@@ -1,0 +1,3 @@
+.codex
+ssh-keygen -t ed25519 -C "Michael.adebayo@zequencedigital.co.uk"
+ssh-keygen -t ed25519 -C "Michael.adebayo@zequencedigital.co.uk".pub

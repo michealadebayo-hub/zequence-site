@@ -3,9 +3,26 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OwanbePal | Plan Bold. Celebrate Big.</title>
 
-<meta name="description" content="Create beautiful event pages, manage guests, and collect secure digital contributions for your Owambe. Built for Nigeria and the diaspora.">
+<title>Zequence Digital | High-Converting Websites for Fashion & eCommerce</title>
+
+<meta name="description" content="We design high-converting websites for fashion brands, jewellery businesses, and growing small businesses.">
+<meta name="theme-color" content="#FFF8EF">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="apple-touch-icon" href="logo.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zequence Digital | High-Converting Websites for Fashion & eCommerce">
+<meta property="og:description" content="Premium websites, eCommerce stores, and automation systems for fashion brands, jewellery businesses, restaurants, and growing small businesses.">
+<meta property="og:image" content="social-preview.svg">
+<meta property="og:image:alt" content="Zequence Digital UK social preview">
+<meta property="og:site_name" content="Zequence Digital UK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zequence Digital | High-Converting Websites for Fashion & eCommerce">
+<meta name="twitter:description" content="Premium websites, eCommerce stores, and automation systems for fashion brands, jewellery businesses, restaurants, and growing small businesses.">
+<meta name="twitter:image" content="social-preview.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -18,126 +35,492 @@ tailwind.config = {
         burntOrange: "#E85D04",
         gold: "#C68A00",
         deepGreen: "#0B6B3A",
-        darkText: "#1F1F1F"
+        darkText: "#1F1F1F",
+        ink: "#201A17",
+        sand: "#F3E7D4",
+        olive: "#1E3B2E"
+      },
+      fontFamily: {
+        sans: ["Manrope", "sans-serif"],
+        display: ["Cormorant Garamond", "serif"]
+      },
+      boxShadow: {
+        soft: "0 20px 60px rgba(31, 25, 20, 0.08)"
       }
     }
   }
 }
 </script>
 
+<style>
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(232, 93, 4, 0.10), transparent 28%),
+    radial-gradient(circle at top right, rgba(198, 138, 0, 0.12), transparent 24%),
+    linear-gradient(180deg, #fff8ef 0%, #fffaf4 52%, #f8efe4 100%);
+}
+</style>
+
 </head>
 
 <body class="bg-cream text-darkText font-sans">
 
-<!-- HERO -->
-<section class="pt-24 pb-20 text-center px-6">
-  <h1 class="text-4xl md:text-6xl font-bold leading-tight">
-    Plan Your Owambe.<br>
-    <span class="text-burntOrange">Collect Contributions.</span><br>
-    Celebrate Without Stress.
-  </h1>
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-white focus:px-4 focus:py-2 focus:rounded-full focus:shadow-md">
+  Skip to content
+</a>
 
-  <p class="mt-6 text-lg md:text-xl max-w-2xl mx-auto">
-    Create beautiful event pages, manage guests, and receive secure digital contributions —
-    all in one place.
-  </p>
+<header class="bg-cream/85 backdrop-blur sticky top-0 z-40 border-b border-black/5">
+  <div class="max-w-6xl mx-auto px-6 py-5 md:py-6 flex items-center justify-between gap-6">
 
-  <div class="mt-10">
-    <a href="#beta"
-      class="bg-burntOrange hover:bg-orange-700 text-white px-10 py-4 rounded-full text-lg transition">
-      Join Beta
+    <!-- LOGO -->
+    <a href="#" class="flex items-center focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream rounded-2xl">
+      <span class="flex items-center gap-4">
+        <span class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-ink text-lg font-extrabold tracking-tight text-white shadow-soft md:h-16 md:w-16 md:text-xl">
+          <span class="text-white">Z</span><span class="text-gold">D</span>
+        </span>
+        <span class="flex flex-col leading-none">
+          <span class="font-display text-3xl font-semibold tracking-[0.08em] text-ink md:text-4xl">
+            ZEQUENCE
+          </span>
+          <span class="mt-1 text-[0.65rem] font-semibold uppercase tracking-[0.45em] text-gray-500 md:text-xs">
+            Digital UK
+          </span>
+        </span>
+      </span>
     </a>
+
+    <!-- NAV -->
+    <nav aria-label="Primary navigation" class="hidden md:flex items-center gap-6 text-sm">
+      <a href="#services" class="hover:text-burntOrange transition focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream rounded">Services</a>
+      <a href="#process" class="hover:text-burntOrange transition focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream rounded">Process</a>
+      <a href="#portfolio" class="hover:text-burntOrange transition focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream rounded">Work</a>
+      <a href="#results" class="hover:text-burntOrange transition focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream rounded">Results</a>
+      <a href="#contact" class="hover:text-burntOrange transition focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream rounded">Contact</a>
+    </nav>
+
+    <a href="#contact" class="hidden md:inline-flex items-center rounded-full bg-ink text-white px-5 py-3 text-sm font-semibold transition hover:bg-burntOrange focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream">
+      Book a Discovery Call
+    </a>
+
   </div>
-</section>
+</header>
 
-<!-- PROBLEM SECTION -->
-<section class="bg-white py-20 px-6">
-  <div class="max-w-5xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-12">
-      Nigerian Celebrations Are Joyful. Planning Them Should Be.
-    </h2>
+<main id="main-content">
 
-    <div class="grid md:grid-cols-2 gap-8 text-left">
-      <div class="p-6 border rounded-lg">
-        Endless WhatsApp messages and voice notes.
+<!-- HERO -->
+<section class="px-6 pt-16 pb-20 md:pt-24 md:pb-24">
+  <div class="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+    <div>
+      <p class="inline-flex items-center rounded-full border border-black/10 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-gray-600 shadow-sm">
+        Premium websites for product-led brands
+      </p>
+
+      <h1 class="mt-6 max-w-4xl font-display text-5xl font-semibold leading-none text-ink md:text-7xl">
+        Elegant websites that turn
+        <span class="text-burntOrange">attention into sales.</span>
+      </h1>
+
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-gray-700 md:text-xl">
+        Zequence Digital helps fashion, jewellery and ambitious small businesses launch polished, conversion-focused websites that feel premium, build trust and make buying easy.
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="#contact"
+          class="bg-burntOrange hover:bg-orange-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition shadow-lg focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream">
+          Start Your Project
+        </a>
+
+        <a href="#portfolio"
+          class="border border-black/10 bg-white/80 px-8 py-4 rounded-full text-lg hover:bg-white transition focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-cream">
+          View Our Work
+        </a>
       </div>
-      <div class="p-6 border rounded-lg">
-        Confusion tracking who has contributed.
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-3">
+        <div class="rounded-3xl bg-white/80 p-5 shadow-soft ring-1 ring-black/5">
+          <p class="text-3xl font-extrabold text-ink">7 days</p>
+          <p class="mt-2 text-sm text-gray-600">Fast launch timelines for focused brochure sites.</p>
+        </div>
+        <div class="rounded-3xl bg-white/80 p-5 shadow-soft ring-1 ring-black/5">
+          <p class="text-3xl font-extrabold text-ink">Mobile first</p>
+          <p class="mt-2 text-sm text-gray-600">Every section is designed to look sharp on phone and desktop.</p>
+        </div>
+        <div class="rounded-3xl bg-white/80 p-5 shadow-soft ring-1 ring-black/5">
+          <p class="text-3xl font-extrabold text-ink">Built to convert</p>
+          <p class="mt-2 text-sm text-gray-600">Clear messaging, clean checkout paths and trust-building layouts.</p>
+        </div>
       </div>
-      <div class="p-6 border rounded-lg">
-        Guests asking repeatedly for account details.
-      </div>
-      <div class="p-6 border rounded-lg">
-        Diaspora family struggling to send support easily.
+    </div>
+
+    <div class="relative">
+      <div class="absolute -top-6 -left-4 h-32 w-32 rounded-full bg-gold/15 blur-3xl"></div>
+      <div class="absolute -bottom-8 -right-6 h-40 w-40 rounded-full bg-burntOrange/15 blur-3xl"></div>
+
+      <div class="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/80 p-4 shadow-soft backdrop-blur">
+        <img
+          src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&amp;w=1400&amp;auto=format&amp;fit=crop"
+          alt="Creative studio desk with fashion moodboards and a laptop"
+          class="h-[460px] w-full rounded-[1.5rem] object-cover"
+        />
+
+        <div class="absolute bottom-10 left-10 max-w-xs rounded-[1.5rem] bg-ink/90 p-5 text-white shadow-2xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-white/70">What clients want</p>
+          <p class="mt-3 font-display text-3xl leading-tight">A site that feels premium before a customer even clicks buy.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SOLUTION SECTION -->
-<section class="py-20 px-6">
+<!-- TRUST -->
+<section class="px-6 pb-8">
+  <div class="max-w-6xl mx-auto rounded-[2rem] border border-black/5 bg-white/80 px-6 py-5 shadow-soft backdrop-blur">
+    <div class="flex flex-col gap-4 text-center text-sm font-medium text-gray-600 md:flex-row md:items-center md:justify-between md:text-left">
+      <span>Helping fashion labels, jewellery brands and founder-led businesses launch online with confidence.</span>
+      <span class="uppercase tracking-[0.28em] text-xs text-gray-500">Strategy. Design. eCommerce.</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="bg-white py-20 px-6">
   <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-12">
-      OwanbePal Makes It Simple
-    </h2>
+    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-burntOrange">Services</p>
+    <h2 class="mt-4 font-display text-4xl font-semibold md:text-6xl">What We Build</h2>
+
+    <p class="mx-auto mt-4 mb-12 max-w-2xl text-gray-600">
+      We create online experiences that make your brand feel sharper, your offer easier to understand and your next step obvious.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-8 text-left">
+
+      <div class="rounded-[1.75rem] border border-black/5 bg-gradient-to-b from-[#fffaf5] to-white p-8 shadow-soft transition hover:-translate-y-1">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">01</p>
+        <h3 class="mt-4 text-2xl font-semibold text-ink">Brand-Led Website Design</h3>
+        <p class="mt-4 text-gray-600">Bespoke landing pages and service sites that feel elevated, clear and commercially focused.</p>
+      </div>
+
+      <div class="rounded-[1.75rem] border border-black/5 bg-gradient-to-b from-[#fffdf8] to-white p-8 shadow-soft transition hover:-translate-y-1">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">02</p>
+        <h3 class="mt-4 text-2xl font-semibold text-ink">eCommerce Store Builds</h3>
+        <p class="mt-4 text-gray-600">Product pages, collections and checkout journeys designed to reduce friction and increase trust.</p>
+      </div>
+
+      <div class="rounded-[1.75rem] border border-black/5 bg-gradient-to-b from-[#fdf7ef] to-white p-8 shadow-soft transition hover:-translate-y-1">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">03</p>
+        <h3 class="mt-4 text-2xl font-semibold text-ink">Strategic Website Redesigns</h3>
+        <p class="mt-4 text-gray-600">Refresh dated sites with stronger messaging, cleaner visuals and more confident conversion paths.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SOFTWARE + AUTOMATION -->
+<section class="px-6 py-20">
+  <div class="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+    <div class="text-left">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-burntOrange">Software + Automation</p>
+      <h2 class="mt-4 font-display text-4xl font-semibold text-ink md:text-6xl">Smart systems that save time and help you serve customers faster.</h2>
+      <p class="mt-5 max-w-2xl leading-8 text-gray-600">
+        Beyond websites, we can build lightweight software tools and automations that reduce admin, speed up replies and make everyday operations smoother for your business.
+      </p>
+      <p class="mt-4 max-w-2xl leading-8 text-gray-600">
+        A great example is a WhatsApp booking flow for restaurants, where customers can enquire, reserve and get confirmations faster without constant manual back-and-forth.
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="rounded-[1.75rem] border border-black/5 bg-white p-7 shadow-soft">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">Automation</p>
+        <h3 class="mt-3 text-2xl font-semibold text-ink">WhatsApp Booking Systems</h3>
+        <p class="mt-3 text-sm leading-7 text-gray-600">Ideal for restaurants, beauty businesses and service brands that want quicker booking conversations and fewer missed enquiries.</p>
+      </div>
+
+      <div class="rounded-[1.75rem] border border-black/5 bg-white p-7 shadow-soft">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">Operations</p>
+        <h3 class="mt-3 text-2xl font-semibold text-ink">Customer Follow-Up Flows</h3>
+        <p class="mt-3 text-sm leading-7 text-gray-600">Automate confirmations, reminders and lead follow-ups so customers hear from your business at the right time.</p>
+      </div>
+
+      <div class="rounded-[1.75rem] border border-black/5 bg-white p-7 shadow-soft">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">Custom Tools</p>
+        <h3 class="mt-3 text-2xl font-semibold text-ink">Business Workflow Software</h3>
+        <p class="mt-3 text-sm leading-7 text-gray-600">Simple internal tools for enquiries, bookings, requests or admin tasks that currently take too much manual effort.</p>
+      </div>
+
+      <div class="rounded-[1.75rem] border border-black/5 bg-gradient-to-b from-[#fffaf5] to-white p-7 shadow-soft">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">Built Around You</p>
+        <h3 class="mt-3 text-2xl font-semibold text-ink">Tailored to Your Business</h3>
+        <p class="mt-3 text-sm leading-7 text-gray-600">We design these systems around how your team already works, so the solution feels practical, not complicated.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="px-6 py-20">
+  <div class="max-w-6xl mx-auto rounded-[2rem] bg-olive px-8 py-14 text-white shadow-soft md:px-12">
+    <div class="max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">Process</p>
+      <h2 class="mt-4 font-display text-4xl font-semibold md:text-5xl">A clear, calm process from idea to launch.</h2>
+      <p class="mt-4 text-white/80">You do not need to figure everything out before we begin. We guide the structure, the messaging and the visuals so your website feels considered from day one.</p>
+    </div>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-6">
+        <p class="text-sm font-semibold text-gold">Step 1</p>
+        <h3 class="mt-3 text-2xl font-semibold">Discovery</h3>
+        <p class="mt-3 text-sm leading-7 text-white/80">We clarify your offer, audience, priorities and the pages your customers actually need.</p>
+      </div>
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-6">
+        <p class="text-sm font-semibold text-gold">Step 2</p>
+        <h3 class="mt-3 text-2xl font-semibold">Design + Build</h3>
+        <p class="mt-3 text-sm leading-7 text-white/80">We translate your brand into a polished layout with strong mobile design and clear buying paths.</p>
+      </div>
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-6">
+        <p class="text-sm font-semibold text-gold">Step 3</p>
+        <h3 class="mt-3 text-2xl font-semibold">Launch + Support</h3>
+        <p class="mt-3 text-sm leading-7 text-white/80">We help you go live confidently, with support for edits, handover and next-step improvements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN DIRECTIONS -->
+<section id="portfolio" class="py-20 px-6">
+  <div class="max-w-6xl mx-auto text-center">
+
+    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-burntOrange">Design Directions</p>
+    <h2 class="mt-4 font-display text-4xl font-semibold md:text-6xl">How Your Brand Could Show Up Online</h2>
+    <p class="mx-auto mt-4 mb-12 max-w-2xl text-gray-600">These are concept directions that show the kind of visual quality, structure and user experience we can build for your business.</p>
 
     <div class="grid md:grid-cols-3 gap-10">
-      <div class="p-8 bg-white shadow-md rounded-lg">
-        <h3 class="text-xl font-semibold text-burntOrange mb-4">🎉 Event Page</h3>
-        Create a beautiful page for your wedding, birthday, naming ceremony or burial.
+
+      <!-- CARD -->
+      <div class="overflow-hidden rounded-[1.75rem] border border-black/5 bg-white shadow-soft transition group hover:-translate-y-1">
+        <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&amp;w=1200&amp;auto=format&amp;fit=crop"
+             alt="Fashion eCommerce storefront"
+             loading="lazy"
+             class="w-full h-56 object-cover group-hover:scale-105 transition duration-500" />
+        <div class="p-6">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">Fashion</p>
+          <h3 class="mt-3 text-2xl font-semibold text-ink">Editorial Storefront</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">A polished eCommerce concept with immersive product imagery, clean navigation and refined calls to action.</p>
+        </div>
       </div>
 
-      <div class="p-8 bg-white shadow-md rounded-lg">
-        <h3 class="text-xl font-semibold text-burntOrange mb-4">💳 Contribution Wallet</h3>
-        Collect secure digital support from Nigeria and abroad.
+      <!-- CARD -->
+      <div class="overflow-hidden rounded-[1.75rem] border border-black/5 bg-white shadow-soft transition group hover:-translate-y-1">
+        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&amp;w=1200&amp;auto=format&amp;fit=crop"
+             alt="Luxury jewellery website"
+             loading="lazy"
+             class="w-full h-56 object-cover group-hover:scale-105 transition duration-500" />
+        <div class="p-6">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">Jewellery</p>
+          <h3 class="mt-3 text-2xl font-semibold text-ink">Luxury Product Experience</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">A premium concept direction designed to make collections feel desirable, trustworthy and simple to shop on mobile.</p>
+        </div>
       </div>
 
-      <div class="p-8 bg-white shadow-md rounded-lg">
-        <h3 class="text-xl font-semibold text-burntOrange mb-4">📋 Guest Manager</h3>
-        Upload guests, track RSVPs, and stay organised effortlessly.
+      <!-- CARD -->
+      <div class="overflow-hidden rounded-[1.75rem] border border-black/5 bg-white shadow-soft transition group hover:-translate-y-1">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&amp;w=1200&amp;auto=format&amp;fit=crop"
+             alt="Small business website"
+             loading="lazy"
+             class="w-full h-56 object-cover group-hover:scale-105 transition duration-500" />
+        <div class="p-6">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-burntOrange">Small Business</p>
+          <h3 class="mt-3 text-2xl font-semibold text-ink">Lead-Generating Business Site</h3>
+          <p class="mt-3 text-sm leading-7 text-gray-600">A concept built around clear positioning, stronger trust cues and a smoother enquiry journey for service-led brands.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STARTER TRUST -->
+<section class="px-6 py-20">
+  <div class="max-w-6xl mx-auto grid gap-8 lg:grid-cols-[1fr_1fr]">
+    <div class="rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-black/5 md:p-10 text-left">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-burntOrange">Why Work With Us Early</p>
+      <h2 class="mt-4 font-display text-4xl font-semibold text-ink md:text-5xl">You do not need a huge agency to get a sharp digital presence.</h2>
+      <p class="mt-5 leading-8 text-gray-600">Zequence Digital is focused on helping businesses launch with clarity, polish and practical support. That means thoughtful design, honest communication and a strong standard of work from day one.</p>
+    </div>
+
+    <div class="grid gap-5">
+      <div class="rounded-[1.5rem] bg-white/90 p-7 shadow-soft ring-1 ring-black/5 text-left">
+        <p class="text-sm font-semibold text-burntOrange">Founder-led attention</p>
+        <p class="mt-3 text-gray-600">You work directly with the person building your site, not through layers of account management.</p>
+      </div>
+      <div class="rounded-[1.5rem] bg-white/90 p-7 shadow-soft ring-1 ring-black/5 text-left">
+        <p class="text-sm font-semibold text-burntOrange">Clear communication</p>
+        <p class="mt-3 text-gray-600">We keep the process simple, collaborative and easy to follow, especially if this is your first website project.</p>
+      </div>
+      <div class="rounded-[1.5rem] bg-white/90 p-7 shadow-soft ring-1 ring-black/5 text-left">
+        <p class="text-sm font-semibold text-burntOrange">Built for growth</p>
+        <p class="mt-3 text-gray-600">The goal is not just to launch something pretty. It is to give your business a strong foundation you can build on.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DIASPORA SECTION -->
+<!-- RESULTS -->
+<section id="results" class="px-6 py-20">
+  <div class="max-w-6xl mx-auto grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+    <div class="rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-black/5 md:p-10">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-burntOrange">Why clients choose us</p>
+      <h2 class="mt-4 font-display text-4xl font-semibold text-ink md:text-5xl">The site should feel as premium as the brand behind it.</h2>
+      <p class="mt-5 leading-8 text-gray-600">We combine visual polish with practical conversion thinking, so your website does not just look modern, it also helps visitors trust you faster and take action sooner.</p>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2">
+      <div class="rounded-[1.75rem] bg-white/90 p-7 shadow-soft ring-1 ring-black/5">
+        <p class="text-sm font-semibold text-burntOrange">Sharper first impressions</p>
+        <p class="mt-3 text-gray-600">Elevated layouts, better hierarchy and visuals that feel aligned with premium products.</p>
+      </div>
+      <div class="rounded-[1.75rem] bg-white/90 p-7 shadow-soft ring-1 ring-black/5">
+        <p class="text-sm font-semibold text-burntOrange">More confident enquiries</p>
+        <p class="mt-3 text-gray-600">Cleaner messaging and stronger trust cues help visitors feel ready to reach out or buy.</p>
+      </div>
+      <div class="rounded-[1.75rem] bg-white/90 p-7 shadow-soft ring-1 ring-black/5">
+        <p class="text-sm font-semibold text-burntOrange">Better mobile journeys</p>
+        <p class="mt-3 text-gray-600">Most buyers browse on their phone first, so every section is designed mobile-first, not squeezed in later.</p>
+      </div>
+      <div class="rounded-[1.75rem] bg-white/90 p-7 shadow-soft ring-1 ring-black/5">
+        <p class="text-sm font-semibold text-burntOrange">Support after launch</p>
+        <p class="mt-3 text-gray-600">You are not left alone after go-live. We help with updates, refinements and next-stage improvements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
 <section class="bg-deepGreen text-white py-20 px-6 text-center">
-  <h2 class="text-3xl md:text-4xl font-bold mb-6">
-    Built for Family Everywhere
-  </h2>
-  <p class="max-w-2xl mx-auto text-lg">
-    Whether your loved ones are in Lagos, London, Houston or Toronto —
-    everyone can support your celebration easily and securely.
-  </p>
+  <div class="max-w-5xl mx-auto">
+    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">Why Zequence</p>
+    <h2 class="mt-4 font-display text-4xl font-semibold md:text-6xl">Built for brands that want polish, clarity and momentum.</h2>
+
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-white/80">
+      We blend premium aesthetics with practical conversion decisions so your site works as a brand asset and a sales tool.
+    </p>
+
+    <div class="mt-10 grid gap-4 md:grid-cols-3 text-sm">
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 px-6 py-5">Fast Delivery</div>
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 px-6 py-5">Affordable Pricing</div>
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 px-6 py-5">Mobile Optimised</div>
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 px-6 py-5">Conversion Focused</div>
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 px-6 py-5">Ongoing Support</div>
+      <div class="rounded-[1.5rem] border border-white/10 bg-white/5 px-6 py-5">Built for Growth</div>
+    </div>
+  </div>
 </section>
 
-<!-- BETA SECTION -->
-<section id="beta" class="py-24 px-6 text-center">
-  <h2 class="text-3xl md:text-4xl font-bold mb-6">
-    Be Among the First to Try OwanbePal
-  </h2>
+<!-- CTA -->
+<section class="py-24 px-6 text-center bg-white">
+  <p class="text-xs font-semibold uppercase tracking-[0.28em] text-burntOrange">Ready When You Are</p>
+  <h2 class="mt-4 font-display text-4xl font-semibold text-ink md:text-6xl">Ready to launch a site that looks more expensive and converts more confidently?</h2>
 
-  <p class="mb-10">
-    We’re launching soon. Join the beta and plan your next celebration the smart way.
+  <p class="mx-auto mt-6 mb-10 max-w-2xl text-gray-600">
+    Whether you need a fresh start or a stronger redesign, we can build a website that supports your next stage of growth.
   </p>
 
-  <form class="max-w-md mx-auto">
-    <input type="email" placeholder="Enter your email"
-      class="w-full px-4 py-3 border rounded-full mb-4 focus:outline-none" />
-    <button
-      class="w-full bg-gold hover:bg-yellow-600 text-white px-6 py-3 rounded-full transition">
-      Join Beta
-    </button>
-  </form>
+  <a href="#contact"
+    class="bg-burntOrange hover:bg-orange-700 text-white px-10 py-4 rounded-full text-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-burntOrange focus:ring-offset-2 focus:ring-offset-white">
+    Book Your Project
+  </a>
 </section>
+
+<!-- FAQ -->
+<section class="px-6 py-20 bg-white">
+  <div class="max-w-4xl mx-auto">
+    <p class="text-center text-xs font-semibold uppercase tracking-[0.28em] text-burntOrange">FAQ</p>
+    <h2 class="mt-4 text-center font-display text-4xl font-semibold text-ink md:text-5xl">Questions You May Be Asking</h2>
+
+    <div class="mt-12 grid gap-5">
+      <div class="rounded-[1.5rem] border border-black/5 p-6 shadow-soft">
+        <h3 class="text-xl font-semibold text-ink">Do you need previous client projects to work with us?</h3>
+        <p class="mt-3 leading-7 text-gray-600">No. If you like the quality of our design direction, our communication and the way we think about your business, we are happy to help you launch.</p>
+      </div>
+      <div class="rounded-[1.5rem] border border-black/5 p-6 shadow-soft">
+        <h3 class="text-xl font-semibold text-ink">What if I am starting from scratch?</h3>
+        <p class="mt-3 leading-7 text-gray-600">That is completely fine. We can help you shape the pages, messaging and structure so you do not need to arrive with everything figured out.</p>
+      </div>
+      <div class="rounded-[1.5rem] border border-black/5 p-6 shadow-soft">
+        <h3 class="text-xl font-semibold text-ink">Can you build something custom for my business?</h3>
+        <p class="mt-3 leading-7 text-gray-600">Yes. We create websites, eCommerce experiences and practical software or automation solutions based on what your business actually needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 px-6 text-center">
+  <div class="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+    <div class="text-left">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-burntOrange">Contact</p>
+      <h2 class="mt-4 font-display text-4xl font-semibold text-ink md:text-6xl">Let’s build something your customers trust instantly.</h2>
+      <p class="mt-5 max-w-xl leading-8 text-gray-600">Tell us about your brand, what you sell and where you want the website to take you next. We usually reply within a few hours.</p>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-[1.5rem] border border-black/5 bg-white p-5 shadow-soft">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-gray-500">Typical projects</p>
+          <p class="mt-3 font-semibold text-ink">Brand sites, eCommerce stores and strategic redesigns</p>
+        </div>
+        <div class="rounded-[1.5rem] border border-black/5 bg-white p-5 shadow-soft">
+          <p class="text-xs font-semibold uppercase tracking-[0.24em] text-gray-500">Support style</p>
+          <p class="mt-3 font-semibold text-ink">Clear communication, no pressure, practical guidance</p>
+        </div>
+      </div>
+    </div>
+
+    <form action="https://formspree.io/f/xwvwvjyg" method="POST" class="rounded-[2rem] bg-white p-8 text-left shadow-soft ring-1 ring-black/5 md:p-10">
+      <label for="name" class="block text-sm font-medium mb-2">Your Name</label>
+      <input id="name" type="text" name="name" placeholder="Your Name" autocomplete="name" required
+        class="w-full px-4 py-3 border border-black/10 rounded-full mb-4 focus:outline-none focus:ring-2 focus:ring-burntOrange focus:border-burntOrange" />
+
+      <label for="email" class="block text-sm font-medium mb-2">Your Email</label>
+      <input id="email" type="email" name="email" placeholder="Your Email" autocomplete="email" required
+        class="w-full px-4 py-3 border border-black/10 rounded-full mb-4 focus:outline-none focus:ring-2 focus:ring-burntOrange focus:border-burntOrange" />
+
+      <label for="message" class="block text-sm font-medium mb-2">Project Details</label>
+      <textarea id="message" name="message" placeholder="Tell us about your project, brand or goals" rows="6" required
+        class="w-full px-4 py-3 border border-black/10 rounded-[1.5rem] mb-4 focus:outline-none focus:ring-2 focus:ring-burntOrange focus:border-burntOrange"></textarea>
+
+      <button type="submit"
+        class="w-full bg-ink hover:bg-burntOrange text-white px-6 py-4 rounded-full font-semibold transition focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-white">
+        Send Project Enquiry
+      </button>
+
+      <p class="mt-4 text-sm text-gray-500">
+        No-obligation enquiry. We typically respond within a few hours.
+      </p>
+    </form>
+  </div>
+</section>
+
+</main>
 
 <!-- FOOTER -->
 <footer class="bg-white border-t py-10 text-center text-sm">
-  <p>© 2026 OwanbePal</p>
-  <p class="mt-2 text-gray-600">
-    A product of Zequence Digital UK Ltd.
-  </p>
+  <p>© 2026 Zequence Digital UK</p>
+  <p class="mt-2 text-gray-600">Premium web design and eCommerce experiences for modern brands.</p>
 </footer>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/447588951595?text=Hi%20I%20want%20a%20website"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Send us a message on WhatsApp"
+   class="fixed bottom-5 right-5 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe57] text-white px-5 py-3 rounded-full shadow-lg font-semibold">
+  <span aria-hidden="true">💬</span>
+  <span>Message us</span>
+</a>
 
 </body>
 </html>

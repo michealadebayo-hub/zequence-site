@@ -1,0 +1,53 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Zequence Digital social preview</title>
+  <desc id="desc">A branded social preview card for Zequence Digital UK.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="1120" y2="590" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8EF"/>
+      <stop offset="0.58" stop-color="#FFF3E3"/>
+      <stop offset="1" stop-color="#F3E7D4"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="180" y1="120" x2="940" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E85D04"/>
+      <stop offset="1" stop-color="#C68A00"/>
+    </linearGradient>
+    <filter id="softBlur" x="0" y="0" width="1200" height="630" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="40"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" rx="40" fill="url(#bg)"/>
+
+  <g filter="url(#softBlur)" opacity="0.55">
+    <circle cx="1045" cy="130" r="140" fill="#E85D04"/>
+    <circle cx="950" cy="520" r="120" fill="#C68A00"/>
+    <circle cx="180" cy="110" r="90" fill="#E85D04"/>
+  </g>
+
+  <rect x="58" y="58" width="1084" height="514" rx="34" fill="#FFFFFF" fill-opacity="0.72" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="2"/>
+
+  <g>
+    <rect x="96" y="105" width="132" height="132" rx="30" fill="#201A17"/>
+    <rect x="103" y="112" width="118" height="118" rx="24" stroke="url(#accent)" stroke-width="3"/>
+    <path d="M129 140H193V153L154 190H193V203H129V190L168 153H129V140Z" fill="#FFF8EF"/>
+    <path d="M125 132C134 120 149 114 161 114C176 114 189 120 198 132" stroke="url(#accent)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M125 209C135 221 149 227 161 227C176 227 189 221 198 209" stroke="url(#accent)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <text x="266" y="165" fill="#201A17" font-family="Manrope, Arial, sans-serif" font-size="42" font-weight="800" letter-spacing="2">ZEQUENCE DIGITAL UK</text>
+  <text x="96" y="320" fill="#201A17" font-family="'Cormorant Garamond', Georgia, serif" font-size="78" font-weight="600">
+    Premium websites, eCommerce
+  </text>
+  <text x="96" y="395" fill="#201A17" font-family="'Cormorant Garamond', Georgia, serif" font-size="78" font-weight="600">
+    and automation systems
+  </text>
+  <text x="96" y="465" fill="#6B635B" font-family="Manrope, Arial, sans-serif" font-size="28" font-weight="500">
+    For fashion brands, jewellery businesses, restaurants and ambitious small businesses.
+  </text>
+
+  <rect x="96" y="502" width="272" height="58" rx="29" fill="#201A17"/>
+  <text x="136" y="540" fill="#FFF8EF" font-family="Manrope, Arial, sans-serif" font-size="24" font-weight="700">
+    Strategy • Design • Growth
+  </text>
+</svg>

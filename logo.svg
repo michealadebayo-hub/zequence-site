@@ -1,0 +1,21 @@
+<svg width="760" height="180" viewBox="0 0 760 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">Zequence Digital UK logo</title>
+  <desc id="logoDesc">A modern monogram icon with the Zequence Digital UK wordmark.</desc>
+
+  <defs>
+    <linearGradient id="zequenceGlow" x1="24" y1="20" x2="156" y2="156" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E85D04"/>
+      <stop offset="1" stop-color="#C68A00"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="10" y="10" width="160" height="160" rx="38" fill="#201A17"/>
+  <rect x="18" y="18" width="144" height="144" rx="30" stroke="url(#zequenceGlow)" stroke-width="4"/>
+
+  <path d="M52 52H128V68L81 112H128V128H52V112L99 68H52V52Z" fill="#FFF8EF"/>
+  <path d="M47 43C59 28 76 20 95 20C114 20 131 28 143 43" stroke="url(#zequenceGlow)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M47 137C59 152 76 160 95 160C114 160 131 152 143 137" stroke="url(#zequenceGlow)" stroke-width="6" stroke-linecap="round"/>
+
+  <text x="202" y="82" fill="#201A17" font-family="Manrope, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="2">ZEQUENCE</text>
+  <text x="205" y="122" fill="#6B635B" font-family="Manrope, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="8">DIGITAL UK</text>
+</svg>
