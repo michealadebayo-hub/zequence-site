@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zequencedigital.co.uk/sitemap.xml
