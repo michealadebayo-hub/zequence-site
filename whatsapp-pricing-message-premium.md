@@ -4,9 +4,9 @@ Hi, thanks for reaching out to Zequence Digital UK.
 
 Our projects are tailored to each business, but as a guide:
 
-- Starter Website: from GBP 750
-- Business Website: from GBP 1,200
-- eCommerce Website: from GBP 1,800
+- Starter Website: from GBP 500
+- Business Website: from GBP 950
+- Shopify Store: from GBP 1,500
 - Automation / WhatsApp booking setup: from GBP 350
 
 Final pricing depends on the scope, functionality, and the kind of experience you want to create for your customers.

@@ -6,13 +6,14 @@ These are starting prices for Zequence Digital UK projects. Final pricing depend
 
 ### Starter Website
 
-From GBP 750
+From GBP 500
 
 Ideal for:
 
 - New businesses
 - Personal brands
 - Service businesses that need a clean and professional online presence
+- Smaller businesses that want a strong starting point without a larger custom scope
 
 Typical inclusions:
 
@@ -23,7 +24,7 @@ Typical inclusions:
 
 ### Business Website
 
-From GBP 1,200
+From GBP 950
 
 Ideal for:
 
@@ -36,9 +37,9 @@ Typical inclusions:
 - Conversion-focused design
 - Contact and enquiry flow setup
 
-### eCommerce Website
+### Shopify Store
 
-From GBP 1,800
+From GBP 1,500
 
 Ideal for:
 
@@ -52,6 +53,54 @@ Typical inclusions:
 - Shopping and checkout flow
 - Mobile optimisation
 - Better customer journey design
+- Shopify setup tailored to your brand
+
+#### Shopify Tier Guide
+
+##### Starter Shopify Store
+
+From GBP 1,500
+
+Suggested scope:
+
+- Up to 10 products
+- Up to 3 collections
+- Core store pages
+- Basic payment and shipping setup
+- Mobile-friendly theme customisation
+
+##### Growth Shopify Store
+
+From GBP 2,000
+
+Suggested scope:
+
+- Up to 30 products
+- Up to 8 collections
+- More polished homepage structure
+- App setup for key features
+- Stronger product and collection experience
+
+##### Custom Shopify Store
+
+From GBP 3,000+
+
+Suggested scope:
+
+- 30+ products
+- Advanced store structure
+- More tailored design requirements
+- Extra integrations, apps, or migration support
+- Larger catalog or more complex product setup
+
+##### Common Shopify Add-Ons
+
+- Extra product uploads
+- Additional collection setup
+- Product description support
+- Review app or upsell app setup
+- Email sign-up or marketing integration
+- Migration from another platform
 
 ### Automation And Software
 
@@ -76,6 +125,7 @@ More advanced software or custom automation projects are quoted after discovery.
 - Every quote is tailored to the business
 - Ongoing support can be quoted separately
 - Clear timelines are confirmed after project scope is agreed
+- Shopify subscription fees, premium themes, and paid apps are separate costs paid directly to Shopify
 
 Prepared by:
 

@@ -37,20 +37,32 @@ Thank you for the opportunity to support your business. This proposal outlines t
 
 Use these as internal pricing anchors and adapt based on scope:
 
-- Starter Website: from GBP 750
-- Business Website: from GBP 1,200
-- eCommerce Website: from GBP 1,800
+- Starter Website: from GBP 500
+- Business Website: from GBP 950
+- Shopify Store: from GBP 1,500
 - Automation / WhatsApp booking setup: from GBP 350
 - Custom software or more advanced automation: quoted after discovery
+
+### Shopify Scope Guide
+
+Use this when quoting Shopify projects:
+
+- Starter Shopify Store: up to 10 products / up to 3 collections / core store setup
+- Growth Shopify Store: up to 30 products / up to 8 collections / stronger homepage and app setup
+- Custom Shopify Store: 30+ products / advanced scope / migration or more tailored integrations
+
+Extra products, extra collections, advanced app setup, or migration work can be quoted as add-ons.
 
 ## Deliverables
 
 - Website pages / sections:
-- eCommerce features:
+- Shopify store features:
 - Automation or software features:
 - Contact or enquiry setup:
 - Mobile optimisation:
 - Basic SEO setup:
+- Product upload quantity:
+- Collection setup quantity:
 
 ## Timeline
 
@@ -78,6 +90,7 @@ Currency: GBP
 - Remaining balance is due before launch unless otherwise agreed.
 - Additional work outside the agreed scope will be quoted separately.
 - Delays caused by missing content, approvals, or access may affect the timeline.
+- Shopify subscription fees, premium themes, and paid apps are separate platform costs paid directly to Shopify where applicable.
 
 ## What We Need From You
 

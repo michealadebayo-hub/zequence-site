@@ -16,7 +16,7 @@ This questionnaire helps us understand your business, your goals, and the kind o
 ## Project Type
 
 - What do you need help with?
-- Is this a new website, redesign, eCommerce store, software tool, or automation project?
+- Is this a new website, redesign, Shopify store, software tool, or automation project?
 - What is the main goal of this project?
 - What made you decide to look for help now?
 
@@ -45,6 +45,9 @@ This questionnaire helps us understand your business, your goals, and the kind o
 - What pages or features do you need?
 - Do you need online payments, bookings, enquiry forms, WhatsApp integration, or automation?
 - Do you need help with copywriting or structure?
+- If this is a Shopify store, how many products do you currently have?
+- If this is a Shopify store, how many collections or categories do you expect to need?
+- Do you need help uploading products, organising collections, or setting up payments and shipping?
 
 ## Timeline And Budget
 
