@@ -373,6 +373,12 @@ body {
         <button type="submit" class="mt-6 w-full rounded-full bg-night px-6 py-4 font-bold text-white transition hover:bg-cobalt focus:outline-none focus:ring-2 focus:ring-cobalt focus:ring-offset-2">
           Send Message
         </button>
+
+        <div id="email-options" hidden class="mt-4 grid gap-2 sm:grid-cols-3">
+          <a id="email-app-link" href="mailto:hello@zequencedigital.co.uk" class="rounded-full border border-line bg-white px-4 py-3 text-center text-sm font-bold text-night transition hover:border-cobalt hover:text-cobalt">Email App</a>
+          <a id="gmail-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=hello@zequencedigital.co.uk" target="_blank" rel="noopener noreferrer" class="rounded-full border border-line bg-white px-4 py-3 text-center text-sm font-bold text-night transition hover:border-cobalt hover:text-cobalt">Gmail</a>
+          <a id="yahoo-link" href="https://compose.mail.yahoo.com/?to=hello@zequencedigital.co.uk" target="_blank" rel="noopener noreferrer" class="rounded-full border border-line bg-white px-4 py-3 text-center text-sm font-bold text-night transition hover:border-cobalt hover:text-cobalt">Yahoo Mail</a>
+        </div>
       </form>
     </div>
   </section>
@@ -424,12 +430,16 @@ document.getElementById('contact-form').addEventListener('submit', function (eve
   var message = document.getElementById('message').value.trim();
   var subject = encodeURIComponent('Website enquiry from ' + name);
   var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
+  var recipient = 'hello@zequencedigital.co.uk';
 
   if (typeof gtag === 'function') {
     gtag('event', 'generate_lead', { method: 'contact_form_email' });
   }
 
-  window.location.href = 'mailto:hello@zequencedigital.co.uk?subject=' + subject + '&body=' + body;
+  document.getElementById('email-app-link').href = 'mailto:' + recipient + '?subject=' + subject + '&body=' + body;
+  document.getElementById('gmail-link').href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + recipient + '&su=' + subject + '&body=' + body;
+  document.getElementById('yahoo-link').href = 'https://compose.mail.yahoo.com/?to=' + recipient + '&subject=' + subject + '&body=' + body;
+  document.getElementById('email-options').hidden = false;
 });
 
 var assistantPanel = document.getElementById('assistant-panel');
@@ -462,10 +472,13 @@ function appendAssistantMessage(text, sender) {
 
 function appendAssistantActions(request) {
   var encodedMessage = encodeURIComponent('Hi Zequence Digital, I need help with: ' + request);
+  var recipient = 'hello@zequencedigital.co.uk';
   var actions = document.createElement('div');
   actions.className = 'grid grid-cols-2 gap-2';
   actions.innerHTML =
-    '<a class="rounded-full bg-night px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-cobalt" href="mailto:hello@zequencedigital.co.uk?subject=Website%20enquiry&body=' + encodedMessage + '">Email</a>' +
+    '<a class="rounded-full bg-night px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-cobalt" href="mailto:' + recipient + '?subject=Website%20enquiry&body=' + encodedMessage + '">Email App</a>' +
+    '<a class="rounded-full border border-line bg-white px-3 py-2 text-center text-xs font-bold text-night transition hover:border-cobalt hover:text-cobalt" href="https://mail.google.com/mail/?view=cm&fs=1&to=' + recipient + '&su=Website%20enquiry&body=' + encodedMessage + '" target="_blank" rel="noopener noreferrer">Gmail</a>' +
+    '<a class="rounded-full border border-line bg-white px-3 py-2 text-center text-xs font-bold text-night transition hover:border-cobalt hover:text-cobalt" href="https://compose.mail.yahoo.com/?to=' + recipient + '&subject=Website%20enquiry&body=' + encodedMessage + '" target="_blank" rel="noopener noreferrer">Yahoo</a>' +
     '<a class="rounded-full bg-[#25D366] px-3 py-2 text-center text-xs font-bold text-night transition hover:bg-volt" href="https://wa.me/447588951595?text=' + encodedMessage + '" target="_blank" rel="noopener noreferrer">WhatsApp</a>';
   assistantMessages.appendChild(actions);
   assistantMessages.scrollTop = assistantMessages.scrollHeight;
