@@ -98,6 +98,12 @@ body {
   background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
   border: 1px solid rgba(255,255,255,.18);
 }
+.assistant-panel {
+  max-height: calc(100vh - 7rem);
+}
+.assistant-panel[hidden] {
+  display: none;
+}
 </style>
 </head>
 
@@ -372,6 +378,43 @@ body {
   </section>
 </main>
 
+<div class="fixed bottom-5 right-5 z-50 flex max-w-[calc(100vw-2.5rem)] flex-col items-end gap-3">
+  <section id="assistant-panel" hidden class="assistant-panel w-[22rem] max-w-full overflow-hidden rounded-2xl border border-line bg-white shadow-panel" aria-label="Ask Zequence assistant">
+    <div class="flex items-center justify-between gap-4 bg-night px-4 py-3 text-white">
+      <div>
+        <p class="font-display text-lg font-bold">Ask Zequence</p>
+        <p class="text-xs text-white/62">Free enquiry helper</p>
+      </div>
+      <button type="button" id="assistant-close" class="grid h-9 w-9 place-items-center rounded-full border border-white/14 text-xl leading-none transition hover:bg-white/10" aria-label="Close assistant">×</button>
+    </div>
+
+    <div id="assistant-messages" class="max-h-72 space-y-3 overflow-y-auto bg-cloud p-4 text-sm">
+      <div class="rounded-2xl rounded-tl-md bg-white p-3 leading-6 text-gray-700 shadow-sm">
+        Hi, I can help with app enquiries, OwambePal, bookings, payments, internal tools, and project requests. Tell me what you need, then I can prepare an email or WhatsApp message for you.
+      </div>
+    </div>
+
+    <div class="border-t border-line bg-white p-4">
+      <div class="grid grid-cols-2 gap-2">
+        <button type="button" class="assistant-chip rounded-full border border-line px-3 py-2 text-xs font-bold text-night transition hover:border-cobalt hover:text-cobalt" data-prompt="I want to ask about OwambePal">OwambePal</button>
+        <button type="button" class="assistant-chip rounded-full border border-line px-3 py-2 text-xs font-bold text-night transition hover:border-cobalt hover:text-cobalt" data-prompt="I need a business app or internal tool">Business App</button>
+        <button type="button" class="assistant-chip rounded-full border border-line px-3 py-2 text-xs font-bold text-night transition hover:border-cobalt hover:text-cobalt" data-prompt="I want a quote for a project">Get Quote</button>
+        <button type="button" class="assistant-chip rounded-full border border-line px-3 py-2 text-xs font-bold text-night transition hover:border-cobalt hover:text-cobalt" data-prompt="I want to partner with Zequence Digital">Partnership</button>
+      </div>
+
+      <form id="assistant-form" class="mt-3 flex gap-2">
+        <label for="assistant-input" class="sr-only">Ask Zequence</label>
+        <input id="assistant-input" type="text" autocomplete="off" placeholder="Type your request..." class="min-w-0 flex-1 rounded-full border border-line px-4 py-3 text-sm outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10" />
+        <button type="submit" class="rounded-full bg-night px-4 py-3 text-sm font-bold text-white transition hover:bg-cobalt">Send</button>
+      </form>
+    </div>
+  </section>
+
+  <button type="button" id="assistant-toggle" class="inline-flex items-center gap-2 rounded-full bg-night px-5 py-4 font-bold text-white shadow-glow transition hover:bg-cobalt focus:outline-none focus:ring-2 focus:ring-cobalt focus:ring-offset-2" aria-controls="assistant-panel" aria-expanded="false">
+    Ask Zequence
+  </button>
+</div>
+
 <script>
 document.getElementById('contact-form').addEventListener('submit', function (event) {
   event.preventDefault();
@@ -387,6 +430,104 @@ document.getElementById('contact-form').addEventListener('submit', function (eve
   }
 
   window.location.href = 'mailto:hello@zequencedigital.co.uk?subject=' + subject + '&body=' + body;
+});
+
+var assistantPanel = document.getElementById('assistant-panel');
+var assistantToggle = document.getElementById('assistant-toggle');
+var assistantClose = document.getElementById('assistant-close');
+var assistantForm = document.getElementById('assistant-form');
+var assistantInput = document.getElementById('assistant-input');
+var assistantMessages = document.getElementById('assistant-messages');
+var assistantLastRequest = '';
+
+function setAssistantOpen(isOpen) {
+  assistantPanel.hidden = !isOpen;
+  assistantToggle.setAttribute('aria-expanded', String(isOpen));
+
+  if (isOpen) {
+    assistantInput.focus();
+  }
+}
+
+function appendAssistantMessage(text, sender) {
+  var message = document.createElement('div');
+  var isUser = sender === 'user';
+  message.className = isUser
+    ? 'ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-night p-3 text-sm leading-6 text-white'
+    : 'max-w-[90%] rounded-2xl rounded-tl-md bg-white p-3 text-sm leading-6 text-gray-700 shadow-sm';
+  message.textContent = text;
+  assistantMessages.appendChild(message);
+  assistantMessages.scrollTop = assistantMessages.scrollHeight;
+}
+
+function appendAssistantActions(request) {
+  var encodedMessage = encodeURIComponent('Hi Zequence Digital, I need help with: ' + request);
+  var actions = document.createElement('div');
+  actions.className = 'grid grid-cols-2 gap-2';
+  actions.innerHTML =
+    '<a class="rounded-full bg-night px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-cobalt" href="mailto:hello@zequencedigital.co.uk?subject=Website%20enquiry&body=' + encodedMessage + '">Email</a>' +
+    '<a class="rounded-full bg-[#25D366] px-3 py-2 text-center text-xs font-bold text-night transition hover:bg-volt" href="https://wa.me/447588951595?text=' + encodedMessage + '" target="_blank" rel="noopener noreferrer">WhatsApp</a>';
+  assistantMessages.appendChild(actions);
+  assistantMessages.scrollTop = assistantMessages.scrollHeight;
+}
+
+function getAssistantReply(request) {
+  var lowerRequest = request.toLowerCase();
+
+  if (lowerRequest.includes('owambe') || lowerRequest.includes('event') || lowerRequest.includes('rsvp')) {
+    return 'OwambePal supports celebration workflows like RSVP, event links, digital spray, gift contributions, aso-ebi, vendors, and smart ticketing. I can pass your request to Zequence by email or WhatsApp.';
+  }
+
+  if (lowerRequest.includes('quote') || lowerRequest.includes('price') || lowerRequest.includes('cost')) {
+    return 'For a quote, Zequence will need the type of app, main features, deadline, and budget range. Use email or WhatsApp below and include those details if you can.';
+  }
+
+  if (lowerRequest.includes('booking') || lowerRequest.includes('payment') || lowerRequest.includes('app') || lowerRequest.includes('tool')) {
+    return 'Zequence Digital builds focused apps for bookings, payments, customer flows, records, and internal operations. I can prepare your enquiry for email or WhatsApp.';
+  }
+
+  if (lowerRequest.includes('partner') || lowerRequest.includes('partnership')) {
+    return 'Partnership enquiries are welcome. Share the company, opportunity, and best contact details so Zequence can follow up.';
+  }
+
+  return 'Thanks. I can help route this to Zequence Digital. Send it by email or WhatsApp and include your name, contact details, and what outcome you want.';
+}
+
+function handleAssistantRequest(request) {
+  var trimmedRequest = request.trim();
+
+  if (!trimmedRequest) {
+    return;
+  }
+
+  assistantLastRequest = trimmedRequest;
+  appendAssistantMessage(trimmedRequest, 'user');
+  appendAssistantMessage(getAssistantReply(trimmedRequest), 'assistant');
+  appendAssistantActions(trimmedRequest);
+}
+
+assistantToggle.addEventListener('click', function () {
+  setAssistantOpen(assistantPanel.hidden);
+});
+
+assistantClose.addEventListener('click', function () {
+  setAssistantOpen(false);
+});
+
+assistantForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  handleAssistantRequest(assistantInput.value);
+  assistantInput.value = '';
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'generate_lead', { method: 'free_assistant' });
+  }
+});
+
+document.querySelectorAll('.assistant-chip').forEach(function (chip) {
+  chip.addEventListener('click', function () {
+    handleAssistantRequest(chip.getAttribute('data-prompt'));
+  });
 });
 </script>
 
