@@ -360,7 +360,13 @@ body {
         </div>
       </div>
 
-      <form id="contact-form" class="rounded-3xl border border-line bg-cloud p-6 shadow-panel md:p-8">
+      <form id="contact-form" action="https://formsubmit.co/hello@zequencedigital.co.uk" method="POST" class="rounded-3xl border border-line bg-cloud p-6 shadow-panel md:p-8">
+        <input type="hidden" name="_subject" value="New Zequence Digital website enquiry">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://www.zequencedigital.co.uk/?sent=1#contact">
+        <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
+
         <label for="name" class="block text-sm font-bold text-night">Your Name</label>
         <input id="name" type="text" name="name" autocomplete="name" required class="mt-2 w-full rounded-2xl border border-line bg-white px-4 py-3 outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10" />
 
@@ -373,12 +379,6 @@ body {
         <button type="submit" class="mt-6 w-full rounded-full bg-night px-6 py-4 font-bold text-white transition hover:bg-cobalt focus:outline-none focus:ring-2 focus:ring-cobalt focus:ring-offset-2">
           Send Message
         </button>
-
-        <div id="email-options" hidden class="mt-4 grid gap-2 sm:grid-cols-3">
-          <a id="email-app-link" href="mailto:hello@zequencedigital.co.uk" class="rounded-full border border-line bg-white px-4 py-3 text-center text-sm font-bold text-night transition hover:border-cobalt hover:text-cobalt">Email App</a>
-          <a id="gmail-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=hello@zequencedigital.co.uk" target="_blank" rel="noopener noreferrer" class="rounded-full border border-line bg-white px-4 py-3 text-center text-sm font-bold text-night transition hover:border-cobalt hover:text-cobalt">Gmail</a>
-          <a id="yahoo-link" href="https://compose.mail.yahoo.com/?to=hello@zequencedigital.co.uk" target="_blank" rel="noopener noreferrer" class="rounded-full border border-line bg-white px-4 py-3 text-center text-sm font-bold text-night transition hover:border-cobalt hover:text-cobalt">Yahoo Mail</a>
-        </div>
       </form>
     </div>
   </section>
@@ -422,26 +422,6 @@ body {
 </div>
 
 <script>
-document.getElementById('contact-form').addEventListener('submit', function (event) {
-  event.preventDefault();
-
-  var name = document.getElementById('name').value.trim();
-  var email = document.getElementById('email').value.trim();
-  var message = document.getElementById('message').value.trim();
-  var subject = encodeURIComponent('Website enquiry from ' + name);
-  var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
-  var recipient = 'hello@zequencedigital.co.uk';
-
-  if (typeof gtag === 'function') {
-    gtag('event', 'generate_lead', { method: 'contact_form_email' });
-  }
-
-  document.getElementById('email-app-link').href = 'mailto:' + recipient + '?subject=' + subject + '&body=' + body;
-  document.getElementById('gmail-link').href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + recipient + '&su=' + subject + '&body=' + body;
-  document.getElementById('yahoo-link').href = 'https://compose.mail.yahoo.com/?to=' + recipient + '&subject=' + subject + '&body=' + body;
-  document.getElementById('email-options').hidden = false;
-});
-
 var assistantPanel = document.getElementById('assistant-panel');
 var assistantToggle = document.getElementById('assistant-toggle');
 var assistantClose = document.getElementById('assistant-close');
