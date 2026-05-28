@@ -1,53 +1,50 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Zequence Digital social preview</title>
-  <desc id="desc">A branded social preview card for Zequence Digital UK.</desc>
+  <desc id="desc">A branded social preview card for Zequence Digital UK Limited.</desc>
 
   <defs>
-    <linearGradient id="bg" x1="80" y1="40" x2="1120" y2="590" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFF8EF"/>
-      <stop offset="0.58" stop-color="#FFF3E3"/>
-      <stop offset="1" stop-color="#F3E7D4"/>
+    <linearGradient id="accent" x1="96" y1="96" x2="1104" y2="534" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#51E6D8"/>
+      <stop offset="0.5" stop-color="#9DFF57"/>
+      <stop offset="1" stop-color="#315CFF"/>
     </linearGradient>
-    <linearGradient id="accent" x1="180" y1="120" x2="940" y2="520" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#E85D04"/>
-      <stop offset="1" stop-color="#C68A00"/>
-    </linearGradient>
-    <filter id="softBlur" x="0" y="0" width="1200" height="630" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="40"/>
-    </filter>
+    <radialGradient id="aquaGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(220 132) rotate(42) scale(360 240)">
+      <stop stop-color="#51E6D8" stop-opacity="0.36"/>
+      <stop offset="1" stop-color="#51E6D8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="voltGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(950 94) rotate(116) scale(330 260)">
+      <stop stop-color="#9DFF57" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#9DFF57" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <rect width="1200" height="630" rx="40" fill="url(#bg)"/>
+  <rect width="1200" height="630" rx="36" fill="#09111F"/>
+  <rect width="1200" height="630" fill="url(#aquaGlow)"/>
+  <rect width="1200" height="630" fill="url(#voltGlow)"/>
 
-  <g filter="url(#softBlur)" opacity="0.55">
-    <circle cx="1045" cy="130" r="140" fill="#E85D04"/>
-    <circle cx="950" cy="520" r="120" fill="#C68A00"/>
-    <circle cx="180" cy="110" r="90" fill="#E85D04"/>
-  </g>
-
-  <rect x="58" y="58" width="1084" height="514" rx="34" fill="#FFFFFF" fill-opacity="0.72" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="2"/>
+  <path d="M0 78H1200M0 166H1200M0 254H1200M0 342H1200M0 430H1200M0 518H1200M102 0V630M226 0V630M350 0V630M474 0V630M598 0V630M722 0V630M846 0V630M970 0V630M1094 0V630" stroke="#FFFFFF" stroke-opacity="0.06"/>
 
   <g>
-    <rect x="96" y="105" width="132" height="132" rx="30" fill="#201A17"/>
-    <rect x="103" y="112" width="118" height="118" rx="24" stroke="url(#accent)" stroke-width="3"/>
-    <path d="M129 140H193V153L154 190H193V203H129V190L168 153H129V140Z" fill="#FFF8EF"/>
-    <path d="M125 132C134 120 149 114 161 114C176 114 189 120 198 132" stroke="url(#accent)" stroke-width="5" stroke-linecap="round"/>
-    <path d="M125 209C135 221 149 227 161 227C176 227 189 221 198 209" stroke="url(#accent)" stroke-width="5" stroke-linecap="round"/>
+    <rect x="86" y="86" width="132" height="132" rx="24" fill="#FFFFFF"/>
+    <rect x="95" y="95" width="114" height="114" rx="18" fill="#09111F"/>
+    <rect x="95" y="95" width="114" height="114" rx="18" stroke="url(#accent)" stroke-width="4"/>
+    <path d="M121 127H184V140L146 173H184V186H121V173L159 140H121V127Z" fill="#FFFFFF"/>
+    <path d="M165 150C177 150 186 157 186 168C186 179 177 186 165 186H152V173H164C169 173 173 171 173 168C173 165 169 163 164 163H153V150H165Z" fill="#9DFF57"/>
   </g>
 
-  <text x="266" y="165" fill="#201A17" font-family="Manrope, Arial, sans-serif" font-size="42" font-weight="800" letter-spacing="2">ZEQUENCE DIGITAL UK</text>
-  <text x="96" y="320" fill="#201A17" font-family="'Cormorant Garamond', Georgia, serif" font-size="78" font-weight="600">
-    Premium websites, eCommerce
+  <text x="246" y="145" fill="#FFFFFF" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="46" font-weight="700">Zequence Digital UK Limited</text>
+  <text x="96" y="316" fill="#FFFFFF" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="76" font-weight="700">
+    AI-powered operational
   </text>
-  <text x="96" y="395" fill="#201A17" font-family="'Cormorant Garamond', Georgia, serif" font-size="78" font-weight="600">
-    and automation systems
+  <text x="96" y="396" fill="#FFFFFF" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="76" font-weight="700">
+    software for growing teams
   </text>
-  <text x="96" y="465" fill="#6B635B" font-family="Manrope, Arial, sans-serif" font-size="28" font-weight="500">
-    For fashion brands, jewellery businesses, restaurants and ambitious small businesses.
+  <text x="96" y="474" fill="#B8C3D4" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="500">
+    Workflow tools, product systems, customer flows, bookings, payments, and launch support.
   </text>
 
-  <rect x="96" y="502" width="272" height="58" rx="29" fill="#201A17"/>
-  <text x="136" y="540" fill="#FFF8EF" font-family="Manrope, Arial, sans-serif" font-size="24" font-weight="700">
-    Strategy • Design • Growth
+  <rect x="96" y="524" width="390" height="58" rx="29" fill="#9DFF57"/>
+  <text x="132" y="562" fill="#09111F" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">
+    Systems - AI - Product Design
   </text>
 </svg>

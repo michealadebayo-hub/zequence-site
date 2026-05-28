@@ -1,21 +1,26 @@
 <svg width="760" height="180" viewBox="0 0 760 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle logoDesc">
   <title id="logoTitle">Zequence Digital UK logo</title>
-  <desc id="logoDesc">A modern monogram icon with the Zequence Digital UK wordmark.</desc>
+  <desc id="logoDesc">A modern ZQ monogram with the Zequence Digital UK wordmark.</desc>
 
   <defs>
-    <linearGradient id="zequenceGlow" x1="24" y1="20" x2="156" y2="156" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#E85D04"/>
-      <stop offset="1" stop-color="#C68A00"/>
+    <linearGradient id="zequenceAccent" x1="22" y1="18" x2="158" y2="158" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#51E6D8"/>
+      <stop offset="0.48" stop-color="#9DFF57"/>
+      <stop offset="1" stop-color="#315CFF"/>
     </linearGradient>
+    <filter id="softGlow" x="0" y="0" width="184" height="184" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
   </defs>
 
-  <rect x="10" y="10" width="160" height="160" rx="38" fill="#201A17"/>
-  <rect x="18" y="18" width="144" height="144" rx="30" stroke="url(#zequenceGlow)" stroke-width="4"/>
+  <rect x="10" y="10" width="160" height="160" rx="28" fill="#09111F"/>
+  <rect x="18" y="18" width="144" height="144" rx="22" stroke="url(#zequenceAccent)" stroke-width="4"/>
+  <path d="M18 42C48 16 95 8 162 30V18H18V42Z" fill="#51E6D8" opacity="0.18"/>
+  <path d="M52 54H130V70L82 111H130V127H52V111L100 70H52V54Z" fill="#FFFFFF"/>
+  <path d="M108 82C122 82 133 91 133 104C133 117 122 126 108 126H92V111H107C113 111 117 108 117 104C117 100 113 97 107 97H93V82H108Z" fill="#9DFF57"/>
+  <circle cx="54" cy="42" r="14" fill="#51E6D8" opacity="0.65" filter="url(#softGlow)"/>
+  <circle cx="138" cy="138" r="16" fill="#315CFF" opacity="0.5" filter="url(#softGlow)"/>
 
-  <path d="M52 52H128V68L81 112H128V128H52V112L99 68H52V52Z" fill="#FFF8EF"/>
-  <path d="M47 43C59 28 76 20 95 20C114 20 131 28 143 43" stroke="url(#zequenceGlow)" stroke-width="6" stroke-linecap="round"/>
-  <path d="M47 137C59 152 76 160 95 160C114 160 131 152 143 137" stroke="url(#zequenceGlow)" stroke-width="6" stroke-linecap="round"/>
-
-  <text x="202" y="82" fill="#201A17" font-family="Manrope, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="2">ZEQUENCE</text>
-  <text x="205" y="122" fill="#6B635B" font-family="Manrope, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="8">DIGITAL UK</text>
+  <text x="202" y="83" fill="#09111F" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="54" font-weight="700">Zequence</text>
+  <text x="205" y="124" fill="#526070" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="7">DIGITAL UK</text>
 </svg>
