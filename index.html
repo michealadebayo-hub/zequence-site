@@ -104,6 +104,9 @@ body {
 .assistant-panel[hidden] {
   display: none;
 }
+.mobile-menu[hidden] {
+  display: none;
+}
 </style>
 </head>
 
@@ -125,19 +128,36 @@ body {
 
     <nav aria-label="Primary navigation" class="hidden items-center gap-7 text-sm font-medium text-white/72 md:flex">
       <a href="#apps" class="transition hover:text-white">Systems</a>
+      <a href="#use-cases" class="transition hover:text-white">Use Cases</a>
+      <a href="#owambepal" class="transition hover:text-white">OwambePal</a>
       <a href="#coming-soon" class="transition hover:text-white">Coming Soon</a>
       <a href="#company" class="transition hover:text-white">Company</a>
       <a href="#contact" class="transition hover:text-white">Contact</a>
     </nav>
 
-    <a href="#contact" class="rounded-full bg-white px-4 py-2.5 text-sm font-bold text-night transition hover:bg-volt md:hidden">
-      Contact
-    </a>
+    <button type="button" id="mobile-menu-toggle" class="grid h-11 w-11 place-items-center rounded-full border border-white/14 bg-white/8 transition hover:bg-white/14 focus:outline-none focus:ring-2 focus:ring-aqua md:hidden" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+      <span class="grid gap-1.5" aria-hidden="true">
+        <span class="block h-0.5 w-5 rounded-full bg-white"></span>
+        <span class="block h-0.5 w-5 rounded-full bg-white"></span>
+        <span class="block h-0.5 w-5 rounded-full bg-white"></span>
+      </span>
+    </button>
 
     <a href="#apps" class="hidden rounded-full bg-white px-5 py-2.5 text-sm font-bold text-night transition hover:bg-volt md:inline-flex">
       Explore Systems
     </a>
   </div>
+
+  <nav id="mobile-menu" hidden aria-label="Mobile navigation" class="mobile-menu border-t border-white/10 px-5 py-4 md:hidden">
+    <div class="mx-auto grid max-w-7xl gap-2 text-sm font-bold text-white/78">
+      <a href="#apps" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Systems</a>
+      <a href="#use-cases" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Use Cases</a>
+      <a href="#owambepal" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">OwambePal</a>
+      <a href="#coming-soon" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Coming Soon</a>
+      <a href="#company" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Company</a>
+      <a href="#contact" class="rounded-xl bg-volt px-3 py-3 text-night transition hover:bg-aqua">Contact</a>
+    </div>
+  </nav>
 </header>
 
 <main id="main-content">
@@ -272,6 +292,86 @@ body {
     </div>
   </section>
 
+  <section id="use-cases" class="border-y border-line bg-white px-5 py-20 md:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.22em] text-cobalt">Use Cases</p>
+          <h2 class="mt-4 font-display text-4xl font-bold tracking-tight text-night md:text-5xl">Clear builds for the workflows that usually leak time.</h2>
+        </div>
+        <p class="max-w-2xl leading-8 text-gray-600 lg:justify-self-end">
+          Start with one operational pain point, then turn it into a clean customer journey, internal tool, or automation layer that can grow into a product.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <article class="rounded-2xl border border-line bg-cloud p-6">
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-cobalt">Booking Intake</p>
+          <h3 class="mt-4 font-display text-2xl font-bold text-night">Enquiry to confirmed slot</h3>
+          <p class="mt-3 leading-7 text-gray-600">Capture details, route requests, send follow-ups, and keep bookings from getting buried in chats.</p>
+        </article>
+        <article class="rounded-2xl border border-line bg-cloud p-6">
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-cobalt">Payment Flow</p>
+          <h3 class="mt-4 font-display text-2xl font-bold text-night">Quotes, deposits, reminders</h3>
+          <p class="mt-3 leading-7 text-gray-600">Connect simple payment steps with customer updates so teams know what is paid and what needs action.</p>
+        </article>
+        <article class="rounded-2xl border border-line bg-cloud p-6">
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-cobalt">Customer Desk</p>
+          <h3 class="mt-4 font-display text-2xl font-bold text-night">Records and next steps</h3>
+          <p class="mt-3 leading-7 text-gray-600">Build lightweight dashboards for customer context, tasks, ownership, status, and repeatable service steps.</p>
+        </article>
+        <article class="rounded-2xl border border-line bg-cloud p-6">
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-cobalt">AI Assistant</p>
+          <h3 class="mt-4 font-display text-2xl font-bold text-night">Support without the noise</h3>
+          <p class="mt-3 leading-7 text-gray-600">Use AI to summarise requests, prepare replies, triage leads, and reduce repeated admin work.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="owambepal" class="px-5 py-20 md:px-8">
+    <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
+      <div>
+        <p class="text-xs font-black uppercase tracking-[0.22em] text-cobalt">Live Product Proof</p>
+        <h2 class="mt-4 font-display text-4xl font-bold tracking-tight text-night md:text-5xl">OwambePal shows the product direction in public.</h2>
+        <p class="mt-6 text-lg leading-8 text-gray-600">
+          Zequence Digital is building from real workflows: event hosts need one link for guests, giving, RSVP, outfits, vendors, and updates. OwambePal turns that messy journey into a product experience.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://www.owambepal.com" target="_blank" rel="noopener noreferrer" class="rounded-full bg-night px-6 py-3 font-bold text-white transition hover:bg-cobalt">Open OwambePal</a>
+          <a href="#contact" class="rounded-full border border-line px-6 py-3 font-bold text-night transition hover:border-cobalt hover:text-cobalt">Build Similar System</a>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-line bg-white p-6 shadow-panel">
+        <div class="grid gap-4">
+          <div class="rounded-2xl bg-night p-5 text-white">
+            <p class="text-xs font-black uppercase tracking-[0.2em] text-volt">Event link</p>
+            <p class="mt-3 font-display text-3xl font-bold">Guest journey in one place</p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl bg-cloud p-5">
+              <p class="font-display text-xl font-bold text-night">RSVP</p>
+              <p class="mt-2 leading-7 text-gray-600">Collect guest intent and keep hosts organised.</p>
+            </div>
+            <div class="rounded-2xl bg-cloud p-5">
+              <p class="font-display text-xl font-bold text-night">Digital Spray</p>
+              <p class="mt-2 leading-7 text-gray-600">Make giving moments easier to share and track.</p>
+            </div>
+            <div class="rounded-2xl bg-cloud p-5">
+              <p class="font-display text-xl font-bold text-night">Aso-ebi</p>
+              <p class="mt-2 leading-7 text-gray-600">Support outfit orders and guest coordination.</p>
+            </div>
+            <div class="rounded-2xl bg-cloud p-5">
+              <p class="font-display text-xl font-bold text-night">Updates</p>
+              <p class="mt-2 leading-7 text-gray-600">Keep guests moving through the next step.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="coming-soon" class="bg-night px-5 py-20 text-white md:px-8">
     <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr]">
       <div>
@@ -377,8 +477,42 @@ body {
         <label for="email" class="mt-5 block text-sm font-bold text-night">Your Email</label>
         <input id="email" type="email" name="email" autocomplete="email" required class="mt-2 w-full rounded-2xl border border-line bg-white px-4 py-3 outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10" />
 
+        <div class="mt-5 grid gap-5 md:grid-cols-2">
+          <div>
+            <label for="project-type" class="block text-sm font-bold text-night">Project Type</label>
+            <select id="project-type" name="project_type" required class="mt-2 w-full rounded-2xl border border-line bg-white px-4 py-3 outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10">
+              <option value="">Select one</option>
+              <option>AI operations system</option>
+              <option>Customer or booking workflow</option>
+              <option>Payment or quote flow</option>
+              <option>OwambePal enquiry</option>
+              <option>Partnership</option>
+            </select>
+          </div>
+          <div>
+            <label for="timeline" class="block text-sm font-bold text-night">Timeline</label>
+            <select id="timeline" name="timeline" required class="mt-2 w-full rounded-2xl border border-line bg-white px-4 py-3 outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10">
+              <option value="">Select one</option>
+              <option>As soon as possible</option>
+              <option>Within 1 month</option>
+              <option>1-3 months</option>
+              <option>Still exploring</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="budget" class="mt-5 block text-sm font-bold text-night">Budget Range</label>
+        <select id="budget" name="budget_range" class="mt-2 w-full rounded-2xl border border-line bg-white px-4 py-3 outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10">
+          <option value="">Select one if known</option>
+          <option>Under GBP 1,000</option>
+          <option>GBP 1,000-GBP 3,000</option>
+          <option>GBP 3,000-GBP 7,500</option>
+          <option>GBP 7,500+</option>
+          <option>Not sure yet</option>
+        </select>
+
         <label for="message" class="mt-5 block text-sm font-bold text-night">Message</label>
-        <textarea id="message" name="message" rows="5" required class="mt-2 w-full rounded-2xl border border-line bg-white px-4 py-3 outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10"></textarea>
+        <textarea id="message" name="message" rows="5" required placeholder="Tell us what happens today, what slows things down, and what outcome you want." class="mt-2 w-full rounded-2xl border border-line bg-white px-4 py-3 outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10"></textarea>
 
         <button type="submit" class="mt-6 w-full rounded-full bg-night px-6 py-4 font-bold text-white transition hover:bg-cobalt focus:outline-none focus:ring-2 focus:ring-cobalt focus:ring-offset-2">
           Send Message
@@ -433,6 +567,14 @@ var assistantForm = document.getElementById('assistant-form');
 var assistantInput = document.getElementById('assistant-input');
 var assistantMessages = document.getElementById('assistant-messages');
 var assistantLastRequest = '';
+var mobileMenu = document.getElementById('mobile-menu');
+var mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+
+function setMobileMenuOpen(isOpen) {
+  mobileMenu.hidden = !isOpen;
+  mobileMenuToggle.setAttribute('aria-expanded', String(isOpen));
+  mobileMenuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+}
 
 function setAssistantOpen(isOpen) {
   assistantPanel.hidden = !isOpen;
@@ -526,13 +668,25 @@ document.querySelectorAll('.assistant-chip').forEach(function (chip) {
     handleAssistantRequest(chip.getAttribute('data-prompt'));
   });
 });
+
+mobileMenuToggle.addEventListener('click', function () {
+  setMobileMenuOpen(mobileMenu.hidden);
+});
+
+document.querySelectorAll('#mobile-menu a').forEach(function (link) {
+  link.addEventListener('click', function () {
+    setMobileMenuOpen(false);
+  });
+});
 </script>
 
 <footer class="border-t border-line bg-white px-5 py-10 text-sm text-gray-500 md:px-8">
   <div class="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
     <p>© 2026 Zequence Digital UK Limited. Apps and software for modern operators.</p>
-    <div class="flex gap-5">
+    <div class="flex flex-wrap gap-5">
       <a href="#apps" class="transition hover:text-night">Systems</a>
+      <a href="#use-cases" class="transition hover:text-night">Use Cases</a>
+      <a href="#owambepal" class="transition hover:text-night">OwambePal</a>
       <a href="#coming-soon" class="transition hover:text-night">Coming Soon</a>
       <a href="#contact" class="transition hover:text-night">Contact</a>
       <a href="privacy.html" class="transition hover:text-night">Privacy</a>
