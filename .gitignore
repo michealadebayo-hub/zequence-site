@@ -1,3 +1,7 @@
 .codex
-ssh-keygen -t ed25519 -C "Michael.adebayo@zequencedigital.co.uk"
-ssh-keygen -t ed25519 -C "Michael.adebayo@zequencedigital.co.uk".pub
+
+# Accidental ssh-keygen command-as-filename artifacts and any key material
+ssh-keygen *
+*.pub
+id_ed25519*
+id_rsa*
