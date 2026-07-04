@@ -79,6 +79,7 @@ body { background: #f6f7f4; color: #17201d; }
     <nav class="hidden items-center gap-5 text-sm font-semibold text-white/72 md:flex" aria-label="Primary navigation">
       <a href="finance-modeler.html" class="transition hover:text-white">Finance Tool</a>
       <a href="finance-modeler.html#paid-offers" class="transition hover:text-white">Offers</a>
+      <a href="treasury-cash-flow-pack.html" class="transition hover:text-white">Treasury Pack</a>
       <a href="finance-modeler.html#custom-pack" class="transition hover:text-white">Custom Pack</a>
       <a href="/" class="transition hover:text-white">Zequence</a>
     </nav>
@@ -90,6 +91,7 @@ body { background: #f6f7f4; color: #17201d; }
     <div class="mx-auto grid max-w-7xl gap-2 text-sm font-bold text-white/78">
       <a href="finance-modeler.html" class="rounded-lg px-3 py-3 hover:bg-white/8">Finance Tool</a>
       <a href="finance-modeler.html#paid-offers" class="rounded-lg px-3 py-3 hover:bg-white/8">Offers</a>
+      <a href="treasury-cash-flow-pack.html" class="rounded-lg px-3 py-3 hover:bg-white/8">Treasury Pack</a>
       <a href="finance-modeler.html#custom-pack" class="rounded-lg px-3 py-3 hover:bg-white/8">Custom Pack</a>
       <a href="/" class="rounded-lg px-3 py-3 hover:bg-white/8">Zequence</a>
     </div>
@@ -133,7 +135,8 @@ body { background: #f6f7f4; color: #17201d; }
           <button type="button" class="checkout-card rounded-lg border border-line bg-white p-5 text-left shadow-panel" data-pack="treasury-cashflow">
             <span class="text-xs font-black uppercase tracking-[0.14em] text-teal">Treasury Cash Flow Pack</span>
             <span class="mt-3 block font-display text-3xl font-bold">From £199</span>
-            <span class="mt-3 block text-sm leading-6 text-gray-600">13-week rolling cash flow, covenant dashboard, liquidity headroom, and funding action templates.</span>
+            <span class="mt-3 block text-sm leading-6 text-gray-600">13-week rolling cash flow, receipts and payments forecast, covenant dashboard, liquidity headroom, funding actions, and cash runway.</span>
+            <span class="mt-4 inline-flex rounded-lg bg-mint/40 px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-pine">Flagship cash pack</span>
           </button>
           <button type="button" class="checkout-card rounded-lg border border-line bg-white p-5 text-left shadow-panel" data-pack="expert-review">
             <span class="text-xs font-black uppercase tracking-[0.14em] text-teal">Expert Review</span>
@@ -173,6 +176,7 @@ body { background: #f6f7f4; color: #17201d; }
         <h2 id="selectedPackName" class="mt-2 font-display text-3xl font-bold">Industry Pack</h2>
         <p id="selectedPackPrice" class="mt-2 text-2xl font-black text-pine">£149-£299</p>
         <p id="selectedPackDescription" class="mt-3 text-sm leading-6 text-gray-600">Template bundle for one industry with dashboard and reporting guidance.</p>
+        <a id="selectedPackDetailLink" href="finance-modeler.html#paid-offers" class="mt-4 inline-flex rounded-lg border border-line px-4 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal">View Pack Detail</a>
 
         <form id="checkout-form" action="https://formsubmit.co/hello@zequencedigital.co.uk" method="POST" class="mt-6">
           <input type="hidden" name="_subject" value="Finance pack checkout request">
@@ -330,6 +334,9 @@ function setPack(key) {
   document.getElementById('selectedPackDescription').textContent = pack.description;
   document.getElementById('selectedPackField').value = pack.name;
   document.getElementById('selectedPriceField').value = pack.price;
+  var detailLink = document.getElementById('selectedPackDetailLink');
+  detailLink.href = key === 'treasury-cashflow' ? 'treasury-cash-flow-pack.html' : 'finance-modeler.html#paid-offers';
+  detailLink.textContent = key === 'treasury-cashflow' ? 'View Treasury Pack Detail' : 'View Pack Detail';
   var text = encodeURIComponent('Hi Zequence Digital, I want to buy the ' + pack.name + ' (' + pack.price + ').');
   document.getElementById('whatsappCheckout').href = 'https://wa.me/447588951595?text=' + text;
   document.getElementById('emailCheckout').href = 'mailto:hello@zequencedigital.co.uk?subject=' + encodeURIComponent('Finance Pack Checkout: ' + pack.name) + '&body=' + encodeURIComponent('Hi Zequence Digital,\n\nI want to buy the ' + pack.name + ' (' + pack.price + ').\n\nIndustry / use case:\nTimeline:\n');
