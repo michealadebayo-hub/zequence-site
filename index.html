@@ -33,34 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        night: "#09111F",
-        ink: "#111827",
-        cloud: "#F7F8FB",
-        line: "#DDE3EE",
-        volt: "#9DFF57",
-        aqua: "#51E6D8",
-        cobalt: "#315CFF",
-        violet: "#7C4DFF",
-        coral: "#FF6B57"
-      },
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        display: ["Space Grotesk", "sans-serif"]
-      },
-      boxShadow: {
-        glow: "0 24px 90px rgba(49, 92, 255, 0.22)",
-        panel: "0 20px 70px rgba(9, 17, 31, 0.12)"
-      }
-    }
-  }
-}
-</script>
+<link rel="stylesheet" href="assets/css/site.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -130,6 +103,8 @@ body {
       <a href="#apps" class="transition hover:text-white">Systems</a>
       <a href="#use-cases" class="transition hover:text-white">Use Cases</a>
       <a href="#owambepal" class="transition hover:text-white">OwambePal</a>
+      <a href="finance-modeler.html" class="transition hover:text-white">Finance Modeler</a>
+      <a href="finance-checkout.html?pack=industry" class="transition hover:text-white">Finance Packs</a>
       <a href="closepilot.html" class="transition hover:text-white">ClosePilot</a>
       <a href="honorhub.html" class="transition hover:text-white">HonorHub</a>
       <a href="#coming-soon" class="transition hover:text-white">Coming Soon</a>
@@ -155,6 +130,8 @@ body {
       <a href="#apps" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Systems</a>
       <a href="#use-cases" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Use Cases</a>
       <a href="#owambepal" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">OwambePal</a>
+      <a href="finance-modeler.html" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Finance Modeler</a>
+      <a href="finance-checkout.html?pack=industry" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Finance Packs</a>
       <a href="closepilot.html" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">ClosePilot</a>
       <a href="honorhub.html" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">HonorHub</a>
       <a href="#coming-soon" class="rounded-xl px-3 py-3 transition hover:bg-white/8 hover:text-white">Coming Soon</a>
@@ -285,12 +262,16 @@ body {
 
         <article class="group rounded-2xl border border-line bg-white p-6 shadow-panel transition hover:-translate-y-1">
           <div class="flex items-center justify-between">
-            <span class="rounded-full bg-aqua/20 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-night">Workflow</span>
+            <span class="rounded-full bg-volt/20 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-night">Tool</span>
             <span class="grid h-11 w-11 place-items-center rounded-2xl bg-night font-display font-bold text-white">03</span>
           </div>
-          <h3 class="mt-8 font-display text-3xl font-bold text-night">AI Operations Systems</h3>
-          <p class="mt-4 leading-7 text-gray-600">Custom tools for bookings, customer records, internal tasks, simple dashboards, automated follow-up, and repeatable business workflows.</p>
-          <a href="#contact" class="mt-7 inline-flex rounded-full bg-night px-5 py-3 text-sm font-bold text-white transition group-hover:bg-cobalt">Discuss System</a>
+          <h3 class="mt-8 font-display text-3xl font-bold text-night">Finance Modeler</h3>
+          <p class="mt-4 leading-7 text-gray-600">A finance manager workspace for driver-based forecasts, variance analysis, scenario review, downloadable Excel workbooks, and paid finance model packs.</p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="finance-modeler.html" class="inline-flex rounded-full bg-night px-5 py-3 text-sm font-bold text-white transition group-hover:bg-cobalt">Open Tool</a>
+            <a href="finance-checkout.html?pack=industry" class="inline-flex rounded-full border border-line px-5 py-3 text-sm font-bold text-night transition hover:border-cobalt hover:text-cobalt">Buy Pack</a>
+            <a href="finance-terms.html" class="inline-flex rounded-full border border-line px-5 py-3 text-sm font-bold text-night transition hover:border-cobalt hover:text-cobalt">Terms</a>
+          </div>
         </article>
 
         <article class="group rounded-2xl border border-line bg-night p-6 text-white shadow-glow transition hover:-translate-y-1">
@@ -701,10 +682,13 @@ document.querySelectorAll('#mobile-menu a').forEach(function (link) {
       <a href="#apps" class="transition hover:text-night">Systems</a>
       <a href="#use-cases" class="transition hover:text-night">Use Cases</a>
       <a href="#owambepal" class="transition hover:text-night">OwambePal</a>
+      <a href="finance-modeler.html" class="transition hover:text-night">Finance Modeler</a>
+      <a href="finance-checkout.html?pack=industry" class="transition hover:text-night">Finance Packs</a>
       <a href="closepilot.html" class="transition hover:text-night">ClosePilot</a>
       <a href="honorhub.html" class="transition hover:text-night">HonorHub</a>
       <a href="#coming-soon" class="transition hover:text-night">Coming Soon</a>
       <a href="#contact" class="transition hover:text-night">Contact</a>
+      <a href="finance-terms.html" class="transition hover:text-night">Finance Terms</a>
       <a href="privacy.html" class="transition hover:text-night">Privacy</a>
     </div>
   </div>

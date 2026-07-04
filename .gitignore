@@ -1,4 +1,5 @@
 .codex
+node_modules/
 
 # Accidental ssh-keygen command-as-filename artifacts and any key material
 ssh-keygen *

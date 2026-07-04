@@ -1,0 +1,2838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Finance Modeler | Forecasting and Variance Analysis</title>
+<meta name="description" content="A browser-based finance modelling and variance analysis workspace for finance managers, with import, working capital, board pack export, and Excel formula options.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#10231E">
+<link rel="canonical" href="https://zequencedigital.co.uk/finance-modeler.html">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="apple-touch-icon" href="logo.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Finance Modeler | Forecasting and Variance Analysis">
+<meta property="og:description" content="Build driver-based forecasts, import actuals, review departments, compare scenarios, and download an Excel model with formula options.">
+<meta property="og:url" content="https://zequencedigital.co.uk/finance-modeler.html">
+<meta property="og:site_name" content="Zequence Digital UK Limited">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Finance Modeler",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "url": "https://zequencedigital.co.uk/finance-modeler.html",
+      "description": "Browser-based finance modelling and variance analysis workspace with interactive templates, Excel formula exports, scenario analysis, and board pack outputs.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Zequence Digital UK Limited",
+        "url": "https://zequencedigital.co.uk/"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "GBP",
+        "lowPrice": "29",
+        "highPrice": "5000",
+        "offerCount": "7",
+        "url": "https://zequencedigital.co.uk/finance-checkout.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is my uploaded finance data stored?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The finance tool works in the browser and uses session storage only for the active session. Clear All removes demo, imported, and session data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I export Excel formulas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The workbook export includes a formula mode so finance managers can keep using and adapting the model in Excel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Zequence customise a finance model for my business?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Zequence offers expert review, done-with-you setup, custom finance packs, and monthly CFO pack support."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<style>
+html { scroll-behavior: smooth; }
+body { background: #f6f7f4; color: #17201d; }
+input[type="number"] { appearance: textfield; }
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.mobile-menu[hidden] { display: none; }
+.metric-grid { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
+.sheet-grid { grid-template-columns: minmax(11rem, 1.2fr) repeat(4, minmax(8.5rem, 1fr)); }
+.department-grid { grid-template-columns: minmax(10rem, 1.15fr) repeat(5, minmax(7.5rem, 1fr)); }
+.comparison-grid { grid-template-columns: minmax(9rem, 1fr) repeat(3, minmax(8.5rem, 1fr)); }
+.offer-card {
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.offer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 60px rgba(16,35,30,0.18);
+}
+@media (max-width: 900px) {
+  .sheet-grid { grid-template-columns: minmax(10rem, 1fr) repeat(4, minmax(8rem, 1fr)); }
+  .department-grid { grid-template-columns: minmax(10rem, 1fr) repeat(5, minmax(7rem, 1fr)); }
+  .comparison-grid { grid-template-columns: minmax(9rem, 1fr) repeat(3, minmax(8rem, 1fr)); }
+}
+@media print {
+  header, footer, #export, #import, button, input, select, textarea { display: none !important; }
+  body { background: white; }
+  section { break-inside: avoid; }
+}
+</style>
+</head>
+<body class="font-sans antialiased">
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-pine">Skip to content</a>
+
+<header class="sticky top-0 z-40 border-b border-white/10 bg-pine text-white shadow-[0_14px_40px_rgba(16,35,30,0.24)]">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-4 md:px-8">
+    <a href="/" class="flex items-center gap-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-pine">
+      <span class="grid h-11 w-11 place-items-center rounded-lg bg-mint font-black text-pine">FM</span>
+      <span>
+        <span class="block text-lg font-black tracking-tight">Finance Modeler</span>
+        <span class="block text-xs font-bold uppercase tracking-[0.18em] text-white/62">by Zequence Digital</span>
+      </span>
+    </a>
+    <nav class="hidden items-center gap-5 text-sm font-semibold text-white/72 xl:flex" aria-label="Primary navigation">
+      <a href="#model" class="transition hover:text-white">Model</a>
+      <a href="#import" class="transition hover:text-white">Import</a>
+      <a href="#model-library" class="transition hover:text-white">Library</a>
+      <a href="#paid-offers" class="transition hover:text-white">Offers</a>
+      <a href="#variance" class="transition hover:text-white">Variance</a>
+      <a href="#departments" class="transition hover:text-white">Departments</a>
+      <a href="#working-capital" class="transition hover:text-white">Cash</a>
+      <a href="#scenarios" class="transition hover:text-white">Scenarios</a>
+      <a href="#board" class="transition hover:text-white">Board Pack</a>
+      <a href="#custom-pack" class="transition hover:text-white">Custom Pack</a>
+      <a href="#export" class="transition hover:text-white">Export</a>
+    </nav>
+    <button type="button" id="mobile-menu-toggle" class="grid h-11 w-11 place-items-center rounded-lg border border-white/14 bg-white/8 xl:hidden" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+      <span class="grid gap-1.5" aria-hidden="true"><span class="h-0.5 w-5 bg-white"></span><span class="h-0.5 w-5 bg-white"></span><span class="h-0.5 w-5 bg-white"></span></span>
+    </button>
+    <button type="button" id="exportTop" class="hidden rounded-lg bg-mint px-5 py-2.5 text-sm font-black text-pine transition hover:bg-gold md:inline-flex">Download Excel</button>
+  </div>
+  <nav id="mobile-menu" hidden class="mobile-menu border-t border-white/10 px-5 py-4 xl:hidden" aria-label="Mobile navigation">
+    <div class="mx-auto grid max-w-7xl gap-2 text-sm font-bold text-white/78 sm:grid-cols-2">
+      <a href="#model" class="rounded-lg px-3 py-3 hover:bg-white/8">Model</a>
+      <a href="#import" class="rounded-lg px-3 py-3 hover:bg-white/8">Import</a>
+      <a href="#model-library" class="rounded-lg px-3 py-3 hover:bg-white/8">Library</a>
+      <a href="#paid-offers" class="rounded-lg px-3 py-3 hover:bg-white/8">Offers</a>
+      <a href="#variance" class="rounded-lg px-3 py-3 hover:bg-white/8">Variance</a>
+      <a href="#departments" class="rounded-lg px-3 py-3 hover:bg-white/8">Departments</a>
+      <a href="#working-capital" class="rounded-lg px-3 py-3 hover:bg-white/8">Cash</a>
+      <a href="#scenarios" class="rounded-lg px-3 py-3 hover:bg-white/8">Scenarios</a>
+      <a href="#board" class="rounded-lg px-3 py-3 hover:bg-white/8">Board Pack</a>
+      <a href="#custom-pack" class="rounded-lg px-3 py-3 hover:bg-white/8">Custom Pack</a>
+      <a href="/" class="rounded-lg px-3 py-3 hover:bg-white/8">Zequence</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section class="bg-pine text-white">
+    <div class="mx-auto grid min-h-[calc(100vh-76px)] max-w-7xl gap-10 px-5 py-10 md:px-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+      <div>
+        <p class="inline-flex rounded-lg border border-white/14 bg-white/8 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-mint">Finance manager workspace</p>
+        <h1 class="mt-6 max-w-3xl font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl">Model the plan. Explain the variance. Export the workbook.</h1>
+        <p class="mt-6 max-w-xl text-lg leading-8 text-white/70">A practical finance tool for driver-based forecasting, imported actuals, departmental review, working capital planning, scenario stress testing, and board-ready commentary. Data is kept for the current browser session only.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#model" class="rounded-lg bg-mint px-6 py-4 font-black text-pine transition hover:bg-gold">Start Modelling</a>
+          <a href="#import" class="rounded-lg border border-white/16 bg-white/8 px-6 py-4 font-black text-white transition hover:bg-white/14">Import Data</a>
+          <a href="#model-library" class="rounded-lg border border-white/16 bg-white/8 px-6 py-4 font-black text-white transition hover:bg-white/14">Model Library</a>
+          <a href="finance-checkout.html?pack=industry" class="rounded-lg border border-white/16 bg-white/8 px-6 py-4 font-black text-white transition hover:bg-white/14">Buy Pack</a>
+          <a href="#paid-offers" class="rounded-lg border border-white/16 bg-white/8 px-6 py-4 font-black text-white transition hover:bg-white/14">See Packs</a>
+          <a href="#custom-pack" class="rounded-lg border border-white/16 bg-white/8 px-6 py-4 font-black text-white transition hover:bg-white/14">Request Custom Pack</a>
+          <button type="button" id="loadDemoTop" class="rounded-lg border border-white/16 bg-white/8 px-6 py-4 font-black text-white transition hover:bg-white/14">Load Demo</button>
+          <button type="button" id="clearAllTop" class="rounded-lg border border-white/16 bg-white/8 px-6 py-4 font-black text-white transition hover:bg-white/14">Clear All</button>
+        </div>
+      </div>
+
+      <section class="rounded-lg border border-white/10 bg-white/8 p-4 shadow-panel">
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <label class="block rounded-lg bg-white p-4 text-ink">
+            <span class="text-xs font-black uppercase tracking-[0.16em] text-teal">Company</span>
+            <input id="companyName" type="text" value="Finance Manager Co" class="mt-3 w-full rounded-lg border border-line px-3 py-2 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+          </label>
+          <label class="block rounded-lg bg-white p-4 text-ink">
+            <span class="text-xs font-black uppercase tracking-[0.16em] text-teal">Currency</span>
+            <select id="currency" class="mt-3 w-full rounded-lg border border-line px-3 py-2 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+              <option value="GBP">GBP</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="NGN">NGN</option>
+            </select>
+          </label>
+          <label class="block rounded-lg bg-white p-4 text-ink">
+            <span class="text-xs font-black uppercase tracking-[0.16em] text-teal">Start Month</span>
+            <input id="startMonth" type="month" value="2026-01" class="mt-3 w-full rounded-lg border border-line px-3 py-2 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+          </label>
+          <label class="block rounded-lg bg-white p-4 text-ink">
+            <span class="text-xs font-black uppercase tracking-[0.16em] text-teal">Periods</span>
+            <select id="periodCount" class="mt-3 w-full rounded-lg border border-line px-3 py-2 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+              <option value="6">6 months</option>
+              <option value="12" selected>12 months</option>
+              <option value="18">18 months</option>
+              <option value="24">24 months</option>
+            </select>
+          </label>
+        </div>
+        <div class="mt-4 grid metric-grid gap-3" id="metricCards"></div>
+      </section>
+    </div>
+  </section>
+
+  <section id="model" class="scroll-mt-24 px-5 py-10 md:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Driver Model</p>
+          <h2 class="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">Inputs that finance teams can defend.</h2>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" data-scenario="base" class="scenario-tab rounded-lg bg-pine px-4 py-2 text-sm font-black text-white">Base</button>
+          <button type="button" data-scenario="upside" class="scenario-tab rounded-lg border border-line bg-white px-4 py-2 text-sm font-black text-ink">Upside</button>
+          <button type="button" data-scenario="downside" class="scenario-tab rounded-lg border border-line bg-white px-4 py-2 text-sm font-black text-ink">Downside</button>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-[0.45fr_0.55fr]">
+        <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display text-2xl font-bold">Assumptions</h3>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" id="loadDemo" class="rounded-lg border border-line px-3 py-2 text-sm font-black text-ink transition hover:border-teal hover:text-teal">Load Demo</button>
+              <button type="button" id="clearAll" class="rounded-lg border border-line px-3 py-2 text-sm font-black text-ink transition hover:border-clay hover:text-clay">Clear All</button>
+            </div>
+          </div>
+          <div id="assumptionInputs" class="mt-5 grid gap-4 sm:grid-cols-2"></div>
+        </section>
+
+        <section class="overflow-hidden rounded-lg border border-line bg-white shadow-panel">
+          <div class="flex flex-col gap-3 border-b border-line p-5 md:flex-row md:items-center md:justify-between">
+            <h3 class="font-display text-2xl font-bold">Forecast P&amp;L and Cash</h3>
+            <p class="text-sm font-semibold text-gray-500">Revenue to cash, including working capital and scenario sensitivity.</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-paper text-left text-xs uppercase tracking-[0.14em] text-gray-500" id="modelHead"></thead>
+              <tbody id="modelBody" class="divide-y divide-line"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section id="import" class="scroll-mt-24 border-y border-line bg-white px-5 py-10 md:px-8">
+    <div class="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.45fr_0.55fr]">
+      <section class="rounded-lg border border-line bg-paper p-5">
+        <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Data Import</p>
+        <h2 class="mt-3 font-display text-4xl font-bold tracking-tight">Bring in actuals, budgets, and department plans.</h2>
+        <p class="mt-4 leading-7 text-gray-600">Upload CSV or Excel, or paste rows from a spreadsheet. Data is mapped in this browser session only; it is not saved permanently.</p>
+        <div class="mt-5 grid gap-3 rounded-lg border border-line bg-white p-4 text-sm leading-6 text-gray-600">
+          <p class="font-black text-ink">Required data for useful results</p>
+          <p><strong>Variance actuals:</strong> Line item, Budget, Actual, Forecast. Optional: Department or Owner, Type. Use Type as <code>good</code> for revenue/income lines and <code>bad</code> for cost lines.</p>
+          <p><strong>Department plan:</strong> Department, Revenue %, Payroll, Marketing, Software, Other. Revenue % should total close to 100%.</p>
+          <p><strong>Model assumptions:</strong> Starting revenue, growth, gross margin, payroll, marketing, software, rent, other opex, capex, tax, opening cash, and working capital days.</p>
+        </div>
+        <div class="mt-5 grid gap-4 sm:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-black">Import target</span>
+            <select id="importTarget" class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+              <option value="variance">Variance actuals</option>
+              <option value="departments">Department plan</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="text-sm font-black">CSV or Excel file</span>
+            <input id="importFile" type="file" accept=".csv,.xlsx,.xls" class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm font-bold">
+          </label>
+        </div>
+        <label class="mt-4 block">
+          <span class="text-sm font-black">Paste data</span>
+          <textarea id="pasteData" rows="7" class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 font-mono text-sm outline-none focus:border-teal focus:ring-4 focus:ring-teal/10" placeholder="Line item,Budget,Actual,Forecast,Department,Type&#10;Revenue,185000,192500,205000,Sales,good"></textarea>
+        </label>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <button type="button" id="applyPaste" class="rounded-lg bg-pine px-5 py-3 text-sm font-black text-white transition hover:bg-teal">Apply Pasted Data</button>
+          <button type="button" id="downloadTemplate" class="rounded-lg border border-line bg-white px-5 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal">Download Selected Template</button>
+          <button type="button" id="downloadChecklist" class="rounded-lg border border-line bg-white px-5 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal">Download Input Checklist</button>
+          <button type="button" id="clearImport" class="rounded-lg border border-line bg-white px-5 py-3 text-sm font-black text-ink transition hover:border-clay hover:text-clay">Clear Imported Data</button>
+        </div>
+      </section>
+      <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+        <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Import Log</p>
+            <h3 class="mt-2 font-display text-3xl font-bold">Mapping status</h3>
+          </div>
+          <span id="importCount" class="rounded-lg bg-paper px-3 py-2 text-sm font-black text-ink">No import yet</span>
+        </div>
+        <div id="importPreview" class="mt-5 min-h-64 rounded-lg border border-line bg-paper p-4 text-sm leading-6 text-gray-600">Import data to preview mapped rows and any skipped records.</div>
+      </section>
+    </div>
+  </section>
+
+  <section id="model-library" class="scroll-mt-24 px-5 py-10 md:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-5 lg:grid-cols-[0.65fr_0.35fr] lg:items-end">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Model Template Library</p>
+          <h2 class="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">Formula templates for finance teams across industries.</h2>
+          <p class="mt-4 max-w-3xl leading-7 text-gray-600">Choose a model, download a ready-to-use Excel template with input guidance and formulas, or download the full library workbook. Templates are generated locally in the browser.</p>
+        </div>
+        <div class="rounded-lg border border-line bg-white p-4 shadow-panel">
+          <label class="block">
+            <span class="text-sm font-black text-ink">Industry filter</span>
+            <select id="modelIndustryFilter" class="mt-2 w-full rounded-lg border border-line bg-paper px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10"></select>
+          </label>
+          <label class="mt-4 block">
+            <span class="text-sm font-black text-ink">Search models</span>
+            <input id="modelSearch" type="search" placeholder="Search variance, pricing, SaaS, inventory..." class="mt-2 w-full rounded-lg border border-line bg-paper px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+          </label>
+          <div class="mt-4 grid gap-2">
+            <button type="button" id="downloadAllModelTemplates" class="rounded-lg bg-pine px-5 py-3 text-sm font-black text-white transition hover:bg-teal">Download All Templates</button>
+            <button type="button" id="downloadModelCatalogue" class="rounded-lg border border-line bg-white px-5 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal">Download Catalogue CSV</button>
+          </div>
+        </div>
+      </div>
+      <div id="modelLibrarySummary" class="mt-8 grid metric-grid gap-3"></div>
+      <div id="modelLibraryGrid" class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+      <section id="interactiveModelWorkspace" class="mt-8 rounded-lg border border-line bg-white p-5 shadow-panel">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Interactive Model Workspace</p>
+            <h3 id="interactiveModelTitle" class="mt-2 font-display text-3xl font-bold">Select a template to analyse your data.</h3>
+            <p id="interactiveModelDescription" class="mt-3 max-w-3xl leading-7 text-gray-600">Use any model card above, upload or paste your input values, then review calculated outputs and interpretation. Data remains session-only.</p>
+          </div>
+          <div class="grid gap-2 sm:grid-cols-2 lg:min-w-80">
+            <button type="button" id="downloadInteractiveTemplate" class="rounded-lg border border-line bg-white px-5 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal">Download Input Template</button>
+            <button type="button" id="downloadInteractiveResult" class="rounded-lg bg-pine px-5 py-3 text-sm font-black text-white transition hover:bg-teal">Download Result Workbook</button>
+          </div>
+        </div>
+        <div class="mt-6 grid gap-6 lg:grid-cols-[0.42fr_0.58fr]">
+          <section class="rounded-lg border border-line bg-paper p-4">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="block">
+                <span class="text-sm font-black text-ink">Upload model data</span>
+                <input id="interactiveModelFile" type="file" accept=".csv,.xlsx,.xls" class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm font-bold">
+              </label>
+              <label class="block">
+                <span class="text-sm font-black text-ink">Paste model data</span>
+                <textarea id="interactiveModelPaste" rows="3" class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-2 font-mono text-sm outline-none focus:border-teal focus:ring-4 focus:ring-teal/10" placeholder="Input,Value&#10;Revenue,250000"></textarea>
+              </label>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <button type="button" id="applyInteractivePaste" class="rounded-lg bg-pine px-4 py-3 text-sm font-black text-white transition hover:bg-teal">Apply Pasted Values</button>
+              <button type="button" id="clearInteractiveModel" class="rounded-lg border border-line bg-white px-4 py-3 text-sm font-black text-ink transition hover:border-clay hover:text-clay">Clear Model Values</button>
+            </div>
+            <div id="interactiveInputFields" class="mt-5 grid gap-3"></div>
+          </section>
+          <section class="rounded-lg border border-line bg-white p-4">
+            <div id="interactiveResultSummary" class="grid gap-3 sm:grid-cols-2"></div>
+            <div id="interactiveInterpretation" class="mt-5 rounded-lg border border-line bg-paper p-4 text-sm leading-6 text-gray-700"></div>
+            <div id="interactiveFormulaPreview" class="mt-5 rounded-lg border border-line bg-paper p-4 text-sm leading-6 text-gray-700"></div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section id="variance" class="scroll-mt-24 px-5 py-10 md:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-5 lg:grid-cols-[0.7fr_0.3fr] lg:items-end">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Variance Analysis</p>
+          <h2 class="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">Actuals, budget, forecast, owner, and commentary.</h2>
+        </div>
+        <label class="block">
+          <span class="text-sm font-black text-ink">Variance threshold</span>
+          <div class="mt-2 flex items-center gap-3 rounded-lg border border-line bg-paper px-3 py-2">
+            <input id="threshold" type="range" min="2" max="30" value="8" class="w-full">
+            <output id="thresholdOut" class="w-12 text-right font-black">8%</output>
+          </div>
+        </label>
+      </div>
+      <div class="mt-8 overflow-x-auto rounded-lg border border-line">
+        <div class="min-w-[980px]">
+          <div class="grid grid-cols-[minmax(10rem,1.1fr)_minmax(7rem,0.8fr)_repeat(3,minmax(7rem,0.8fr))_minmax(12rem,1fr)] bg-pine px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-white/72">
+            <span>Line item</span><span>Owner</span><span>Budget</span><span>Actual</span><span>Forecast</span><span>Variance</span>
+          </div>
+          <div id="varianceRows" class="divide-y divide-line bg-white"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="departments" class="scroll-mt-24 border-y border-line bg-white px-5 py-10 md:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Department Review</p>
+          <h2 class="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">Cost centre ownership built into the model.</h2>
+        </div>
+        <button type="button" id="addDepartment" class="rounded-lg bg-pine px-5 py-3 text-sm font-black text-white transition hover:bg-teal">Add Department</button>
+      </div>
+      <div class="mt-8 overflow-x-auto rounded-lg border border-line">
+        <div class="min-w-[930px]">
+          <div class="grid department-grid bg-pine px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-white/72">
+            <span>Department</span><span>Revenue %</span><span>Payroll</span><span>Marketing</span><span>Software</span><span>Other</span>
+          </div>
+          <div id="departmentRows" class="divide-y divide-line bg-white"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="working-capital" class="scroll-mt-24 px-5 py-10 md:px-8">
+    <div class="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.42fr_0.58fr]">
+      <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+        <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Working Capital</p>
+        <h2 class="mt-3 font-display text-4xl font-bold tracking-tight">Turn profit into cash.</h2>
+        <div id="workingCapitalInputs" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
+      </section>
+      <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+        <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Cash Bridge</p>
+            <h3 class="mt-2 font-display text-3xl font-bold">Net income to ending cash</h3>
+          </div>
+          <span id="cashBridgeStatus" class="rounded-lg bg-paper px-3 py-2 text-sm font-black text-ink">Base scenario</span>
+        </div>
+        <div id="cashBridge" class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </section>
+    </div>
+  </section>
+
+  <section id="scenarios" class="scroll-mt-24 border-y border-line bg-white px-5 py-10 md:px-8">
+    <div class="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.42fr_0.58fr]">
+      <section class="rounded-lg border border-line bg-paper p-5">
+        <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Scenario Levers</p>
+        <h2 class="mt-3 font-display text-4xl font-bold tracking-tight">Stress test the story.</h2>
+        <div id="scenarioInputs" class="mt-6 grid gap-4"></div>
+      </section>
+      <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+        <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Scenario Comparison</p>
+            <h3 class="mt-2 font-display text-3xl font-bold">Base vs upside vs downside</h3>
+          </div>
+          <span id="chartScenario" class="rounded-lg bg-paper px-3 py-2 text-sm font-black text-ink">Base scenario</span>
+        </div>
+        <div id="scenarioComparison" class="mt-5 overflow-x-auto rounded-lg border border-line"></div>
+        <canvas id="trendChart" width="920" height="420" class="mt-5 block w-full rounded-lg bg-paper"></canvas>
+      </section>
+    </div>
+  </section>
+
+  <section id="board" class="scroll-mt-24 px-5 py-10 md:px-8">
+    <div class="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.55fr_0.45fr]">
+      <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Board Pack</p>
+            <h2 class="mt-3 font-display text-4xl font-bold tracking-tight">Management summary and variance narrative.</h2>
+          </div>
+          <button type="button" id="downloadBoardPack" class="rounded-lg bg-pine px-5 py-3 text-sm font-black text-white transition hover:bg-teal">Download HTML Pack</button>
+        </div>
+        <div id="boardSummary" class="mt-6 grid gap-4"></div>
+      </section>
+      <section class="rounded-lg border border-line bg-white p-5 shadow-panel">
+        <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Formula Audit</p>
+        <h3 class="mt-2 font-display text-3xl font-bold">Checks before export</h3>
+        <div id="checkList" class="mt-5 grid gap-3"></div>
+      </section>
+    </div>
+  </section>
+
+  <section id="paid-offers" class="scroll-mt-24 bg-pine px-5 py-12 text-white md:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-6 lg:grid-cols-[0.65fr_0.35fr] lg:items-end">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-mint">Paid Packs and Services</p>
+          <h2 class="mt-3 max-w-4xl font-display text-4xl font-bold tracking-tight md:text-5xl">Turn the free finance tool into paid template packs, audits, and custom builds.</h2>
+          <p class="mt-5 max-w-3xl leading-8 text-white/68">Users can explore models for free, then request a premium pack when they need a board-ready workbook, tailored reporting pack, or a review of their existing spreadsheet.</p>
+        </div>
+        <div class="rounded-lg border border-white/12 bg-white/8 p-5">
+          <p class="font-black text-mint">Fastest route to revenue</p>
+          <p class="mt-3 text-sm leading-6 text-white/68">Start with the model audit and flagship packs, then convert complex requests into custom pack projects.</p>
+          <a href="#custom-pack" class="mt-5 inline-flex rounded-lg bg-mint px-5 py-3 text-sm font-black text-pine transition hover:bg-gold">Request Custom Pack</a>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 lg:grid-cols-4">
+        <article class="offer-card rounded-lg border border-white/12 bg-white p-5 text-ink">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-teal">Finance Model Audit</p>
+          <h3 class="mt-3 font-display text-2xl font-bold">£250-£500</h3>
+          <p class="mt-3 text-sm leading-6 text-gray-600">Review an existing spreadsheet for formula risk, model structure, reporting gaps, controls, and improvement opportunities.</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <button type="button" id="downloadAuditChecklist" class="rounded-lg border border-line px-4 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal">Checklist</button>
+            <a href="finance-checkout.html?pack=audit" class="rounded-lg bg-pine px-4 py-3 text-sm font-black text-white transition hover:bg-teal">Checkout</a>
+          </div>
+        </article>
+        <article class="offer-card rounded-lg border border-white/12 bg-white p-5 text-ink">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-teal">Manufacturing Pack</p>
+          <h3 class="mt-3 font-display text-2xl font-bold">From £199</h3>
+          <p class="mt-3 text-sm leading-6 text-gray-600">Standard costing, material/labour variance, PVM, inventory ageing, yield, capacity, OEE, and product profitability.</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <a href="finance-checkout.html?pack=manufacturing" class="rounded-lg bg-pine px-4 py-3 text-sm font-black text-white transition hover:bg-teal">Checkout</a>
+            <button type="button" class="rounded-lg border border-line px-4 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal" data-pack-request="Manufacturing Finance Pack">Request</button>
+          </div>
+        </article>
+        <article class="offer-card rounded-lg border border-white/12 bg-white p-5 text-ink">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-teal">SaaS Finance Pack</p>
+          <h3 class="mt-3 font-display text-2xl font-bold">From £199</h3>
+          <p class="mt-3 text-sm leading-6 text-gray-600">MRR, ARR, churn, expansion, CAC payback, LTV, cohort revenue, sales pipeline forecast, cash runway, and board KPIs.</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <a href="finance-checkout.html?pack=saas" class="rounded-lg bg-pine px-4 py-3 text-sm font-black text-white transition hover:bg-teal">Checkout</a>
+            <button type="button" class="rounded-lg border border-line px-4 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal" data-pack-request="SaaS Finance Pack">Request</button>
+          </div>
+        </article>
+        <article class="offer-card rounded-lg border border-white/12 bg-white p-5 text-ink">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-teal">Retail/Ecommerce Pack</p>
+          <h3 class="mt-3 font-display text-2xl font-bold">From £199</h3>
+          <p class="mt-3 text-sm leading-6 text-gray-600">Store contribution, product margin, AOV, repeat purchase, inventory, shrinkage, CAC payback, channel profitability, and cash.</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <a href="finance-checkout.html?pack=retail" class="rounded-lg bg-pine px-4 py-3 text-sm font-black text-white transition hover:bg-teal">Checkout</a>
+            <button type="button" class="rounded-lg border border-line px-4 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal" data-pack-request="Retail and Ecommerce Finance Pack">Request</button>
+          </div>
+        </article>
+        <article class="offer-card rounded-lg border border-white/12 bg-white p-5 text-ink">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-teal">Treasury Cash Flow Pack</p>
+          <h3 class="mt-3 font-display text-2xl font-bold">From £199</h3>
+          <p class="mt-3 text-sm leading-6 text-gray-600">13-week rolling cash flow, receipts and payments forecast, covenant dashboard, headroom alerts, funding actions, and cash runway.</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <a href="finance-checkout.html?pack=treasury-cashflow" class="rounded-lg bg-pine px-4 py-3 text-sm font-black text-white transition hover:bg-teal">Checkout</a>
+            <button type="button" class="rounded-lg border border-line px-4 py-3 text-sm font-black text-ink transition hover:border-teal hover:text-teal" data-pack-request="Treasury Cash Flow Pack">Request</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-8 grid gap-4 lg:grid-cols-3">
+        <article class="rounded-lg border border-white/12 bg-white/8 p-5">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">Single Template</p>
+          <h3 class="mt-3 font-display text-3xl font-bold">£29-£79</h3>
+          <p class="mt-3 text-sm leading-6 text-white/68">One model, formula workbook, input guide, and basic interpretation.</p>
+        </article>
+        <article class="rounded-lg border border-mint bg-white/10 p-5">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">Industry Pack</p>
+          <h3 class="mt-3 font-display text-3xl font-bold">£149-£299</h3>
+          <p class="mt-3 text-sm leading-6 text-white/68">A focused set of templates for one industry plus dashboard and reporting guidance.</p>
+        </article>
+        <article class="rounded-lg border border-white/12 bg-white/8 p-5">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">All Access Library</p>
+          <h3 class="mt-3 font-display text-3xl font-bold">£499-£999</h3>
+          <p class="mt-3 text-sm leading-6 text-white/68">Full template library, catalogue, guides, and update path into custom packs.</p>
+        </article>
+      </div>
+
+      <div class="mt-8 rounded-lg border border-white/12 bg-white/8 p-5">
+        <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="text-xs font-black uppercase tracking-[0.18em] text-mint">Benchmark Positioning</p>
+            <h3 class="mt-2 font-display text-3xl font-bold">A ladder from DIY templates to custom finance support.</h3>
+          </div>
+          <a href="finance-checkout.html?pack=expert-review" class="inline-flex rounded-lg bg-mint px-5 py-3 text-sm font-black text-pine transition hover:bg-gold">Start With Review</a>
+        </div>
+        <div class="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+          <article class="rounded-lg border border-white/12 bg-pine/40 p-4">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">1. DIY</p>
+            <p class="mt-2 font-black">£29-£79</p>
+            <p class="mt-2 text-sm leading-6 text-white/68">Single model for confident self-serve users.</p>
+          </article>
+          <article class="rounded-lg border border-white/12 bg-pine/40 p-4">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">2. Pack</p>
+            <p class="mt-2 font-black">£149-£299</p>
+            <p class="mt-2 text-sm leading-6 text-white/68">Industry bundle with dashboards and guides.</p>
+          </article>
+          <article class="rounded-lg border border-white/12 bg-pine/40 p-4">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">3. Review</p>
+            <p class="mt-2 font-black">£250-£500</p>
+            <p class="mt-2 text-sm leading-6 text-white/68">Spreadsheet audit and improvement notes.</p>
+          </article>
+          <article class="rounded-lg border border-white/12 bg-pine/40 p-4">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">4. Setup</p>
+            <p class="mt-2 font-black">£750-£1,250</p>
+            <p class="mt-2 text-sm leading-6 text-white/68">We configure the pack with client data.</p>
+          </article>
+          <article class="rounded-lg border border-white/12 bg-pine/40 p-4">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">5. Build</p>
+            <p class="mt-2 font-black">From £1,500</p>
+            <p class="mt-2 text-sm leading-6 text-white/68">Custom model and board reporting workflow.</p>
+          </article>
+          <article class="rounded-lg border border-white/12 bg-pine/40 p-4">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-mint">6. CFO</p>
+            <p class="mt-2 font-black">£750-£3,000/mo</p>
+            <p class="mt-2 text-sm leading-6 text-white/68">Monthly refresh, commentary, and decision support.</p>
+          </article>
+        </div>
+        <p class="mt-4 text-sm leading-6 text-white/62">Go beyond a static spreadsheet: use the interactive workspace to analyse performance, export a formula workbook, interpret variances, and add expert review or custom finance pack support when the model needs to fit your business.</p>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <button type="button" id="downloadClientDataPack" class="rounded-lg bg-mint px-6 py-4 font-black text-pine transition hover:bg-gold">Download Client Data Request Pack</button>
+        <a href="finance-checkout.html?pack=industry" class="rounded-lg bg-white px-6 py-4 font-black text-pine transition hover:bg-mint">Go to Checkout</a>
+        <a href="mailto:hello@zequencedigital.co.uk?subject=Paid%20Finance%20Pack%20Interest&body=Hi%20Zequence%20Digital%2C%0A%0AI%20am%20interested%20in%20a%20paid%20finance%20model%20pack.%0A%0APack%3A%0AIndustry%3A%0ATimeline%3A%0A" class="rounded-lg border border-white/16 px-6 py-4 font-black text-white transition hover:bg-white/10">Register Interest</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare-faq" class="scroll-mt-24 border-y border-line bg-white px-5 py-10 md:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Compare Plans</p>
+          <h2 class="mt-3 max-w-4xl font-display text-4xl font-bold tracking-tight md:text-5xl">Pick the level of finance support you need.</h2>
+          <p class="mt-4 max-w-3xl leading-8 text-gray-600">Start with a self-serve template, add review when accuracy matters, or request a custom finance pack when the model needs to match your accounts, KPIs, and board reporting cadence.</p>
+        </div>
+        <a href="finance-checkout.html?pack=setup" class="inline-flex rounded-lg bg-pine px-5 py-3 text-sm font-black text-white transition hover:bg-teal">Compare in Checkout</a>
+      </div>
+
+      <div class="mt-8 overflow-x-auto rounded-lg border border-line bg-paper">
+        <table class="min-w-[920px] w-full border-collapse text-left text-sm">
+          <thead class="bg-pine text-white">
+            <tr>
+              <th class="px-4 py-4 font-black">Plan</th>
+              <th class="px-4 py-4 font-black">Best for</th>
+              <th class="px-4 py-4 font-black">Includes</th>
+              <th class="px-4 py-4 font-black">Delivery</th>
+              <th class="px-4 py-4 font-black">Price</th>
+              <th class="px-4 py-4 font-black">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line bg-white">
+            <tr>
+              <td class="px-4 py-4 font-black">DIY Template</td>
+              <td class="px-4 py-4 text-gray-600">Finance users who can adapt a workbook themselves</td>
+              <td class="px-4 py-4 text-gray-600">One formula model, inputs, checks, and guide</td>
+              <td class="px-4 py-4 text-gray-600">Digital delivery after payment</td>
+              <td class="px-4 py-4 font-black">£29-£79</td>
+              <td class="px-4 py-4"><a href="finance-checkout.html?pack=single" class="font-black text-teal">Checkout</a></td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 font-black">Industry Pack</td>
+              <td class="px-4 py-4 text-gray-600">Manufacturing, SaaS, retail, property, services, or sector-specific reporting</td>
+              <td class="px-4 py-4 text-gray-600">Template bundle, dashboards, model guide, and KPI structure</td>
+              <td class="px-4 py-4 text-gray-600">Digital delivery after payment</td>
+              <td class="px-4 py-4 font-black">£149-£299</td>
+              <td class="px-4 py-4"><a href="finance-checkout.html?pack=industry" class="font-black text-teal">Checkout</a></td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 font-black">Expert Review</td>
+              <td class="px-4 py-4 text-gray-600">Teams with an existing model that needs confidence before use</td>
+              <td class="px-4 py-4 text-gray-600">Formula, structure, controls, and reporting risk review</td>
+              <td class="px-4 py-4 text-gray-600">Usually 2-5 working days after file access</td>
+              <td class="px-4 py-4 font-black">£250-£500</td>
+              <td class="px-4 py-4"><a href="finance-checkout.html?pack=expert-review" class="font-black text-teal">Request</a></td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 font-black">Done-With-You Setup</td>
+              <td class="px-4 py-4 text-gray-600">Users who want Zequence to configure a pack with real data</td>
+              <td class="px-4 py-4 text-gray-600">Setup call, assumptions mapping, workbook configuration, and handover notes</td>
+              <td class="px-4 py-4 text-gray-600">Scoped after data request pack</td>
+              <td class="px-4 py-4 font-black">£750-£1,250</td>
+              <td class="px-4 py-4"><a href="finance-checkout.html?pack=setup" class="font-black text-teal">Request</a></td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 font-black">Custom Build</td>
+              <td class="px-4 py-4 text-gray-600">Businesses needing a model built around their accounts and decisions</td>
+              <td class="px-4 py-4 text-gray-600">Forecast, variance, cash, scenario, dashboard, and board pack workflow</td>
+              <td class="px-4 py-4 text-gray-600">Scoped project delivery</td>
+              <td class="px-4 py-4 font-black">From £1,500</td>
+              <td class="px-4 py-4"><a href="#custom-pack" class="font-black text-teal">Scope</a></td>
+            </tr>
+            <tr>
+              <td class="px-4 py-4 font-black">Monthly CFO Pack</td>
+              <td class="px-4 py-4 text-gray-600">Teams that need recurring model refresh and commentary</td>
+              <td class="px-4 py-4 text-gray-600">Monthly refresh, variance notes, board commentary, and decision support</td>
+              <td class="px-4 py-4 text-gray-600">Monthly support cadence</td>
+              <td class="px-4 py-4 font-black">£750-£3,000/mo</td>
+              <td class="px-4 py-4"><a href="finance-checkout.html?pack=cfo-monthly" class="font-black text-teal">Request</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-8 grid gap-4 lg:grid-cols-2">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">FAQ</p>
+          <h3 class="mt-2 font-display text-3xl font-bold">Common questions before using the tool.</h3>
+        </div>
+        <div class="grid gap-3">
+          <details class="rounded-lg border border-line bg-paper p-4">
+            <summary class="cursor-pointer font-black text-ink">Is uploaded or pasted finance data stored?</summary>
+            <p class="mt-3 text-sm leading-6 text-gray-600">No. The tool runs in the browser and uses session storage only for the active session. Clear All removes demo, imported, and session data.</p>
+          </details>
+          <details class="rounded-lg border border-line bg-paper p-4">
+            <summary class="cursor-pointer font-black text-ink">Can I download Excel with formulas?</summary>
+            <p class="mt-3 text-sm leading-6 text-gray-600">Yes. Choose formula workbook mode before export. The workbook includes inputs, forecast model, variance analysis, working capital, scenarios, board summary, checks, and guide sheets.</p>
+          </details>
+          <details class="rounded-lg border border-line bg-paper p-4">
+            <summary class="cursor-pointer font-black text-ink">Can Zequence customise the model?</summary>
+            <p class="mt-3 text-sm leading-6 text-gray-600">Yes. Use the data request pack or custom-pack form to scope setup, model audit, custom build, or monthly CFO support.</p>
+          </details>
+          <details class="rounded-lg border border-line bg-paper p-4">
+            <summary class="cursor-pointer font-black text-ink">Can I use this for board reporting?</summary>
+            <p class="mt-3 text-sm leading-6 text-gray-600">Yes. The tool includes board pack summary, variance commentary, control checks, scenario comparison, and exportable reporting outputs.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="custom-pack" class="scroll-mt-24 border-y border-line bg-white px-5 py-10 md:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="grid gap-6 lg:grid-cols-[0.58fr_0.42fr] lg:items-start">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Custom Finance Pack</p>
+          <h2 class="mt-3 max-w-4xl font-display text-4xl font-bold tracking-tight md:text-5xl">Request a finance model pack built around your industry, accounts, KPIs, and board reporting.</h2>
+          <p class="mt-5 max-w-3xl leading-8 text-gray-600">The free tool helps users explore models. The custom pack turns their real operating model into a robust Excel workbook, variance pack, cash forecast, dashboard, and reporting workflow.</p>
+
+          <div class="mt-8 grid gap-4 md:grid-cols-3">
+            <article class="rounded-lg border border-line bg-paper p-5">
+              <p class="text-xs font-black uppercase tracking-[0.14em] text-teal">Custom Lite</p>
+              <h3 class="mt-3 font-display text-2xl font-bold">From £1,500</h3>
+              <p class="mt-3 text-sm leading-6 text-gray-600">Adapt an existing model to the client's chart of accounts, KPIs, and reporting cadence.</p>
+            </article>
+            <article class="rounded-lg border border-line bg-paper p-5">
+              <p class="text-xs font-black uppercase tracking-[0.14em] text-teal">Custom Pro</p>
+              <h3 class="mt-3 font-display text-2xl font-bold">From £5,000</h3>
+              <p class="mt-3 text-sm leading-6 text-gray-600">Full model pack with forecast, variance analysis, working capital, scenarios, dashboard, and board summary.</p>
+            </article>
+            <article class="rounded-lg border border-line bg-paper p-5">
+              <p class="text-xs font-black uppercase tracking-[0.14em] text-teal">CFO Pack</p>
+              <h3 class="mt-3 font-display text-2xl font-bold">Monthly support</h3>
+              <p class="mt-3 text-sm leading-6 text-gray-600">Model maintenance, monthly reporting, pack refreshes, and decision support for finance teams.</p>
+            </article>
+          </div>
+
+          <div class="mt-8 grid gap-4 md:grid-cols-2">
+            <article class="rounded-lg border border-line bg-white p-5 shadow-panel">
+              <p class="font-black text-ink">What the client can receive</p>
+              <ul class="mt-3 space-y-2 text-sm leading-6 text-gray-600">
+                <li>Driver-based forecast model with formulas</li>
+                <li>Budget vs actual and forecast variance pack</li>
+                <li>Industry-specific modules such as standard costing, PVM, inventory, SaaS metrics, job costing, or property appraisal</li>
+                <li>Working capital and cash flow forecast</li>
+                <li>Scenario analysis and sensitivity tables</li>
+                <li>Board pack dashboard and commentary structure</li>
+              </ul>
+            </article>
+            <article class="rounded-lg border border-line bg-white p-5 shadow-panel">
+              <p class="font-black text-ink">Information needed to scope it</p>
+              <ul class="mt-3 space-y-2 text-sm leading-6 text-gray-600">
+                <li>Industry and business model</li>
+                <li>Chart of accounts or management accounts structure</li>
+                <li>Current budget, actuals, forecast, and reporting pack if available</li>
+                <li>Key KPIs and decisions the model must support</li>
+                <li>Preferred Excel, Google Sheets, or dashboard workflow</li>
+                <li>Timeline, users, and review cadence</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="https://wa.me/447588951595?text=Hi%20Zequence%20Digital%2C%20I%20want%20to%20request%20a%20custom%20finance%20model%20pack" target="_blank" rel="noopener noreferrer" class="rounded-lg bg-pine px-6 py-4 font-black text-white transition hover:bg-teal">WhatsApp Request</a>
+            <a href="mailto:hello@zequencedigital.co.uk?subject=Custom%20Finance%20Model%20Pack%20Request&body=Hi%20Zequence%20Digital%2C%0A%0AI%20want%20to%20request%20a%20custom%20finance%20model%20pack.%0A%0AIndustry%3A%0ACompany%20size%3A%0AModels%20needed%3A%0ATimeline%3A%0ABudget%20range%3A%0A" class="rounded-lg border border-line px-6 py-4 font-black text-ink transition hover:border-teal hover:text-teal">Email Brief</a>
+          </div>
+        </div>
+
+        <form id="custom-pack-form" action="https://formsubmit.co/hello@zequencedigital.co.uk" method="POST" class="rounded-lg border border-line bg-paper p-5 shadow-panel">
+          <input type="hidden" name="_subject" value="Custom finance model pack request">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_autoresponse" value="Thank you for requesting a custom finance model pack from Zequence Digital. We have received your brief and will reply with next steps.">
+          <input type="hidden" name="_next" value="https://zequencedigital.co.uk/thank-you.html">
+          <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
+
+          <p class="text-xs font-black uppercase tracking-[0.18em] text-teal">Scope Request</p>
+          <h3 class="mt-2 font-display text-3xl font-bold">Build my custom pack</h3>
+
+          <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-black text-ink">Name</span>
+              <input type="text" name="name" autocomplete="name" required class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+            </label>
+            <label class="block">
+              <span class="text-sm font-black text-ink">Email</span>
+              <input type="email" name="email" autocomplete="email" required class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+            </label>
+          </div>
+
+          <div class="mt-4 grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-black text-ink">Industry</span>
+              <select name="industry" required class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+                <option value="">Select one</option>
+                <option>Manufacturing</option>
+                <option>SaaS / Technology</option>
+                <option>Retail / Ecommerce</option>
+                <option>Construction</option>
+                <option>Hospitality</option>
+                <option>Real Estate</option>
+                <option>Healthcare</option>
+                <option>Logistics / Transport</option>
+                <option>Energy / Utilities</option>
+                <option>Financial Services</option>
+                <option>Professional Services</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-sm font-black text-ink">Package</span>
+              <select name="package" required class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+                <option value="">Select one</option>
+                <option>Custom Lite from £1,500</option>
+                <option>Custom Pro from £5,000</option>
+                <option>CFO Pack monthly support</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="mt-4 grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-black text-ink">Timeline</span>
+              <select name="timeline" required class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+                <option value="">Select one</option>
+                <option>Urgent: 1-2 weeks</option>
+                <option>2-4 weeks</option>
+                <option>1-2 months</option>
+                <option>Exploring</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-sm font-black text-ink">Budget range</span>
+              <select name="budget_range" required class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10">
+                <option value="">Select one</option>
+                <option>£1,500-£2,500</option>
+                <option>£2,500-£5,000</option>
+                <option>£5,000-£10,000</option>
+                <option>£10,000+</option>
+                <option>Need guidance</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="mt-4 block">
+            <span class="text-sm font-black text-ink">Models needed</span>
+            <textarea name="models_needed" rows="4" required placeholder="Example: standard costing variance, PVM, cash forecast, board pack, inventory ageing, product profitability..." class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 outline-none focus:border-teal focus:ring-4 focus:ring-teal/10"></textarea>
+          </label>
+
+          <label class="mt-4 block">
+            <span class="text-sm font-black text-ink">Current data and systems</span>
+            <textarea name="current_data_systems" rows="4" placeholder="Example: Xero, Sage, QuickBooks, NetSuite, Excel management accounts, CSV exports, chart of accounts available..." class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 outline-none focus:border-teal focus:ring-4 focus:ring-teal/10"></textarea>
+          </label>
+
+          <label class="mt-4 block">
+            <span class="text-sm font-black text-ink">Outcome required</span>
+            <textarea name="outcome_required" rows="4" required placeholder="Tell us what decisions, reports, board outputs, or recurring finance tasks this pack must support." class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-3 outline-none focus:border-teal focus:ring-4 focus:ring-teal/10"></textarea>
+          </label>
+
+          <button type="submit" class="mt-5 w-full rounded-lg bg-pine px-6 py-4 font-black text-white transition hover:bg-teal">Request Custom Pack</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="export" class="scroll-mt-24 bg-pine px-5 py-12 text-white md:px-8">
+    <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.65fr_0.35fr] lg:items-center">
+      <div>
+        <p class="text-xs font-black uppercase tracking-[0.18em] text-mint">Excel Export</p>
+        <h2 class="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">Download a workbook finance managers can keep using.</h2>
+        <p class="mt-5 max-w-2xl leading-8 text-white/68">Export includes Inputs, Forecast Model, Variance Analysis, Departments, Working Capital, Scenario Comparison, Board Summary, and Control Checks. Formula mode writes Excel formulas into the core model and variance sheets.</p>
+      </div>
+      <div class="rounded-lg border border-white/12 bg-white/8 p-5">
+        <label class="block">
+          <span class="text-sm font-black text-white">Workbook mode</span>
+          <select id="exportMode" class="mt-2 w-full rounded-lg border border-white/20 bg-white px-3 py-3 font-black text-ink">
+            <option value="formulas">Formula workbook</option>
+            <option value="values">Values only</option>
+          </select>
+        </label>
+        <button type="button" id="downloadWorkbook" class="mt-4 w-full rounded-lg bg-mint px-5 py-4 font-black text-pine transition hover:bg-gold">Download Excel Workbook</button>
+        <button type="button" id="printBoardPack" class="mt-3 w-full rounded-lg border border-white/16 px-5 py-4 font-black text-white transition hover:bg-white/10">Print Board Pack</button>
+        <p id="exportStatus" class="mt-3 min-h-6 text-sm font-semibold text-white/68"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-line bg-white px-5 py-8 text-sm text-gray-500 md:px-8">
+  <div class="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <p>© 2026 Zequence Digital UK Limited. Finance modelling and workflow tools.</p>
+    <div class="flex flex-wrap gap-5">
+      <a href="/" class="transition hover:text-pine">Zequence</a>
+      <a href="#model" class="transition hover:text-pine">Model</a>
+      <a href="#import" class="transition hover:text-pine">Import</a>
+      <a href="#model-library" class="transition hover:text-pine">Library</a>
+      <a href="#paid-offers" class="transition hover:text-pine">Offers</a>
+      <a href="#variance" class="transition hover:text-pine">Variance</a>
+      <a href="#custom-pack" class="transition hover:text-pine">Custom Pack</a>
+      <a href="#board" class="transition hover:text-pine">Board Pack</a>
+      <a href="finance-terms.html" class="transition hover:text-pine">Terms</a>
+      <a href="privacy.html" class="transition hover:text-pine">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+var storageKey = 'zequence-finance-modeler-session-v1';
+var currentScenario = 'base';
+var assumptions = {
+  startingRevenue: 180000,
+  unitPrice: 120,
+  monthlyGrowth: 4,
+  grossMargin: 62,
+  payroll: 52000,
+  marketing: 14000,
+  software: 6200,
+  rent: 9000,
+  otherOpex: 11500,
+  capex: 8000,
+  taxRate: 19,
+  openingCash: 240000
+};
+var workingCapital = {
+  arDays: 42,
+  apDays: 30,
+  inventoryDays: 18,
+  vatRate: 20,
+  debtRepayment: 6000,
+  dividends: 0
+};
+var scenarioLevers = {
+  base: { revenue: 0, margin: 0, opex: 0, workingCapital: 0 },
+  upside: { revenue: 12, margin: 3, opex: -4, workingCapital: -6 },
+  downside: { revenue: -15, margin: -4, opex: 8, workingCapital: 10 }
+};
+var departments = [
+  { name: 'Sales', revenueShare: 52, payroll: 18000, marketing: 6500, software: 1200, other: 2200 },
+  { name: 'Operations', revenueShare: 30, payroll: 22000, marketing: 1500, software: 2400, other: 4800 },
+  { name: 'Admin', revenueShare: 18, payroll: 12000, marketing: 800, software: 2600, other: 4500 }
+];
+var varianceItems = [
+  { name: 'Revenue', department: 'Sales', type: 'good', budget: 185000, actual: 192500, forecast: 205000 },
+  { name: 'Cost of sales', department: 'Operations', type: 'bad', budget: 71000, actual: 74800, forecast: 77900 },
+  { name: 'Payroll', department: 'Admin', type: 'bad', budget: 52000, actual: 54800, forecast: 54000 },
+  { name: 'Marketing', department: 'Sales', type: 'bad', budget: 14000, actual: 12100, forecast: 16000 },
+  { name: 'Software', department: 'Admin', type: 'bad', budget: 6200, actual: 6800, forecast: 7000 },
+  { name: 'Rent and facilities', department: 'Operations', type: 'bad', budget: 9000, actual: 9000, forecast: 9000 },
+  { name: 'Other operating costs', department: 'Operations', type: 'bad', budget: 11500, actual: 13600, forecast: 12000 }
+];
+var importLog = [];
+var activeInteractiveModelId = 'budget-actual-variance';
+var interactiveModelInputs = {};
+var assumptionLabels = [
+  ['startingRevenue', 'Starting revenue', 'money'],
+  ['unitPrice', 'Average selling price', 'money'],
+  ['monthlyGrowth', 'Monthly revenue growth', 'percent'],
+  ['grossMargin', 'Gross margin', 'percent'],
+  ['payroll', 'Monthly payroll', 'money'],
+  ['marketing', 'Monthly marketing', 'money'],
+  ['software', 'Monthly software', 'money'],
+  ['rent', 'Rent and facilities', 'money'],
+  ['otherOpex', 'Other operating costs', 'money'],
+  ['capex', 'Monthly capex', 'money'],
+  ['taxRate', 'Tax rate', 'percent'],
+  ['openingCash', 'Opening cash', 'money']
+];
+var workingCapitalLabels = [
+  ['arDays', 'Debtor days', 'days'],
+  ['apDays', 'Creditor days', 'days'],
+  ['inventoryDays', 'Inventory days', 'days'],
+  ['vatRate', 'VAT / sales tax rate', 'percent'],
+  ['debtRepayment', 'Monthly debt repayment', 'money'],
+  ['dividends', 'Monthly dividends', 'money']
+];
+var scenarioLabels = [
+  ['revenue', 'Revenue sensitivity', 'Higher or lower sales versus base plan'],
+  ['margin', 'Margin sensitivity', 'Gross margin movement in percentage points'],
+  ['opex', 'Opex sensitivity', 'Operating cost movement versus base plan'],
+  ['workingCapital', 'Working capital sensitivity', 'Collections and supplier timing movement']
+];
+var modelRows = [
+  ['revenue', 'Revenue'],
+  ['cogs', 'Cost of sales'],
+  ['grossProfit', 'Gross profit'],
+  ['payroll', 'Payroll'],
+  ['marketing', 'Marketing'],
+  ['software', 'Software'],
+  ['rent', 'Rent and facilities'],
+  ['otherOpex', 'Other operating costs'],
+  ['ebitda', 'EBITDA'],
+  ['tax', 'Tax'],
+  ['netIncome', 'Net income'],
+  ['capex', 'Capital expenditure'],
+  ['deltaNwc', 'Movement in working capital'],
+  ['vatCash', 'VAT / sales tax cash'],
+  ['debtRepayment', 'Debt repayment'],
+  ['dividends', 'Dividends'],
+  ['freeCashFlow', 'Free cash flow'],
+  ['endingCash', 'Ending cash']
+];
+var financeModelLibrary = [
+  { id: 'budget-actual-variance', name: 'Budget vs Actual Variance', industry: 'All Industries', category: 'FP&A', description: 'Compares actual results against budget by line item, owner, and period.', drivers: ['Budget', 'Actual', 'Owner', 'Threshold'], formulas: ['Variance = Actual - Budget', 'Variance % = Variance / Budget', 'Status = threshold logic'] },
+  { id: 'forecast-actual-analysis', name: 'Forecast vs Actual Analysis', industry: 'All Industries', category: 'FP&A', description: 'Measures forecast accuracy and identifies planning assumption gaps.', drivers: ['Forecast', 'Actual', 'Prior forecast', 'Period'], formulas: ['Forecast error = Actual - Forecast', 'Accuracy % = 1 - ABS(Error / Actual)'] },
+  { id: 'rolling-forecast', name: 'Rolling Forecast Model', industry: 'All Industries', category: 'FP&A', description: 'Builds a continuously refreshed 12 to 24 month forecast.', drivers: ['Opening actuals', 'Growth rate', 'Margin', 'Opex', 'Cash drivers'], formulas: ['Revenue = Prior period revenue * (1 + Growth)', 'Cash = Prior cash + Free cash flow'] },
+  { id: 'cash-flow-forecast', name: 'Cash Flow Forecast', industry: 'All Industries', category: 'Treasury', description: 'Projects cash inflows, outflows, funding needs, and runway.', drivers: ['Opening cash', 'Collections', 'Payments', 'Payroll', 'Capex'], formulas: ['Net cash flow = Inflows - Outflows', 'Closing cash = Opening cash + Net cash flow'] },
+  { id: 'rolling-13-week-cash-flow', name: '13-Week Rolling Cash Flow', industry: 'All Industries', category: 'Treasury', description: 'Weekly direct cash forecast for liquidity headroom, covenant monitoring, and near-term funding decisions.', drivers: ['Opening cash', 'Week 1 receipts', 'Receipts weekly growth %', 'Supplier payments', 'Payroll', 'Rent and fixed costs', 'Taxes', 'Capex', 'Debt service', 'Revolver availability', 'Minimum cash buffer', 'Covenant EBITDA', 'Covenant net debt', 'Max leverage covenant'], formulas: ['Closing cash = Opening cash + Receipts - Payments', 'Available liquidity = Closing cash + Revolver availability', 'Headroom = Available liquidity - Minimum cash buffer', 'Leverage = Net debt / EBITDA', 'Covenant headroom = Max leverage covenant - Leverage'] },
+  { id: 'daily-cash-position', name: 'Daily Cash Position Tracker', industry: 'All Industries', category: 'Treasury', description: 'Tracks daily bank balance, expected receipts, urgent payments, and available cash for short-term control.', drivers: ['Opening bank balance', 'Daily receipts', 'Urgent payments', 'Payroll run', 'Restricted cash'], formulas: ['Available cash = Opening bank + Receipts - Payments - Restricted cash'] },
+  { id: 'cash-runway-burn', name: 'Cash Runway and Burn Rate', industry: 'SaaS / Technology', category: 'Treasury', description: 'Measures monthly burn, runway, funding gap, and break-even timing for growth businesses.', drivers: ['Opening cash', 'Monthly receipts', 'Monthly burn', 'Committed funding', 'Target runway months'], formulas: ['Net burn = Cash outflows - Receipts', 'Runway months = Available cash / Net burn', 'Funding gap = Target runway cash - Available cash'] },
+  { id: 'covenant-compliance', name: 'Debt Covenant Compliance', industry: 'All Industries', category: 'Treasury', description: 'Monitors leverage, interest cover, DSCR, liquidity, and headroom against lender covenants.', drivers: ['EBITDA', 'Net debt', 'Interest expense', 'Debt service', 'Available liquidity', 'Required liquidity'], formulas: ['Leverage = Net debt / EBITDA', 'Interest cover = EBITDA / Interest', 'DSCR = Cash available for debt service / Debt service', 'Liquidity headroom = Available liquidity - Required liquidity'] },
+  { id: 'receipts-payments-forecast', name: 'Receipts and Payments Forecast', industry: 'All Industries', category: 'Treasury', description: 'Direct method cash forecast using customer collections, supplier payments, tax, payroll, financing, and one-off flows.', drivers: ['Customer receipts', 'Supplier payments', 'Payroll', 'Tax', 'Financing inflows', 'One-off payments'], formulas: ['Net cash movement = Total receipts - Total payments', 'Closing cash = Opening cash + Net cash movement'] },
+  { id: 'working-capital', name: 'Working Capital Analysis', industry: 'All Industries', category: 'Treasury', description: 'Tracks receivables, payables, inventory, and cash conversion cycle.', drivers: ['Debtor days', 'Creditor days', 'Inventory days', 'Revenue', 'COGS'], formulas: ['CCC = DSO + DIO - DPO', 'NWC = AR + Inventory - AP'] },
+  { id: 'scenario-sensitivity', name: 'Scenario and Sensitivity Analysis', industry: 'All Industries', category: 'Risk', description: 'Tests profit and cash sensitivity to key business assumptions.', drivers: ['Base case', 'Upside case', 'Downside case', 'Sensitivity %'], formulas: ['Scenario result = Base value * (1 + Sensitivity)'] },
+  { id: 'break-even', name: 'Break-Even Analysis', industry: 'All Industries', category: 'Profitability', description: 'Calculates sales volume or revenue required to cover total costs.', drivers: ['Fixed costs', 'Price', 'Variable cost per unit'], formulas: ['Contribution/unit = Price - Variable cost', 'Break-even units = Fixed costs / Contribution per unit'] },
+  { id: 'cvp-analysis', name: 'Cost-Volume-Profit Analysis', industry: 'All Industries', category: 'Profitability', description: 'Models how profit changes with volume, price, and cost structure.', drivers: ['Volume', 'Price', 'Variable cost', 'Fixed cost'], formulas: ['Profit = Volume * (Price - Variable cost) - Fixed cost'] },
+  { id: 'product-profitability', name: 'Product Profitability', industry: 'Manufacturing', category: 'Commercial Finance', description: 'Reviews profitability by SKU, product line, batch, or order.', drivers: ['Units', 'Price', 'Material cost', 'Labour cost', 'Overhead'], formulas: ['Gross profit = Revenue - Product cost', 'Margin % = Gross profit / Revenue'] },
+  { id: 'customer-profitability', name: 'Customer Profitability', industry: 'All Industries', category: 'Commercial Finance', description: 'Calculates true profit by customer after discounts, freight, service, and payment terms.', drivers: ['Revenue', 'Discounts', 'Cost to serve', 'Freight', 'Returns'], formulas: ['Customer profit = Net revenue - Cost to serve - Freight - Returns'] },
+  { id: 'gross-margin', name: 'Gross Margin Analysis', industry: 'All Industries', category: 'Commercial Finance', description: 'Analyses margin by product, customer, channel, region, or plant.', drivers: ['Revenue', 'COGS', 'Units'], formulas: ['Gross margin = Revenue - COGS', 'Margin % = Gross margin / Revenue'] },
+  { id: 'contribution-margin', name: 'Contribution Margin Analysis', industry: 'All Industries', category: 'Commercial Finance', description: 'Separates variable cost from fixed cost to support pricing and mix decisions.', drivers: ['Revenue', 'Variable costs', 'Units'], formulas: ['Contribution = Revenue - Variable costs', 'Contribution/unit = Contribution / Units'] },
+  { id: 'price-volume-mix', name: 'Price-Volume-Mix Analysis', industry: 'Manufacturing', category: 'Commercial Finance', description: 'Explains revenue or margin movement caused by price, volume, and mix.', drivers: ['Prior units', 'Current units', 'Prior price', 'Current price', 'Prior margin', 'Current margin'], formulas: ['Price impact = (Current price - Prior price) * Current units', 'Volume impact = (Current units - Prior units) * Prior margin'] },
+  { id: 'standard-costing', name: 'Standard Costing Variance', industry: 'Manufacturing', category: 'Cost Accounting', description: 'Breaks production variance into material, labour, and overhead movements.', drivers: ['Standard quantity', 'Actual quantity', 'Standard rate', 'Actual rate'], formulas: ['Price variance = Actual quantity * (Actual price - Standard price)', 'Usage variance = Standard price * (Actual quantity - Standard quantity)'] },
+  { id: 'material-price-usage', name: 'Material Price and Usage Variance', industry: 'Manufacturing', category: 'Cost Accounting', description: 'Analyses supplier price movement and production usage efficiency.', drivers: ['Actual quantity', 'Standard quantity', 'Actual price', 'Standard price'], formulas: ['Material price variance = Actual quantity * (Actual price - Standard price)', 'Usage variance = Standard price * (Actual quantity - Standard quantity)'] },
+  { id: 'labour-rate-efficiency', name: 'Labour Rate and Efficiency Variance', industry: 'Manufacturing', category: 'Cost Accounting', description: 'Tracks labour cost variance from wage rate and hours efficiency.', drivers: ['Actual hours', 'Standard hours', 'Actual rate', 'Standard rate'], formulas: ['Rate variance = Actual hours * (Actual rate - Standard rate)', 'Efficiency variance = Standard rate * (Actual hours - Standard hours)'] },
+  { id: 'overhead-absorption', name: 'Manufacturing Overhead Absorption', industry: 'Manufacturing', category: 'Cost Accounting', description: 'Identifies over- or under-absorbed overhead versus actual spend.', drivers: ['Actual overhead', 'Absorbed overhead', 'Activity base'], formulas: ['Absorption variance = Absorbed overhead - Actual overhead'] },
+  { id: 'inventory-valuation', name: 'Inventory Valuation and Obsolescence', industry: 'Manufacturing', category: 'Inventory', description: 'Reviews raw materials, WIP, finished goods, ageing, and write-down risk.', drivers: ['Quantity', 'Unit cost', 'Ageing bucket', 'NRV', 'Reserve %'], formulas: ['Inventory value = Quantity * Unit cost', 'Write-down = MAX(0, Cost - NRV)'] },
+  { id: 'yield-scrap-rework', name: 'Yield, Scrap and Rework Analysis', industry: 'Manufacturing', category: 'Operations Finance', description: 'Converts scrap, waste, and rework into financial impact.', drivers: ['Input units', 'Good units', 'Scrap units', 'Rework hours', 'Unit cost'], formulas: ['Yield % = Good units / Input units', 'Scrap cost = Scrap units * Unit cost'] },
+  { id: 'capacity-utilisation', name: 'Capacity Utilisation Analysis', industry: 'Manufacturing', category: 'Operations Finance', description: 'Compares output against available machine, labour, or plant capacity.', drivers: ['Available hours', 'Used hours', 'Output units', 'Bottleneck rate'], formulas: ['Utilisation % = Used hours / Available hours', 'Lost contribution = Unused hours * Bottleneck rate'] },
+  { id: 'oee-financial', name: 'OEE Financial Impact', industry: 'Manufacturing', category: 'Operations Finance', description: 'Turns availability, performance, and quality losses into financial value.', drivers: ['Availability', 'Performance', 'Quality', 'Ideal output', 'Contribution/unit'], formulas: ['OEE = Availability * Performance * Quality', 'Lost profit = Lost units * Contribution/unit'] },
+  { id: 'unit-cost', name: 'Unit Cost Analysis', industry: 'Manufacturing', category: 'Cost Accounting', description: 'Calculates cost per unit by product, line, batch, or process.', drivers: ['Material', 'Labour', 'Overhead', 'Units produced'], formulas: ['Unit cost = Total cost / Units produced'] },
+  { id: 'make-or-buy', name: 'Make-or-Buy Analysis', industry: 'Manufacturing', category: 'Decision Support', description: 'Compares internal production cost against outsourcing or supplier purchase cost.', drivers: ['Internal variable cost', 'Fixed cost avoided', 'Supplier price', 'Freight', 'Quality cost'], formulas: ['Make cost = Variable cost + Relevant fixed cost', 'Buy cost = Supplier price + Freight + Quality cost'] },
+  { id: 'capex-appraisal', name: 'Capital Expenditure Appraisal', industry: 'All Industries', category: 'Investment', description: 'Evaluates machinery, plant, automation, property, or technology investments.', drivers: ['Initial investment', 'Cash savings', 'Useful life', 'Discount rate', 'Terminal value'], formulas: ['Payback = Investment / Annual cash flow', 'NPV = PV cash flows - Investment'] },
+  { id: 'plant-profitability', name: 'Plant / Site Profitability', industry: 'Manufacturing', category: 'Performance', description: 'Compares factory, site, or production line profitability.', drivers: ['Revenue', 'Direct costs', 'Allocated overhead', 'Capacity', 'Output'], formulas: ['Site profit = Revenue - Direct costs - Allocated overhead'] },
+  { id: 'supply-chain-cost', name: 'Supply Chain Cost Analysis', industry: 'Manufacturing', category: 'Supply Chain', description: 'Analyses freight, warehousing, MOQ, lead time, and supplier price changes.', drivers: ['Purchase cost', 'Freight', 'Warehouse cost', 'MOQ', 'Lead time'], formulas: ['Landed cost = Purchase cost + Freight + Duties + Handling'] },
+  { id: 'sales-pipeline-forecast', name: 'Sales Pipeline Forecast', industry: 'SaaS / Services', category: 'Revenue', description: 'Weights sales opportunities by probability and expected close period.', drivers: ['Pipeline value', 'Probability', 'Close month', 'Sales cycle'], formulas: ['Weighted forecast = Pipeline value * Probability'] },
+  { id: 'saas-metrics', name: 'SaaS MRR / ARR / Churn Model', industry: 'SaaS / Technology', category: 'Revenue', description: 'Tracks recurring revenue, expansion, churn, CAC, and LTV.', drivers: ['Opening MRR', 'New MRR', 'Expansion', 'Churn', 'CAC'], formulas: ['Closing MRR = Opening + New + Expansion - Churn', 'ARR = MRR * 12'] },
+  { id: 'retail-store-profitability', name: 'Retail Store Profitability', industry: 'Retail / Ecommerce', category: 'Performance', description: 'Analyses sales, margin, rent, staffing, shrinkage, and store contribution.', drivers: ['Sales', 'Gross margin', 'Rent', 'Payroll', 'Shrinkage'], formulas: ['Store contribution = Gross profit - Store controllable costs'] },
+  { id: 'ecommerce-cohort', name: 'Ecommerce Cohort and CAC Payback', industry: 'Retail / Ecommerce', category: 'Growth', description: 'Tracks cohort revenue, repeat purchase, CAC payback, and LTV.', drivers: ['CAC', 'Orders', 'AOV', 'Gross margin', 'Repeat rate'], formulas: ['CAC payback months = CAC / Monthly gross profit per customer'] },
+  { id: 'project-profitability', name: 'Project Profitability / WIP', industry: 'Professional Services', category: 'Project Finance', description: 'Measures project revenue, labour, WIP, utilisation, and margin.', drivers: ['Fee', 'Hours', 'Bill rate', 'Cost rate', 'Completion %'], formulas: ['WIP revenue = Fee * Completion %', 'Project margin = Revenue - Labour cost'] },
+  { id: 'hotel-revpar', name: 'Hotel RevPAR and GOP Model', industry: 'Hospitality', category: 'Revenue Management', description: 'Models occupancy, ADR, RevPAR, departmental revenue, and GOP.', drivers: ['Rooms', 'Occupancy', 'ADR', 'F&B revenue', 'Payroll'], formulas: ['RevPAR = Occupancy * ADR', 'Room revenue = Rooms * Occupancy * ADR'] },
+  { id: 'restaurant-prime-cost', name: 'Restaurant Prime Cost Model', industry: 'Hospitality', category: 'Operations Finance', description: 'Tracks food cost, labour cost, prime cost, and margin.', drivers: ['Food sales', 'Food cost', 'Labour cost', 'Occupancy cost'], formulas: ['Prime cost = Food cost + Labour cost', 'Prime cost % = Prime cost / Sales'] },
+  { id: 'property-development', name: 'Property Development Appraisal', industry: 'Real Estate', category: 'Investment', description: 'Models GDV, construction cost, finance cost, profit, and return on cost.', drivers: ['GDV', 'Land cost', 'Build cost', 'Professional fees', 'Finance rate'], formulas: ['Profit = GDV - Total development cost', 'Return on cost = Profit / Cost'] },
+  { id: 'healthcare-service-line', name: 'Healthcare Service Line Profitability', industry: 'Healthcare', category: 'Performance', description: 'Analyses revenue, clinical labour, supplies, utilisation, and contribution by service line.', drivers: ['Patient volume', 'Tariff', 'Clinician cost', 'Supplies', 'Utilisation'], formulas: ['Contribution = Revenue - Clinical cost - Supplies'] },
+  { id: 'transport-route-profitability', name: 'Transport Route Profitability', industry: 'Logistics / Transport', category: 'Operations Finance', description: 'Analyses route revenue, fuel, driver cost, vehicle cost, and utilisation.', drivers: ['Loads', 'Rate/load', 'Miles', 'Fuel cost', 'Driver hours'], formulas: ['Route profit = Revenue - Fuel - Driver - Vehicle cost'] },
+  { id: 'construction-job-costing', name: 'Construction Job Costing', industry: 'Construction', category: 'Project Finance', description: 'Tracks budget, committed cost, actual cost, variations, and margin by job.', drivers: ['Contract value', 'Budget cost', 'Committed cost', 'Actual cost', 'Variations'], formulas: ['Forecast cost = Actual + Remaining committed', 'Margin = Contract value - Forecast cost'] },
+  { id: 'energy-project-economics', name: 'Energy Project Economics', industry: 'Energy / Utilities', category: 'Investment', description: 'Models generation, tariff, opex, capex, debt service, IRR, and DSCR.', drivers: ['Generation', 'Tariff', 'Capex', 'Opex', 'Debt service'], formulas: ['Revenue = Generation * Tariff', 'DSCR = Cash available for debt service / Debt service'] },
+  { id: 'bank-branch-profitability', name: 'Branch / Product Profitability', industry: 'Financial Services', category: 'Performance', description: 'Reviews spread income, fee income, operating cost, losses, and capital usage.', drivers: ['Average balances', 'Spread', 'Fees', 'Loss rate', 'Operating cost'], formulas: ['Net interest income = Balances * Spread', 'Profit = Income - Losses - Opex'] },
+  { id: 'nonprofit-program-cost', name: 'Nonprofit Program Cost and Funding', industry: 'Nonprofit / Public Sector', category: 'Funding', description: 'Compares restricted funding, programme cost, overhead allocation, and funding gap.', drivers: ['Grant funding', 'Programme cost', 'Overhead allocation', 'Beneficiaries'], formulas: ['Funding gap = Total cost - Funding', 'Cost per beneficiary = Cost / Beneficiaries'] }
+];
+
+function currencySymbol() {
+  return { GBP: '£', USD: '$', EUR: '€', NGN: '₦' }[document.getElementById('currency').value] || '';
+}
+
+function formatMoney(value) {
+  var sign = value < 0 ? '-' : '';
+  return sign + currencySymbol() + Math.round(Math.abs(value)).toLocaleString('en-GB');
+}
+
+function formatNumber(value) {
+  return Math.round(value).toLocaleString('en-GB');
+}
+
+function formatPercent(value) {
+  return (Math.round(value * 10) / 10).toLocaleString('en-GB') + '%';
+}
+
+function parseNumber(value) {
+  if (typeof value === 'number') return value;
+  return Number(String(value || '').replace(/[^0-9.-]+/g, '')) || 0;
+}
+
+function demoVarianceItems() {
+  return [
+    { name: 'Revenue', department: 'Sales', type: 'good', budget: 185000, actual: 192500, forecast: 205000 },
+    { name: 'Cost of sales', department: 'Operations', type: 'bad', budget: 71000, actual: 74800, forecast: 77900 },
+    { name: 'Payroll', department: 'Admin', type: 'bad', budget: 52000, actual: 54800, forecast: 54000 },
+    { name: 'Marketing', department: 'Sales', type: 'bad', budget: 14000, actual: 12100, forecast: 16000 },
+    { name: 'Software', department: 'Admin', type: 'bad', budget: 6200, actual: 6800, forecast: 7000 },
+    { name: 'Rent and facilities', department: 'Operations', type: 'bad', budget: 9000, actual: 9000, forecast: 9000 },
+    { name: 'Other operating costs', department: 'Operations', type: 'bad', budget: 11500, actual: 13600, forecast: 12000 }
+  ];
+}
+
+function demoDepartments() {
+  return [
+    { name: 'Sales', revenueShare: 52, payroll: 18000, marketing: 6500, software: 1200, other: 2200 },
+    { name: 'Operations', revenueShare: 30, payroll: 22000, marketing: 1500, software: 2400, other: 4800 },
+    { name: 'Admin', revenueShare: 18, payroll: 12000, marketing: 800, software: 2600, other: 4500 }
+  ];
+}
+
+function escapeHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+  });
+}
+
+function getPeriods() {
+  var count = Number(document.getElementById('periodCount').value);
+  var start = document.getElementById('startMonth').value || '2026-01';
+  var parts = start.split('-').map(Number);
+  var months = [];
+  for (var i = 0; i < count; i += 1) {
+    var date = new Date(parts[0], parts[1] - 1 + i, 1);
+    months.push(date.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' }));
+  }
+  return months;
+}
+
+function calculateModel(scenarioName) {
+  var scenario = scenarioLevers[scenarioName || currentScenario];
+  var periods = getPeriods();
+  var rows = {};
+  var cash = assumptions.openingCash;
+  var previousNwc = 0;
+  periods.forEach(function (_, index) {
+    var growth = assumptions.monthlyGrowth / 100;
+    var revenue = assumptions.startingRevenue * Math.pow(1 + growth, index) * (1 + scenario.revenue / 100);
+    var grossMargin = Math.max(0, Math.min(95, assumptions.grossMargin + scenario.margin)) / 100;
+    var cogs = revenue * (1 - grossMargin);
+    var grossProfit = revenue - cogs;
+    var opexFactor = 1 + scenario.opex / 100;
+    var payroll = assumptions.payroll * opexFactor;
+    var marketing = assumptions.marketing * opexFactor * (1 + index * 0.01);
+    var software = assumptions.software * opexFactor;
+    var rent = assumptions.rent * opexFactor;
+    var otherOpex = assumptions.otherOpex * opexFactor;
+    var ebitda = grossProfit - payroll - marketing - software - rent - otherOpex;
+    var tax = Math.max(0, ebitda) * assumptions.taxRate / 100;
+    var netIncome = ebitda - tax;
+    var wcFactor = 1 + scenario.workingCapital / 100;
+    var receivables = revenue * workingCapital.arDays / 30 * wcFactor;
+    var payables = cogs * workingCapital.apDays / 30 / Math.max(0.2, wcFactor);
+    var inventory = cogs * workingCapital.inventoryDays / 30 * wcFactor;
+    var netWorkingCapital = receivables + inventory - payables;
+    var deltaNwc = index === 0 ? netWorkingCapital : netWorkingCapital - previousNwc;
+    previousNwc = netWorkingCapital;
+    var vatCash = Math.max(0, revenue - cogs) * workingCapital.vatRate / 100;
+    var capex = assumptions.capex;
+    var debtRepayment = workingCapital.debtRepayment;
+    var dividends = workingCapital.dividends;
+    var freeCashFlow = netIncome - capex - deltaNwc - vatCash - debtRepayment - dividends;
+    cash = cash + freeCashFlow;
+    var values = {
+      revenue: revenue,
+      cogs: cogs,
+      grossProfit: grossProfit,
+      payroll: payroll,
+      marketing: marketing,
+      software: software,
+      rent: rent,
+      otherOpex: otherOpex,
+      ebitda: ebitda,
+      tax: tax,
+      netIncome: netIncome,
+      capex: capex,
+      deltaNwc: deltaNwc,
+      vatCash: vatCash,
+      debtRepayment: debtRepayment,
+      dividends: dividends,
+      freeCashFlow: freeCashFlow,
+      endingCash: cash
+    };
+    Object.keys(values).forEach(function (key) {
+      rows[key] = rows[key] || [];
+      rows[key].push(values[key]);
+    });
+  });
+  return { periods: periods, rows: rows };
+}
+
+function scenarioSummary(scenarioName) {
+  var model = calculateModel(scenarioName);
+  var revenue = sum(model.rows.revenue);
+  var ebitda = sum(model.rows.ebitda);
+  var fcf = sum(model.rows.freeCashFlow);
+  var endingCash = model.rows.endingCash[model.rows.endingCash.length - 1];
+  return { name: scenarioName, model: model, revenue: revenue, ebitda: ebitda, fcf: fcf, endingCash: endingCash, margin: revenue ? ebitda / revenue * 100 : 0 };
+}
+
+function sum(values) {
+  return values.reduce(function (total, value) { return total + value; }, 0);
+}
+
+function renderAssumptions() {
+  var container = document.getElementById('assumptionInputs');
+  container.innerHTML = assumptionLabels.map(function (item) {
+    var key = item[0];
+    return '<label class="block">' +
+      '<span class="text-sm font-black text-ink">' + item[1] + '</span>' +
+      '<div class="mt-2 flex overflow-hidden rounded-lg border border-line bg-paper focus-within:border-teal focus-within:ring-4 focus-within:ring-teal/10">' +
+      '<span class="grid w-10 place-items-center text-sm font-black text-gray-500">' + (item[2] === 'percent' ? '%' : currencySymbol()) + '</span>' +
+      '<input data-assumption="' + key + '" type="number" step="0.1" value="' + assumptions[key] + '" class="min-w-0 flex-1 bg-white px-3 py-2 font-bold outline-none">' +
+      '</div></label>';
+  }).join('');
+  container.querySelectorAll('input').forEach(function (input) {
+    input.addEventListener('input', function () {
+      assumptions[input.dataset.assumption] = Number(input.value) || 0;
+      scheduleCalculatedRender();
+    });
+  });
+}
+
+function renderWorkingCapitalInputs() {
+  var container = document.getElementById('workingCapitalInputs');
+  container.innerHTML = workingCapitalLabels.map(function (item) {
+    var key = item[0];
+    var prefix = item[2] === 'money' ? currencySymbol() : item[2] === 'percent' ? '%' : 'd';
+    return '<label class="block">' +
+      '<span class="text-sm font-black text-ink">' + item[1] + '</span>' +
+      '<div class="mt-2 flex overflow-hidden rounded-lg border border-line bg-paper focus-within:border-teal focus-within:ring-4 focus-within:ring-teal/10">' +
+      '<span class="grid w-10 place-items-center text-sm font-black text-gray-500">' + prefix + '</span>' +
+      '<input data-wc="' + key + '" type="number" step="0.1" value="' + workingCapital[key] + '" class="min-w-0 flex-1 bg-white px-3 py-2 font-bold outline-none">' +
+      '</div></label>';
+  }).join('');
+  container.querySelectorAll('input').forEach(function (input) {
+    input.addEventListener('input', function () {
+      workingCapital[input.dataset.wc] = Number(input.value) || 0;
+      scheduleCalculatedRender();
+    });
+  });
+}
+
+function renderScenarioInputs() {
+  var container = document.getElementById('scenarioInputs');
+  container.innerHTML = scenarioLabels.map(function (item) {
+    var key = item[0];
+    var value = scenarioLevers[currentScenario][key];
+    return '<label class="block rounded-lg border border-line bg-white p-4">' +
+      '<span class="flex items-center justify-between gap-3"><span class="font-black text-ink">' + item[1] + '</span><output class="font-black text-teal">' + formatPercent(value) + '</output></span>' +
+      '<span class="mt-1 block text-sm text-gray-500">' + item[2] + '</span>' +
+      '<input data-lever="' + key + '" type="range" min="-30" max="30" step="1" value="' + value + '" class="mt-4 w-full">' +
+      '</label>';
+  }).join('');
+  container.querySelectorAll('input').forEach(function (input) {
+    input.addEventListener('input', function () {
+      scenarioLevers[currentScenario][input.dataset.lever] = Number(input.value);
+      input.parentElement.querySelector('output').textContent = formatPercent(Number(input.value));
+      renderCalculated();
+    });
+  });
+}
+
+function renderMetrics(model) {
+  var last = model.periods.length - 1;
+  var revenue = sum(model.rows.revenue);
+  var ebitda = sum(model.rows.ebitda);
+  var cash = model.rows.endingCash[last];
+  var fcf = sum(model.rows.freeCashFlow);
+  var metrics = [
+    ['Forecast revenue', formatMoney(revenue), 'Total for selected horizon'],
+    ['EBITDA', formatMoney(ebitda), formatPercent(revenue ? ebitda / revenue * 100 : 0) + ' margin'],
+    ['Free cash flow', formatMoney(fcf), fcf >= 0 ? 'Cash generative' : 'Cash absorption'],
+    ['Ending cash', formatMoney(cash), cash >= 0 ? 'Positive runway' : 'Funding gap']
+  ];
+  document.getElementById('metricCards').innerHTML = metrics.map(function (metric) {
+    return '<article class="rounded-lg bg-white p-4 text-ink">' +
+      '<p class="text-xs font-black uppercase tracking-[0.14em] text-teal">' + metric[0] + '</p>' +
+      '<p class="mt-2 text-2xl font-black">' + metric[1] + '</p>' +
+      '<p class="mt-1 text-sm font-semibold text-gray-500">' + metric[2] + '</p>' +
+      '</article>';
+  }).join('');
+}
+
+function renderModelTable(model) {
+  document.getElementById('modelHead').innerHTML = '<tr><th class="px-4 py-3">Line</th>' + model.periods.map(function (period) {
+    return '<th class="px-4 py-3 text-right">' + period + '</th>';
+  }).join('') + '</tr>';
+  document.getElementById('modelBody').innerHTML = modelRows.map(function (row) {
+    var key = row[0];
+    var important = ['grossProfit', 'ebitda', 'netIncome', 'freeCashFlow', 'endingCash'].indexOf(key) !== -1;
+    return '<tr class="' + (important ? 'bg-paper font-black' : '') + '">' +
+      '<th class="whitespace-nowrap px-4 py-3 text-left">' + row[1] + '</th>' +
+      model.rows[key].map(function (value) {
+        var colour = value < 0 ? 'text-clay' : 'text-ink';
+        return '<td class="whitespace-nowrap px-4 py-3 text-right font-semibold ' + colour + '">' + formatMoney(value) + '</td>';
+      }).join('') + '</tr>';
+  }).join('');
+}
+
+function varianceResult(item) {
+  var variance = item.actual - item.budget;
+  var percent = item.budget ? variance / Math.abs(item.budget) * 100 : 0;
+  var threshold = Number(document.getElementById('threshold').value);
+  var favourable = item.type === 'good' ? variance >= 0 : variance <= 0;
+  var material = Math.abs(percent) >= threshold;
+  var status = material ? (favourable ? 'Favourable' : 'Unfavourable') : 'On track';
+  var forecastGap = item.forecast - item.actual;
+  var action = Math.abs(forecastGap) > Math.abs(item.actual * threshold / 100) ? 'Reset forecast' : 'Monitor next close';
+  return { variance: variance, percent: percent, status: status, material: material, favourable: favourable, forecastGap: forecastGap, action: action };
+}
+
+function commentaryFor(item) {
+  var result = varianceResult(item);
+  var direction = result.variance >= 0 ? 'above' : 'below';
+  var quality = result.status === 'Unfavourable' ? 'requires action' : result.status === 'Favourable' ? 'supports the plan' : 'is within tolerance';
+  return item.name + ' is ' + formatMoney(Math.abs(result.variance)) + ' ' + direction + ' budget (' + formatPercent(Math.abs(result.percent)) + '). ' + item.department + ' owns the follow-up; current view ' + quality + '. ' + result.action + '.';
+}
+
+function renderVarianceRows() {
+  var threshold = Number(document.getElementById('threshold').value);
+  document.getElementById('thresholdOut').textContent = threshold + '%';
+  document.getElementById('varianceRows').innerHTML = varianceItems.map(function (item, index) {
+    var result = varianceResult(item);
+    var statusClass = result.status === 'Unfavourable' ? 'bg-clay/10 text-clay' : result.status === 'Favourable' ? 'bg-teal/10 text-teal' : 'bg-paper text-ink';
+    return '<div class="grid grid-cols-[minmax(10rem,1.1fr)_minmax(7rem,0.8fr)_repeat(3,minmax(7rem,0.8fr))_minmax(12rem,1fr)] items-center px-4 py-3">' +
+      '<div><input data-var-index="' + index + '" data-field="name" type="text" value="' + escapeHtml(item.name) + '" class="w-full rounded-lg border border-transparent bg-transparent px-2 py-2 font-black outline-none focus:border-teal focus:bg-white"></div>' +
+      '<div class="px-2"><input data-var-index="' + index + '" data-field="department" type="text" value="' + escapeHtml(item.department || '') + '" class="w-full rounded-lg border border-line bg-paper px-3 py-2 font-bold outline-none focus:border-teal focus:bg-white"></div>' +
+      ['budget', 'actual', 'forecast'].map(function (field) {
+        return '<div class="px-2"><input data-var-index="' + index + '" data-field="' + field + '" type="number" step="100" value="' + item[field] + '" class="w-full rounded-lg border border-line bg-paper px-3 py-2 text-right font-bold outline-none focus:border-teal focus:bg-white"></div>';
+      }).join('') +
+      '<div class="px-2"><span class="inline-flex rounded-lg px-2 py-1 text-xs font-black ' + statusClass + '">' + result.status + '</span><p class="mt-1 text-sm font-semibold text-gray-600">' + formatMoney(result.variance) + ' / ' + formatPercent(result.percent) + '</p><p class="text-xs text-gray-500">' + result.action + '</p></div>' +
+      '</div>';
+  }).join('');
+  document.querySelectorAll('[data-var-index]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      var item = varianceItems[Number(input.dataset.varIndex)];
+      item[input.dataset.field] = ['name', 'department'].indexOf(input.dataset.field) !== -1 ? input.value : Number(input.value) || 0;
+      renderCalculated();
+    });
+  });
+}
+
+function renderDepartments() {
+  document.getElementById('departmentRows').innerHTML = departments.map(function (dept, index) {
+    return '<div class="grid department-grid items-center px-4 py-3">' +
+      '<div><input data-dept-index="' + index + '" data-field="name" type="text" value="' + escapeHtml(dept.name) + '" class="w-full rounded-lg border border-transparent bg-transparent px-2 py-2 font-black outline-none focus:border-teal focus:bg-white"></div>' +
+      ['revenueShare', 'payroll', 'marketing', 'software', 'other'].map(function (field) {
+        return '<div class="px-2"><input data-dept-index="' + index + '" data-field="' + field + '" type="number" step="0.1" value="' + dept[field] + '" class="w-full rounded-lg border border-line bg-paper px-3 py-2 text-right font-bold outline-none focus:border-teal focus:bg-white"></div>';
+      }).join('') +
+      '</div>';
+  }).join('');
+  document.querySelectorAll('[data-dept-index]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      var dept = departments[Number(input.dataset.deptIndex)];
+      dept[input.dataset.field] = input.dataset.field === 'name' ? input.value : Number(input.value) || 0;
+      renderCalculated();
+    });
+  });
+}
+
+function renderCashBridge(model) {
+  var bridge = [
+    ['Net income', sum(model.rows.netIncome)],
+    ['Capital expenditure', -sum(model.rows.capex)],
+    ['Working capital movement', -sum(model.rows.deltaNwc)],
+    ['VAT / sales tax cash', -sum(model.rows.vatCash)],
+    ['Debt repayment', -sum(model.rows.debtRepayment)],
+    ['Free cash flow', sum(model.rows.freeCashFlow)]
+  ];
+  document.getElementById('cashBridge').innerHTML = bridge.map(function (item) {
+    var positive = item[1] >= 0;
+    return '<article class="rounded-lg border border-line bg-paper p-4">' +
+      '<p class="text-xs font-black uppercase tracking-[0.14em] text-gray-500">' + item[0] + '</p>' +
+      '<p class="mt-2 text-2xl font-black ' + (positive ? 'text-ink' : 'text-clay') + '">' + formatMoney(item[1]) + '</p>' +
+      '</article>';
+  }).join('');
+  document.getElementById('cashBridgeStatus').textContent = currentScenario.charAt(0).toUpperCase() + currentScenario.slice(1) + ' scenario';
+}
+
+function renderScenarioComparison() {
+  var scenarios = ['base', 'upside', 'downside'].map(scenarioSummary);
+  var rows = [
+    ['Revenue', 'revenue'],
+    ['EBITDA', 'ebitda'],
+    ['EBITDA margin', 'margin'],
+    ['Free cash flow', 'fcf'],
+    ['Ending cash', 'endingCash']
+  ];
+  document.getElementById('scenarioComparison').innerHTML =
+    '<div class="min-w-[650px]">' +
+    '<div class="grid comparison-grid bg-pine px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-white/72"><span>Metric</span><span>Base</span><span>Upside</span><span>Downside</span></div>' +
+    rows.map(function (row) {
+      return '<div class="grid comparison-grid border-t border-line px-4 py-3 text-sm">' +
+        '<span class="font-black">' + row[0] + '</span>' +
+        scenarios.map(function (scenario) {
+          var value = scenario[row[1]];
+          var display = row[1] === 'margin' ? formatPercent(value) : formatMoney(value);
+          return '<span class="text-right font-semibold">' + display + '</span>';
+        }).join('') +
+        '</div>';
+    }).join('') +
+    '</div>';
+}
+
+function uniqueValues(values) {
+  return Array.from(new Set(values)).sort();
+}
+
+function renderModelLibraryFilters() {
+  var industries = ['All'].concat(uniqueValues(financeModelLibrary.map(function (model) { return model.industry; })));
+  var select = document.getElementById('modelIndustryFilter');
+  select.innerHTML = industries.map(function (industry) {
+    return '<option value="' + escapeHtml(industry) + '">' + escapeHtml(industry) + '</option>';
+  }).join('');
+}
+
+function filteredModelLibrary() {
+  var industry = document.getElementById('modelIndustryFilter').value || 'All';
+  var query = (document.getElementById('modelSearch').value || '').toLowerCase();
+  return financeModelLibrary.filter(function (model) {
+    var industryMatch = industry === 'All' || model.industry === industry;
+    var haystack = [model.name, model.industry, model.category, model.description, model.drivers.join(' '), model.formulas.join(' ')].join(' ').toLowerCase();
+    return industryMatch && (!query || haystack.indexOf(query) !== -1);
+  });
+}
+
+function renderModelLibrary() {
+  var filtered = filteredModelLibrary();
+  var industries = uniqueValues(financeModelLibrary.map(function (model) { return model.industry; })).length;
+  var categories = uniqueValues(financeModelLibrary.map(function (model) { return model.category; })).length;
+  document.getElementById('modelLibrarySummary').innerHTML = [
+    ['Templates', financeModelLibrary.length, 'formula-ready models'],
+    ['Industries', industries, 'covered sectors'],
+    ['Categories', categories, 'finance domains'],
+    ['Showing', filtered.length, 'current results']
+  ].map(function (metric) {
+    return '<article class="rounded-lg border border-line bg-white p-4 shadow-panel"><p class="text-xs font-black uppercase tracking-[0.14em] text-teal">' + metric[0] + '</p><p class="mt-2 text-3xl font-black">' + metric[1] + '</p><p class="mt-1 text-sm font-semibold text-gray-500">' + metric[2] + '</p></article>';
+  }).join('');
+  document.getElementById('modelLibraryGrid').innerHTML = filtered.map(function (model) {
+    return '<article class="rounded-lg border border-line bg-white p-5 shadow-panel">' +
+      '<div class="flex flex-wrap items-center gap-2"><span class="rounded-lg bg-teal/10 px-2 py-1 text-xs font-black text-teal">' + escapeHtml(model.industry) + '</span><span class="rounded-lg bg-paper px-2 py-1 text-xs font-black text-ink">' + escapeHtml(model.category) + '</span></div>' +
+      '<h3 class="mt-4 font-display text-2xl font-bold">' + escapeHtml(model.name) + '</h3>' +
+      '<p class="mt-3 text-sm leading-6 text-gray-600">' + escapeHtml(model.description) + '</p>' +
+      '<p class="mt-4 text-xs font-black uppercase tracking-[0.14em] text-gray-500">Key inputs</p>' +
+      '<p class="mt-2 text-sm leading-6 text-gray-600">' + escapeHtml(model.drivers.join(', ')) + '</p>' +
+      '<div class="mt-5 flex flex-wrap gap-2">' +
+      '<button type="button" data-use-model-id="' + escapeHtml(model.id) + '" class="rounded-lg bg-teal px-4 py-3 text-sm font-black text-white transition hover:bg-pine">Use Interactive</button>' +
+      '<button type="button" data-template-id="' + escapeHtml(model.id) + '" class="rounded-lg bg-pine px-4 py-3 text-sm font-black text-white transition hover:bg-teal">Download Formula Template</button>' +
+      '</div>' +
+      '</article>';
+  }).join('');
+  document.querySelectorAll('[data-use-model-id]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      selectInteractiveModel(button.dataset.useModelId);
+      document.getElementById('interactiveModelWorkspace').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  document.querySelectorAll('[data-template-id]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      downloadModelTemplate(button.dataset.templateId);
+    });
+  });
+}
+
+function getActiveInteractiveModel() {
+  return financeModelLibrary.find(function (model) { return model.id === activeInteractiveModelId; }) || financeModelLibrary[0];
+}
+
+function modelInputKey(input) {
+  return normaliseHeader(input);
+}
+
+function ensureInteractiveInputs(model) {
+  model.drivers.forEach(function (driver, index) {
+    var key = modelInputKey(driver);
+    if (interactiveModelInputs[key] === undefined) {
+      interactiveModelInputs[key] = index === 0 ? 100000 : index === 1 ? 90000 : index === 2 ? 0.1 : 10000;
+    }
+  });
+}
+
+function zeroInteractiveInputs(model) {
+  interactiveModelInputs = {};
+  model.drivers.forEach(function (driver) {
+    interactiveModelInputs[modelInputKey(driver)] = 0;
+  });
+}
+
+function selectInteractiveModel(modelId) {
+  activeInteractiveModelId = modelId;
+  interactiveModelInputs = {};
+  ensureInteractiveInputs(getActiveInteractiveModel());
+  renderInteractiveModel();
+}
+
+function valueForDriver(driver) {
+  return parseNumber(interactiveModelInputs[modelInputKey(driver)]);
+}
+
+function getDriverByWords(model, words, fallbackIndex) {
+  var driver = model.drivers.find(function (item) {
+    var key = normaliseHeader(item);
+    return words.some(function (word) { return key.indexOf(word) !== -1; });
+  });
+  return valueForDriver(driver || model.drivers[fallbackIndex || 0] || '');
+}
+
+function calculateInteractiveModel() {
+  var model = getActiveInteractiveModel();
+  ensureInteractiveInputs(model);
+  var id = model.id;
+  var first = valueForDriver(model.drivers[0] || '');
+  var second = valueForDriver(model.drivers[1] || '');
+  var third = valueForDriver(model.drivers[2] || '');
+  var fourth = valueForDriver(model.drivers[3] || '');
+  var fifth = valueForDriver(model.drivers[4] || '');
+  var metrics = [];
+  var notes = [];
+
+  function push(name, value, kind, note) {
+    metrics.push({ name: name, value: value, kind: kind || 'money', note: note || '' });
+  }
+
+  if (id === 'budget-actual-variance') {
+    var budget = getDriverByWords(model, ['budget'], 0);
+    var actual = getDriverByWords(model, ['actual'], 1);
+    var threshold = getDriverByWords(model, ['threshold'], 3) || 0.1;
+    var variance = actual - budget;
+    var variancePercent = budget ? variance / Math.abs(budget) : 0;
+    push('Variance', variance, 'money', 'Actual less budget');
+    push('Variance %', variancePercent, 'percent', 'Variance divided by budget');
+    push('Materiality threshold', threshold > 1 ? threshold / 100 : threshold, 'percent', 'Review trigger');
+    notes.push(Math.abs(variancePercent) >= (threshold > 1 ? threshold / 100 : threshold) ? 'Variance is material and should be explained by owner, timing, price, volume, or efficiency.' : 'Variance is within the selected threshold.');
+  } else if (id === 'forecast-actual-analysis') {
+    var forecast = getDriverByWords(model, ['forecast'], 0);
+    var actualFa = getDriverByWords(model, ['actual'], 1);
+    var error = actualFa - forecast;
+    push('Forecast error', error, 'money', 'Actual less forecast');
+    push('Forecast accuracy', actualFa ? 1 - Math.abs(error / actualFa) : 0, 'percent', 'Higher is better');
+    notes.push(Math.abs(error) > Math.abs(actualFa * 0.1) ? 'Forecast accuracy needs review; refresh assumptions and timing.' : 'Forecast accuracy is reasonable.');
+  } else if (id === 'break-even') {
+    var fixed = getDriverByWords(model, ['fixed'], 0);
+    var price = getDriverByWords(model, ['price'], 1);
+    var variable = getDriverByWords(model, ['variable'], 2);
+    var contribution = price - variable;
+    push('Contribution per unit', contribution, 'money', 'Price less variable cost');
+    push('Break-even units', contribution ? fixed / contribution : 0, 'number', 'Units required to cover fixed costs');
+    notes.push(contribution <= 0 ? 'Price does not cover variable cost; break-even cannot be achieved without price or cost action.' : 'Break-even volume is calculated from current contribution per unit.');
+  } else if (id === 'cvp-analysis') {
+    var volume = getDriverByWords(model, ['volume'], 0);
+    var cvpPrice = getDriverByWords(model, ['price'], 1);
+    var cvpVariable = getDriverByWords(model, ['variable'], 2);
+    var cvpFixed = getDriverByWords(model, ['fixed'], 3);
+    push('Revenue', volume * cvpPrice, 'money', 'Volume multiplied by price');
+    push('Contribution', volume * (cvpPrice - cvpVariable), 'money', 'Revenue less variable cost');
+    push('Profit', volume * (cvpPrice - cvpVariable) - cvpFixed, 'money', 'Contribution less fixed cost');
+  } else if (id.indexOf('margin') !== -1 || id === 'product-profitability' || id === 'plant-profitability' || id === 'retail-store-profitability') {
+    var revenue = getDriverByWords(model, ['revenue', 'sales', 'fee'], 0);
+    var cost = second + third + fourth + fifth;
+    if (id === 'gross-margin') cost = getDriverByWords(model, ['cogs'], 1);
+    var profit = revenue - cost;
+    push('Profit / contribution', profit, 'money', 'Revenue less relevant costs');
+    push('Margin %', revenue ? profit / revenue : 0, 'percent', 'Profit divided by revenue');
+    notes.push(profit < 0 ? 'The model shows a loss; review pricing, mix, direct cost, and overhead allocation.' : 'The model is profitable on the supplied inputs.');
+  } else if (id.indexOf('variance') !== -1 || id.indexOf('costing') !== -1) {
+    var actualQty = getDriverByWords(model, ['actualquantity', 'actualhours', 'actualoverhead'], 0);
+    var standardQty = getDriverByWords(model, ['standardquantity', 'standardhours', 'absorbed'], 1);
+    var actualRate = getDriverByWords(model, ['actualrate', 'actualprice'], 3);
+    var standardRate = getDriverByWords(model, ['standardrate', 'standardprice'], 2);
+    var rateVariance = actualQty * (actualRate - standardRate);
+    var usageVariance = standardRate * (actualQty - standardQty);
+    push('Rate / price variance', rateVariance, 'money', 'Actual quantity times rate difference');
+    push('Usage / efficiency variance', usageVariance, 'money', 'Standard rate times quantity difference');
+    push('Total variance', rateVariance + usageVariance, 'money', 'Combined variance');
+    notes.push(rateVariance + usageVariance > 0 ? 'Unfavourable cost variance; investigate supplier pricing, labour rate, usage, scrap, or routing standards.' : 'Favourable or neutral variance on supplied inputs.');
+  } else if (id === 'working-capital') {
+    var dso = getDriverByWords(model, ['debtor'], 0);
+    var dpo = getDriverByWords(model, ['creditor'], 1);
+    var dio = getDriverByWords(model, ['inventory'], 2);
+    var wcRevenue = getDriverByWords(model, ['revenue'], 3);
+    var cogs = getDriverByWords(model, ['cogs'], 4);
+    push('Cash conversion cycle', dso + dio - dpo, 'days', 'DSO + DIO - DPO');
+    push('Receivables', wcRevenue * dso / 365, 'money', 'Revenue multiplied by DSO / 365');
+    push('Inventory', cogs * dio / 365, 'money', 'COGS multiplied by DIO / 365');
+    notes.push(dso + dio - dpo > 60 ? 'Cash conversion cycle is long; collections, inventory, and supplier terms should be reviewed.' : 'Cash conversion cycle is within a manageable range.');
+  } else if (id === 'rolling-13-week-cash-flow') {
+    var openingCash13 = getDriverByWords(model, ['openingcash'], 0);
+    var week1Receipts = getDriverByWords(model, ['week1receipts', 'receipts'], 1);
+    var receiptsGrowth = getDriverByWords(model, ['receiptsweeklygrowth'], 2);
+    var supplierPayments = getDriverByWords(model, ['supplier'], 3);
+    var payroll13 = getDriverByWords(model, ['payroll'], 4);
+    var rentFixed = getDriverByWords(model, ['rent', 'fixed'], 5);
+    var taxes13 = getDriverByWords(model, ['tax'], 6);
+    var capex13 = getDriverByWords(model, ['capex'], 7);
+    var debtService13 = getDriverByWords(model, ['debtservice'], 8);
+    var revolver = getDriverByWords(model, ['revolver'], 9);
+    var minCash = getDriverByWords(model, ['minimum', 'buffer'], 10);
+    var covenantEbitda = getDriverByWords(model, ['ebitda'], 11);
+    var covenantDebt = getDriverByWords(model, ['netdebt'], 12);
+    var maxLeverage = getDriverByWords(model, ['maxleverage', 'covenant'], 13) || 3;
+    var growthRate = receiptsGrowth > 1 ? receiptsGrowth / 100 : receiptsGrowth;
+    var cash13 = openingCash13;
+    var minClosingCash = openingCash13;
+    var minLiquidityHeadroom = openingCash13 + revolver - minCash;
+    var cumulativeNetFlow = 0;
+    for (var weekIndex = 0; weekIndex < 13; weekIndex += 1) {
+      var receipts13 = week1Receipts * Math.pow(1 + growthRate, weekIndex);
+      var recurringPayments = supplierPayments + payroll13 + rentFixed;
+      var timedPayments = (weekIndex === 3 || weekIndex === 8 ? taxes13 : 0) + (weekIndex === 5 ? capex13 : 0) + debtService13;
+      var netFlow = receipts13 - recurringPayments - timedPayments;
+      cumulativeNetFlow += netFlow;
+      cash13 += netFlow;
+      minClosingCash = Math.min(minClosingCash, cash13);
+      minLiquidityHeadroom = Math.min(minLiquidityHeadroom, cash13 + revolver - minCash);
+    }
+    var leverage = covenantEbitda ? covenantDebt / covenantEbitda : 0;
+    var covenantHeadroom = maxLeverage - leverage;
+    push('Week 13 closing cash', cash13, 'money', 'Opening cash plus cumulative 13-week net flow');
+    push('Lowest closing cash', minClosingCash, 'money', 'Lowest weekly closing cash across the forecast');
+    push('Minimum liquidity headroom', minLiquidityHeadroom, 'money', 'Lowest available liquidity less minimum cash buffer');
+    push('Cumulative net cash flow', cumulativeNetFlow, 'money', 'Receipts less payments over 13 weeks');
+    push('Leverage ratio', leverage, 'number', 'Net debt divided by covenant EBITDA');
+    push('Covenant headroom', covenantHeadroom, 'number', 'Maximum leverage covenant less forecast leverage');
+    notes.push(minLiquidityHeadroom < 0 ? 'Liquidity headroom is negative in at least one week. Review collections, payment timing, revolver availability, or funding action before covenant pressure builds.' : 'Liquidity headroom remains positive across the 13-week period.');
+    notes.push(covenantHeadroom < 0 ? 'Forecast leverage breaches the selected covenant. Prepare lender communication and mitigation actions.' : 'Forecast leverage remains inside the selected covenant threshold.');
+    notes.push('Use the downloadable formula template for weekly phasing, receipts/payments categories, covenant checks, and board-ready treasury summary.');
+  } else if (id === 'capex-appraisal' || id.indexOf('development') !== -1 || id.indexOf('economics') !== -1) {
+    var investment = getDriverByWords(model, ['investment', 'capex', 'land', 'gdv'], 0);
+    var cashSavings = getDriverByWords(model, ['cash', 'savings', 'tariff'], 1);
+    var life = getDriverByWords(model, ['life'], 2) || 5;
+    var discount = getDriverByWords(model, ['discount', 'finance'], 3) || 0.1;
+    var annual = cashSavings || second;
+    var payback = annual ? investment / annual : 0;
+    var npv = -investment;
+    for (var year = 1; year <= Math.max(1, life); year += 1) npv += annual / Math.pow(1 + (discount > 1 ? discount / 100 : discount), year);
+    push('Payback period', payback, 'number', 'Investment divided by annual cash benefit');
+    push('Indicative NPV', npv, 'money', 'Discounted cash benefit less investment');
+    notes.push(npv >= 0 ? 'Investment clears the indicative NPV test.' : 'Investment does not clear the indicative NPV test on supplied assumptions.');
+  } else if (id === 'saas-metrics') {
+    var opening = getDriverByWords(model, ['opening'], 0);
+    var newMrr = getDriverByWords(model, ['new'], 1);
+    var expansion = getDriverByWords(model, ['expansion'], 2);
+    var churn = getDriverByWords(model, ['churn'], 3);
+    var closing = opening + newMrr + expansion - churn;
+    push('Closing MRR', closing, 'money', 'Opening + new + expansion - churn');
+    push('ARR', closing * 12, 'money', 'Closing MRR multiplied by 12');
+    push('Churn rate', opening ? churn / opening : 0, 'percent', 'Churn divided by opening MRR');
+  } else {
+    var total = model.drivers.reduce(function (sumValue, driver) { return sumValue + valueForDriver(driver); }, 0);
+    var movement = first - second;
+    push('Primary result', total, 'money', 'Sum of supplied model inputs');
+    push('Movement / gap', movement, 'money', 'First input less second input');
+    push('Movement %', second ? movement / Math.abs(second) : 0, 'percent', 'Movement divided by second input');
+    notes.push('Generic analysis is shown because this template has custom business logic. Use the downloadable Excel formula sheet for the full model structure.');
+  }
+
+  if (!notes.length) {
+    var firstMetric = metrics[0];
+    notes.push(firstMetric && firstMetric.value < 0 ? 'Primary result is negative; review the main commercial and cost drivers.' : 'Primary result is positive based on supplied inputs.');
+  }
+  return { model: model, metrics: metrics, notes: notes };
+}
+
+function formatInteractiveValue(metric) {
+  if (metric.kind === 'percent') return formatPercent(metric.value * 100);
+  if (metric.kind === 'number') return formatNumber(metric.value);
+  if (metric.kind === 'days') return formatNumber(metric.value) + ' days';
+  return formatMoney(metric.value);
+}
+
+function renderInteractiveModel() {
+  var model = getActiveInteractiveModel();
+  ensureInteractiveInputs(model);
+  document.getElementById('interactiveModelTitle').textContent = model.name;
+  document.getElementById('interactiveModelDescription').textContent = model.description + ' Data remains in this browser session only.';
+  document.getElementById('interactiveInputFields').innerHTML = model.drivers.map(function (driver) {
+    var key = modelInputKey(driver);
+    return '<label class="block"><span class="text-sm font-black text-ink">' + escapeHtml(driver) + '</span><input data-interactive-input="' + escapeHtml(key) + '" type="number" step="0.01" value="' + (interactiveModelInputs[key] || 0) + '" class="mt-2 w-full rounded-lg border border-line bg-white px-3 py-2 font-bold outline-none focus:border-teal focus:ring-4 focus:ring-teal/10"></label>';
+  }).join('');
+  document.querySelectorAll('[data-interactive-input]').forEach(function (input) {
+    input.addEventListener('input', function () {
+      interactiveModelInputs[input.dataset.interactiveInput] = Number(input.value) || 0;
+      renderInteractiveResults();
+    });
+  });
+  renderInteractiveResults();
+}
+
+function renderInteractiveResults() {
+  var result = calculateInteractiveModel();
+  document.getElementById('interactiveResultSummary').innerHTML = result.metrics.map(function (metric) {
+    var negative = metric.value < 0 && metric.kind !== 'percent';
+    return '<article class="rounded-lg border border-line bg-paper p-4"><p class="text-xs font-black uppercase tracking-[0.14em] text-teal">' + escapeHtml(metric.name) + '</p><p class="mt-2 text-2xl font-black ' + (negative ? 'text-clay' : 'text-ink') + '">' + escapeHtml(formatInteractiveValue(metric)) + '</p><p class="mt-1 text-sm text-gray-500">' + escapeHtml(metric.note) + '</p></article>';
+  }).join('');
+  document.getElementById('interactiveInterpretation').innerHTML = '<p class="font-black text-ink">Interpretation</p><ul class="mt-2 space-y-2">' + result.notes.map(function (note) { return '<li>' + escapeHtml(note) + '</li>'; }).join('') + '</ul>';
+  document.getElementById('interactiveFormulaPreview').innerHTML = '<p class="font-black text-ink">Formula logic</p><ul class="mt-2 space-y-2">' + result.model.formulas.map(function (formula) { return '<li>' + escapeHtml(formula) + '</li>'; }).join('') + '</ul>';
+}
+
+function applyInteractiveObjects(objects) {
+  var model = getActiveInteractiveModel();
+  objects.forEach(function (object) {
+    var inputName = getField(object, ['input', 'driver', 'field', 'metric', 'name']);
+    var value = getField(object, ['value', 'amount', 'actual', 'input value']);
+    if (inputName) {
+      interactiveModelInputs[modelInputKey(inputName)] = parseNumber(value);
+    } else {
+      model.drivers.forEach(function (driver) {
+        var fieldValue = getField(object, [driver]);
+        if (fieldValue !== '') interactiveModelInputs[modelInputKey(driver)] = parseNumber(fieldValue);
+      });
+    }
+  });
+  renderInteractiveModel();
+}
+
+function handleInteractivePaste() {
+  var text = document.getElementById('interactiveModelPaste').value;
+  if (!text.trim()) return;
+  applyInteractiveObjects(rowsToObjects(parseCsv(text)));
+}
+
+function handleInteractiveFile(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function (loadEvent) {
+    if (/\.xlsx?$/.test(file.name.toLowerCase())) {
+      if (!window.XLSX) return;
+      var workbook = XLSX.read(loadEvent.target.result, { type: 'array' });
+      var sheet = workbook.Sheets[workbook.SheetNames[0]];
+      applyInteractiveObjects(rowsToObjects(XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' })));
+    } else {
+      applyInteractiveObjects(rowsToObjects(parseCsv(loadEvent.target.result)));
+    }
+  };
+  if (/\.xlsx?$/.test(file.name.toLowerCase())) reader.readAsArrayBuffer(file); else reader.readAsText(file);
+}
+
+function modelTemplateRows(model) {
+  if (model.id === 'rolling-13-week-cash-flow') return rolling13WeekCashFlowTemplateRows(model);
+  var driverRows = model.drivers.map(function (driver, index) {
+    return [driver, index + 1 === 1 ? 100000 : index + 1 === 2 ? 90000 : index + 1 === 3 ? 0.1 : 10000, 'Replace with your value'];
+  });
+  var formulaRows = model.formulas.map(function (formula) {
+    return [formula];
+  });
+  var analysisRows = [
+    ['Metric', 'Formula / Value', 'Notes'],
+    ['Primary result', formulaCell('SUM(Inputs!B2:B20)', 0), 'Linked to input values'],
+    ['Variance / movement', formulaCell('Inputs!B2-Inputs!B3', 0), 'Generic movement formula'],
+    ['Variance %', formulaCell('IFERROR((Inputs!B2-Inputs!B3)/ABS(Inputs!B3),0)', 0), 'Format as percentage in Excel'],
+    ['Sensitivity +10%', formulaCell('B2*1.1', 0), 'Upside sensitivity'],
+    ['Sensitivity -10%', formulaCell('B2*0.9', 0), 'Downside sensitivity']
+  ];
+  return {
+    cover: [
+      ['Model', model.name],
+      ['Industry', model.industry],
+      ['Category', model.category],
+      ['Purpose', model.description],
+      ['How to use', 'Replace sample inputs in the Inputs sheet. Review formulas in the Analysis sheet. Add periods, products, departments, or sites as needed.'],
+      ['Formula mode', 'Enabled']
+    ],
+    inputs: [['Input', 'Value', 'Notes']].concat(driverRows),
+    analysis: analysisRows,
+    formulas: [['Formula logic']].concat(formulaRows),
+    checks: [
+      ['Check', 'Result', 'Formula'],
+      ['Inputs populated', formulaCell('COUNTA(Inputs!B2:B20)', 0), 'Counts non-empty input values'],
+      ['Primary result positive', formulaCell('IF(Analysis!B2>=0,"Pass","Review")', 0), 'Basic reasonableness check']
+    ]
+  };
+}
+
+function rolling13WeekCashFlowTemplateRows(model) {
+  var weekHeaders = Array.from({ length: 13 }, function (_, index) { return 'Week ' + (index + 1); });
+  var weeklyRows = [
+    ['Line'].concat(weekHeaders),
+    ['Opening cash'].concat(weekHeaders.map(function (_, index) {
+      return index === 0 ? formulaCell('Assumptions!$B$2', 0) : formulaCell(excelCol(index + 1) + '17', 0);
+    })),
+    ['Customer receipts'].concat(weekHeaders.map(function (_, index) {
+      return index === 0 ? formulaCell('Assumptions!$B$3', 0) : formulaCell(excelCol(index + 1) + '3*(1+Assumptions!$B$4)', 0);
+    })),
+    ['Other receipts'].concat(weekHeaders.map(function () { return 0; })),
+    ['Total receipts'].concat(weekHeaders.map(function (_, index) {
+      var col = excelCol(index + 2);
+      return formulaCell('SUM(' + col + '3:' + col + '4)', 0);
+    })),
+    ['Supplier payments'].concat(weekHeaders.map(function () { return formulaCell('Assumptions!$B$5', 0); })),
+    ['Payroll'].concat(weekHeaders.map(function () { return formulaCell('Assumptions!$B$6', 0); })),
+    ['Rent and fixed costs'].concat(weekHeaders.map(function () { return formulaCell('Assumptions!$B$7', 0); })),
+    ['Taxes'].concat(weekHeaders.map(function (_, index) { return index === 3 || index === 8 ? formulaCell('Assumptions!$B$8', 0) : 0; })),
+    ['Capex'].concat(weekHeaders.map(function (_, index) { return index === 5 ? formulaCell('Assumptions!$B$9', 0) : 0; })),
+    ['Debt service'].concat(weekHeaders.map(function () { return formulaCell('Assumptions!$B$10', 0); })),
+    ['Other payments'].concat(weekHeaders.map(function () { return 0; })),
+    ['Total payments'].concat(weekHeaders.map(function (_, index) {
+      var col = excelCol(index + 2);
+      return formulaCell('SUM(' + col + '6:' + col + '12)', 0);
+    })),
+    ['Net cash flow'].concat(weekHeaders.map(function (_, index) {
+      var col = excelCol(index + 2);
+      return formulaCell(col + '5-' + col + '13', 0);
+    })),
+    ['Cumulative net flow'].concat(weekHeaders.map(function (_, index) {
+      var col = excelCol(index + 2);
+      return index === 0 ? formulaCell(col + '14', 0) : formulaCell(excelCol(index + 1) + '15+' + col + '14', 0);
+    })),
+    ['Available liquidity'].concat(weekHeaders.map(function (_, index) {
+      var col = excelCol(index + 2);
+      return formulaCell(col + '17+Assumptions!$B$11', 0);
+    })),
+    ['Closing cash'].concat(weekHeaders.map(function (_, index) {
+      var col = excelCol(index + 2);
+      return formulaCell(col + '2+' + col + '14', 0);
+    })),
+    ['Minimum cash buffer'].concat(weekHeaders.map(function () { return formulaCell('Assumptions!$B$12', 0); })),
+    ['Liquidity headroom'].concat(weekHeaders.map(function (_, index) {
+      var col = excelCol(index + 2);
+      return formulaCell(col + '16-' + col + '18', 0);
+    })),
+    ['Status'].concat(weekHeaders.map(function (_, index) {
+      var col = excelCol(index + 2);
+      return { f: 'IF(' + col + '19<0,"Funding action","OK")', v: 'OK', t: 's' };
+    }))
+  ];
+  return {
+    cover: [
+      ['Model', model.name],
+      ['Industry', model.industry],
+      ['Category', model.category],
+      ['Purpose', '13-week direct cash forecast for treasury control, liquidity headroom, covenant monitoring, and lender communication.'],
+      ['How to use', 'Update Assumptions and weekly timing rows. Review Weekly Cash Flow, Covenant Dashboard, Funding Actions, and Control Checks. Roll forward weekly by replacing actuals and adding a new week.'],
+      ['Formula mode', 'Enabled']
+    ],
+    inputs: [
+      ['Input', 'Value', 'Notes'],
+      ['Opening cash', 250000, 'Cash available at the start of week 1'],
+      ['Week 1 receipts', 180000, 'Expected customer collections in week 1'],
+      ['Receipts weekly growth %', 0.01, 'Use decimal format in Excel'],
+      ['Supplier payments', 85000, 'Recurring weekly supplier payments'],
+      ['Payroll', 42000, 'Weekly payroll or phased payroll equivalent'],
+      ['Rent and fixed costs', 12000, 'Recurring weekly fixed payments'],
+      ['Taxes', 35000, 'Timed into weeks 4 and 9 in the model'],
+      ['Capex', 50000, 'Timed into week 6 in the model'],
+      ['Debt service', 15000, 'Weekly debt service or phased equivalent'],
+      ['Revolver availability', 200000, 'Undrawn facility availability'],
+      ['Minimum cash buffer', 100000, 'Board or lender minimum liquidity threshold'],
+      ['Covenant EBITDA', 1200000, 'Trailing or forecast covenant EBITDA'],
+      ['Covenant net debt', 2800000, 'Debt less cash depending on facility definition'],
+      ['Max leverage covenant', 3, 'Maximum permitted leverage ratio']
+    ],
+    weekly: weeklyRows,
+    analysis: [
+      ['Metric', 'Formula / Value', 'Notes'],
+      ['Lowest closing cash', formulaCell('MIN(\'Weekly Cash Flow\'!B17:N17)', 0), 'Lowest weekly closing cash'],
+      ['Lowest liquidity headroom', formulaCell('MIN(\'Weekly Cash Flow\'!B19:N19)', 0), 'Lowest available liquidity less minimum cash buffer'],
+      ['Week 13 closing cash', formulaCell('\'Weekly Cash Flow\'!N17', 0), 'Closing cash at the end of week 13'],
+      ['Cumulative net cash flow', formulaCell('\'Weekly Cash Flow\'!N15', 0), 'Total net movement across 13 weeks'],
+      ['Leverage ratio', formulaCell('Assumptions!B14/Assumptions!B13', 0), 'Net debt divided by covenant EBITDA'],
+      ['Covenant headroom', formulaCell('Assumptions!B15-B6', 0), 'Max leverage covenant less leverage ratio'],
+      ['Overall status', { f: 'IF(OR(B3<0,B7<0),"Review","OK")', v: 'OK', t: 's' }, 'Flags liquidity or covenant risk']
+    ],
+    covenant: [
+      ['Covenant', 'Forecast', 'Limit', 'Headroom', 'Status'],
+      ['Minimum liquidity', formulaCell('MIN(\'Weekly Cash Flow\'!B16:N16)', 0), formulaCell('Assumptions!B12', 0), formulaCell('B2-C2', 0), { f: 'IF(D2<0,"Breach risk","OK")', v: 'OK', t: 's' }],
+      ['Leverage', formulaCell('Assumptions!B14/Assumptions!B13', 0), formulaCell('Assumptions!B15', 0), formulaCell('C3-B3', 0), { f: 'IF(D3<0,"Breach risk","OK")', v: 'OK', t: 's' }],
+      ['Week 13 closing cash', formulaCell('\'Weekly Cash Flow\'!N17', 0), formulaCell('Assumptions!B12', 0), formulaCell('B4-C4', 0), { f: 'IF(D4<0,"Review","OK")', v: 'OK', t: 's' }]
+    ],
+    funding: [
+      ['Action', 'Trigger', 'Owner', 'Target Week', 'Status'],
+      ['Accelerate collections', 'Headroom below buffer or large overdue receipts', 'Finance / Credit Control', 'Week 1', 'Open'],
+      ['Defer discretionary spend', 'Liquidity headroom below threshold', 'Finance / Operations', 'Week 1', 'Open'],
+      ['Draw revolver', 'Closing cash below minimum buffer', 'CFO / Treasury', 'As required', 'Open'],
+      ['Prepare lender update', 'Covenant headroom tight or negative', 'CFO', 'Before reporting date', 'Open'],
+      ['Refresh forecast weekly', 'Actual receipts or payments differ from forecast', 'Finance', 'Every week', 'Open']
+    ],
+    formulas: [
+      ['Formula logic'],
+      ['Closing cash = Opening cash + Total receipts - Total payments'],
+      ['Available liquidity = Closing cash + Revolver availability'],
+      ['Liquidity headroom = Available liquidity - Minimum cash buffer'],
+      ['Leverage ratio = Covenant net debt / Covenant EBITDA'],
+      ['Covenant headroom = Max leverage covenant - Leverage ratio'],
+      ['Status = OK unless liquidity headroom or covenant headroom is negative']
+    ],
+    checks: [
+      ['Check', 'Result', 'Formula'],
+      ['All 13 weeks populated', formulaCell('COUNTA(\'Weekly Cash Flow\'!B1:N1)', 13), 'Counts weekly columns'],
+      ['No negative liquidity headroom', { f: 'IF(MIN(\'Weekly Cash Flow\'!B19:N19)>=0,"Pass","Review")', v: 'Pass', t: 's' }, 'Flags weeks where available liquidity falls below buffer'],
+      ['Covenant leverage inside limit', { f: 'IF(\'Covenant Dashboard\'!D3>=0,"Pass","Review")', v: 'Pass', t: 's' }, 'Checks leverage headroom'],
+      ['Week 13 cash above buffer', { f: 'IF(\'Weekly Cash Flow\'!N17>=Assumptions!B12,"Pass","Review")', v: 'Pass', t: 's' }, 'Checks final week cash']
+    ]
+  };
+}
+
+function appendModelTemplateSheets(wb, model, prefix) {
+  var rows = modelTemplateRows(model);
+  if (model.id === 'rolling-13-week-cash-flow') {
+    addSheet(wb, 'Cover', rows.cover, [22, 90]);
+    addSheet(wb, 'Assumptions', rows.inputs, [32, 18, 58]);
+    addSheet(wb, 'Weekly Cash Flow', rows.weekly, [26].concat(Array(13).fill(14)));
+    addSheet(wb, 'Analysis', rows.analysis, [28, 18, 58]);
+    addSheet(wb, 'Covenant Dashboard', rows.covenant, [28, 16, 16, 16, 18]);
+    addSheet(wb, 'Funding Actions', rows.funding, [34, 48, 22, 18, 16]);
+    addSheet(wb, 'Formula Logic', rows.formulas, [100]);
+    addSheet(wb, 'Control Checks', rows.checks, [32, 18, 60]);
+    return;
+  }
+  var safePrefix = prefix || model.name.slice(0, 18).replace(/[\[\]\*\/\\\?\:]/g, '');
+  addSheet(wb, safePrefix + ' Cover', rows.cover, [22, 80]);
+  addSheet(wb, safePrefix + ' Inputs', rows.inputs, [30, 16, 42]);
+  if (rows.weekly) addSheet(wb, safePrefix + ' Weekly Model', rows.weekly, [26].concat(Array(13).fill(14)));
+  addSheet(wb, safePrefix + ' Analysis', rows.analysis, [28, 18, 44]);
+  if (rows.covenant) addSheet(wb, safePrefix + ' Covenants', rows.covenant, [28, 16, 16, 16, 18]);
+  if (rows.funding) addSheet(wb, safePrefix + ' Actions', rows.funding, [34, 48, 22, 18, 16]);
+  addSheet(wb, safePrefix + ' Formulas', rows.formulas, [100]);
+  addSheet(wb, safePrefix + ' Checks', rows.checks, [28, 18, 48]);
+}
+
+function downloadModelTemplate(modelId) {
+  if (!window.XLSX) {
+    document.getElementById('exportStatus').textContent = 'Excel library did not load. Check the network connection and try again.';
+    return;
+  }
+  var model = financeModelLibrary.find(function (item) { return item.id === modelId; });
+  if (!model) return;
+  var wb = XLSX.utils.book_new();
+  wb.Props = { Title: model.name + ' Template', Subject: model.description, Author: 'Zequence Digital UK Limited', CreatedDate: new Date() };
+  appendModelTemplateSheets(wb, model, '');
+  XLSX.writeFile(wb, model.id + '-formula-template.xlsx');
+}
+
+function downloadAllModelTemplates() {
+  if (!window.XLSX) {
+    document.getElementById('exportStatus').textContent = 'Excel library did not load. Check the network connection and try again.';
+    return;
+  }
+  var wb = XLSX.utils.book_new();
+  wb.Props = { Title: 'Finance Model Template Library', Subject: 'Formula model templates across industries', Author: 'Zequence Digital UK Limited', CreatedDate: new Date() };
+  addSheet(wb, 'Catalogue', [['Model', 'Industry', 'Category', 'Description', 'Key inputs', 'Formula logic']].concat(financeModelLibrary.map(function (model) {
+    return [model.name, model.industry, model.category, model.description, model.drivers.join(', '), model.formulas.join(' | ')];
+  })), [34, 24, 24, 70, 60, 80]);
+  financeModelLibrary.forEach(function (model, index) {
+    var prefix = String(index + 1).padStart(2, '0') + ' ' + model.name.slice(0, 14).replace(/[\[\]\*\/\\\?\:]/g, '');
+    appendModelTemplateSheets(wb, model, prefix);
+  });
+  XLSX.writeFile(wb, 'finance-model-template-library.xlsx');
+}
+
+function downloadModelCatalogue() {
+  var csv = 'Model,Industry,Category,Description,Key inputs,Formula logic\n' + financeModelLibrary.map(function (model) {
+    return [model.name, model.industry, model.category, model.description, model.drivers.join('; '), model.formulas.join('; ')].map(function (value) {
+      return '"' + String(value).replace(/"/g, '""') + '"';
+    }).join(',');
+  }).join('\n');
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'finance-model-template-catalogue.csv';
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function downloadCsv(filename, rows) {
+  var csv = rows.map(function (row) {
+    return row.map(function (value) {
+      return '"' + String(value == null ? '' : value).replace(/"/g, '""') + '"';
+    }).join(',');
+  }).join('\n');
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function clientDataPackSheets() {
+  return {
+    overview: [
+      ['Client Data Request Pack'],
+      ['Purpose', 'Collect the minimum finance, operating, and KPI data required to build a custom finance model pack.'],
+      ['Storage note', 'Only submit data through your preferred secure channel. This browser tool keeps working data in session storage only.'],
+      [],
+      ['Step', 'Action', 'Owner', 'Status'],
+      ['1', 'Confirm industry, business model, reporting cadence, and decisions the pack must support', 'Client / Zequence', 'Open'],
+      ['2', 'Export management accounts, chart of accounts, budget, forecast, and KPI data', 'Client', 'Open'],
+      ['3', 'Map source files to the requested tabs and identify gaps', 'Client / Zequence', 'Open'],
+      ['4', 'Agree model outputs, review dates, and formula protection requirements', 'Client / Zequence', 'Open']
+    ],
+    files: [
+      ['Data Area', 'File / Extract Requested', 'Required', 'Typical Format', 'Notes'],
+      ['General ledger', 'Trial balance or P&L by month', 'Yes', 'xlsx/csv', 'At least 12-24 months where available'],
+      ['Chart of accounts', 'Account code, account name, type, reporting group', 'Yes', 'xlsx/csv', 'Needed for mapping and variance logic'],
+      ['Budget', 'Budget by month, department, account, project, product or site', 'Yes', 'xlsx/csv', 'Use the most recent approved budget'],
+      ['Actuals', 'Actuals by month, department, account, project, product or site', 'Yes', 'xlsx/csv', 'Include year-to-date actuals'],
+      ['Forecast', 'Latest forecast or rolling forecast', 'Optional', 'xlsx/csv', 'Useful for budget-vs-forecast-vs-actual analysis'],
+      ['Sales', 'Revenue by customer, product, region, channel, contract or SKU', 'Optional', 'xlsx/csv', 'Needed for PVM, cohort, ARR, margin, mix and pricing models'],
+      ['Costing', 'BOM, routings, labour hours, standard costs and actual costs', 'Manufacturing', 'xlsx/csv', 'Needed for standard costing and production variance'],
+      ['Inventory', 'Inventory ageing, stock movement, receipts, issues, write-offs', 'Optional', 'xlsx/csv', 'Needed for working capital and stock models'],
+      ['People', 'Headcount, payroll, contractor costs, department, start dates', 'Optional', 'xlsx/csv', 'Needed for payroll and workforce planning'],
+      ['Working capital', 'Debtor days, creditor days, payment terms, receivables, payables', 'Optional', 'xlsx/csv', 'Needed for cash timing'],
+      ['Debt and capex', 'Loan schedules, interest, repayments, capex plan, asset register', 'Optional', 'xlsx/csv', 'Needed for cash flow and covenant models'],
+      ['Board pack', 'Existing monthly report, KPI definitions, commentary examples', 'Optional', 'pdf/xlsx/pptx', 'Helps match management reporting style']
+    ],
+    dictionary: [
+      ['Field', 'Description', 'Required', 'Example'],
+      ['Period', 'Month, week, or quarter in a consistent date format', 'Yes', '2026-01'],
+      ['Entity', 'Company, branch, site, project, or legal entity', 'Optional', 'London Plant'],
+      ['Department', 'Cost centre or accountable team', 'Optional', 'Operations'],
+      ['Account Code', 'General ledger account code', 'Yes', '4000'],
+      ['Account Name', 'General ledger account name', 'Yes', 'Product revenue'],
+      ['Line Type', 'Revenue, COGS, opex, capex, cash, balance sheet, KPI', 'Yes', 'Revenue'],
+      ['Budget', 'Approved budget amount for the period', 'Yes', '125000'],
+      ['Actual', 'Actual amount for the period', 'Yes', '118500'],
+      ['Forecast', 'Latest forecast amount for the period', 'Optional', '130000'],
+      ['Driver', 'Operational driver linked to the financial line', 'Optional', 'Units sold'],
+      ['Quantity', 'Volume or units', 'Optional', '2400'],
+      ['Rate', 'Price, cost, wage rate, yield, churn, utilisation or conversion metric', 'Optional', '52.50'],
+      ['Currency', 'Transaction or reporting currency', 'Optional', 'GBP']
+    ],
+    kpis: [
+      ['Industry / Pack', 'Recommended KPI', 'Formula / Definition'],
+      ['Manufacturing', 'Standard cost variance', 'Actual cost less standard cost'],
+      ['Manufacturing', 'Production volume variance', 'Actual production less budgeted production at standard margin'],
+      ['Manufacturing', 'Yield / scrap rate', 'Scrap units divided by total produced units'],
+      ['SaaS', 'ARR / MRR', 'Recurring subscription revenue normalised annually or monthly'],
+      ['SaaS', 'Net revenue retention', 'Opening recurring revenue plus expansion less contraction and churn divided by opening recurring revenue'],
+      ['Retail / Ecommerce', 'Gross margin by SKU', 'Net sales less product cost by SKU'],
+      ['Retail / Ecommerce', 'Inventory cover', 'Inventory value divided by average cost of goods sold'],
+      ['Construction', 'Job margin', 'Contract revenue less job costs'],
+      ['Hospitality', 'RevPAR / occupancy', 'Room revenue per available room and occupied rooms divided by available rooms'],
+      ['Healthcare', 'Revenue per clinician hour', 'Revenue divided by productive clinician hours'],
+      ['Logistics', 'Cost per mile / route', 'Route cost divided by miles or completed routes']
+    ],
+    scope: [
+      ['Question', 'Client Response'],
+      ['What decision must this model support?', ''],
+      ['Which users will maintain it?', ''],
+      ['How often will it be refreshed?', 'Monthly'],
+      ['Which systems are source of truth?', ''],
+      ['Which outputs are required?', 'Excel workbook, board pack, dashboard, commentary'],
+      ['Should formulas be visible, locked, or split by input/calculation/output?', ''],
+      ['Are there audit, investor, lender, or board requirements?', ''],
+      ['Target delivery date', ''],
+      ['Success criteria', '']
+    ],
+    readiness: [
+      ['Check', 'Score 0-2', 'Guidance'],
+      ['Monthly actuals are available by account', 0, '0 missing, 1 partial, 2 complete'],
+      ['Budget and forecast are available in comparable structure', 0, '0 missing, 1 needs mapping, 2 comparable'],
+      ['Operational KPI drivers are available', 0, '0 missing, 1 partial, 2 complete'],
+      ['Departments, sites, products, or projects are consistently coded', 0, '0 inconsistent, 1 partial, 2 consistent'],
+      ['Data owner and refresh process are known', 0, '0 unknown, 1 partial, 2 confirmed'],
+      ['Total readiness score', { f: 'SUM(B2:B6)', v: 0, t: 'n' }, '8-10 ready, 5-7 workable, below 5 needs data cleanup']
+    ]
+  };
+}
+
+function downloadClientDataPack() {
+  var sheets = clientDataPackSheets();
+  if (!window.XLSX) {
+    downloadCsv('client-data-request-pack.csv', sheets.files);
+    document.getElementById('exportStatus').textContent = 'Excel library unavailable, so the client data request pack downloaded as CSV.';
+    return;
+  }
+  var wb = XLSX.utils.book_new();
+  wb.Props = { Title: 'Client Data Request Pack', Subject: 'Custom finance model scoping and data requirements', Author: 'Zequence Digital UK Limited', CreatedDate: new Date() };
+  addSheet(wb, 'Overview', sheets.overview, [18, 82, 24, 18]);
+  addSheet(wb, 'Files Requested', sheets.files, [22, 46, 16, 16, 72]);
+  addSheet(wb, 'Data Dictionary', sheets.dictionary, [22, 68, 16, 30]);
+  addSheet(wb, 'KPI Checklist', sheets.kpis, [26, 34, 90]);
+  addSheet(wb, 'Scope Questions', sheets.scope, [54, 78]);
+  addSheet(wb, 'Readiness Score', sheets.readiness, [48, 16, 70]);
+  XLSX.writeFile(wb, 'client-data-request-pack.xlsx');
+}
+
+function auditChecklistSheets() {
+  return {
+    checklist: [
+      ['Area', 'Control / Test', 'Risk if Failed', 'Status', 'Reviewer Notes'],
+      ['Workbook structure', 'Inputs, calculations, outputs, and checks are separated', 'Hard to audit and easy to overwrite formulas', 'Open', ''],
+      ['Formula integrity', 'No hardcoded values inside calculation formulas except documented constants', 'Hidden assumptions distort results', 'Open', ''],
+      ['Formula integrity', 'Formulas are consistent across each time series row or table column', 'Periods calculate differently without explanation', 'Open', ''],
+      ['Formula integrity', 'Circular references are intentional, documented, and controlled', 'Unstable or misleading outputs', 'Open', ''],
+      ['Data links', 'External links are known, removable, or clearly controlled', 'Broken links and stale source data', 'Open', ''],
+      ['Input validation', 'Key drivers use validation, ranges, and units', 'Invalid assumptions can break the model', 'Open', ''],
+      ['Scenario design', 'Base, upside, downside, and custom cases are clearly selectable', 'Users overwrite assumptions manually', 'Open', ''],
+      ['Variance logic', 'Favourable/unfavourable logic distinguishes income and cost lines', 'Management commentary points the wrong way', 'Open', ''],
+      ['Checks', 'Balance sheet, cash, subtotals, and reconciliation checks are visible', 'Errors remain hidden in outputs', 'Open', ''],
+      ['Sensitivity', 'Critical drivers have sensitivity or break-even views', 'Decision risk is not visible', 'Open', ''],
+      ['Version control', 'Workbook includes version log, owner, date, and change notes', 'No audit trail for changes', 'Open', ''],
+      ['Protection', 'Formula sheets or critical cells are protected where needed', 'Accidental overwrites', 'Open', ''],
+      ['Output quality', 'Board pack and management views tie back to source sheets', 'Reports disagree with model data', 'Open', '']
+    ],
+    scoring: [
+      ['Metric', 'Formula / Value', 'Notes'],
+      ['Total checks', { f: 'COUNTA(Checklist!B2:B100)', v: 13, t: 'n' }, 'Number of controls listed'],
+      ['Open checks', { f: 'COUNTIF(Checklist!D2:D100,"Open")', v: 13, t: 'n' }, 'Items still requiring review'],
+      ['Passed checks', { f: 'COUNTIF(Checklist!D2:D100,"Pass")', v: 0, t: 'n' }, 'Items marked pass'],
+      ['Completion %', { f: 'IFERROR(B4/B2,0)', v: 0, t: 'n' }, 'Format as percentage'],
+      ['Indicative audit fee band', '£250-£500', 'Discovery audit; remediation quoted separately']
+    ],
+    remediation: [
+      ['Priority', 'Issue', 'Recommended Action', 'Owner', 'Target Date'],
+      ['High', 'Material formula inconsistency', 'Standardise formula range and document exception', '', ''],
+      ['High', 'Uncontrolled external data links', 'Replace with controlled import tab or documented source refresh', '', ''],
+      ['Medium', 'Missing sensitivity analysis', 'Add driver sensitivity table for revenue, margin, cash and working capital', '', ''],
+      ['Medium', 'Weak output checks', 'Add reconciliation and variance reasonableness checks', '', ''],
+      ['Low', 'No version log', 'Add version history and change owner tab', '', '']
+    ]
+  };
+}
+
+function downloadAuditChecklist() {
+  var sheets = auditChecklistSheets();
+  if (!window.XLSX) {
+    downloadCsv('finance-model-audit-checklist.csv', sheets.checklist);
+    document.getElementById('exportStatus').textContent = 'Excel library unavailable, so the audit checklist downloaded as CSV.';
+    return;
+  }
+  var wb = XLSX.utils.book_new();
+  wb.Props = { Title: 'Finance Model Audit Checklist', Subject: 'Workbook review and remediation checklist', Author: 'Zequence Digital UK Limited', CreatedDate: new Date() };
+  addSheet(wb, 'Checklist', sheets.checklist, [24, 62, 46, 14, 60]);
+  addSheet(wb, 'Scoring', sheets.scoring, [28, 20, 74]);
+  addSheet(wb, 'Remediation Plan', sheets.remediation, [14, 42, 74, 22, 18]);
+  XLSX.writeFile(wb, 'finance-model-audit-checklist.xlsx');
+}
+
+function requestPack(packName) {
+  var form = document.getElementById('custom-pack-form');
+  var packSelect = form.querySelector('[name="package"]');
+  var industrySelect = form.querySelector('[name="industry"]');
+  var modelsNeeded = form.querySelector('[name="models_needed"]');
+  var outcome = form.querySelector('[name="outcome_required"]');
+  if (packSelect) packSelect.value = packName.indexOf('Finance Pack') >= 0 ? 'Custom Pro from £5,000' : 'Not sure yet';
+  if (industrySelect) {
+    if (/Manufacturing/i.test(packName)) industrySelect.value = 'Manufacturing';
+    else if (/SaaS/i.test(packName)) industrySelect.value = 'SaaS / Technology';
+    else if (/Retail|Ecommerce/i.test(packName)) industrySelect.value = 'Retail / Ecommerce';
+  }
+  if (modelsNeeded && !modelsNeeded.value.trim()) {
+    modelsNeeded.value = packName + ': driver-based forecast, variance analysis, cash flow, board pack, KPI dashboard, and downloadable Excel formulas.';
+  }
+  if (outcome && !outcome.value.trim()) {
+    outcome.value = 'I want a custom finance pack that can be refreshed with my data, explain results, and support management decisions.';
+  }
+  form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(function () {
+    var firstEmpty = form.querySelector('input[name="name"], input[name="email"]');
+    if (firstEmpty) firstEmpty.focus();
+  }, 450);
+}
+
+function downloadInteractiveInputTemplate() {
+  var model = getActiveInteractiveModel();
+  var csv = 'Input,Value,Notes\n' + model.drivers.map(function (driver, index) {
+    var sample = index === 0 ? 100000 : index === 1 ? 90000 : index === 2 ? 0.1 : 10000;
+    return '"' + driver.replace(/"/g, '""') + '",' + sample + ',"Replace with your value"';
+  }).join('\n');
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = model.id + '-interactive-input-template.csv';
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function downloadInteractiveResultWorkbook() {
+  if (!window.XLSX) {
+    document.getElementById('exportStatus').textContent = 'Excel library did not load. Check the network connection and try again.';
+    return;
+  }
+  var result = calculateInteractiveModel();
+  var model = result.model;
+  var wb = XLSX.utils.book_new();
+  wb.Props = { Title: model.name + ' Interactive Result', Subject: model.description, Author: 'Zequence Digital UK Limited', CreatedDate: new Date() };
+  addSheet(wb, 'Cover', [
+    ['Model', model.name],
+    ['Industry', model.industry],
+    ['Category', model.category],
+    ['Purpose', model.description],
+    ['Session note', 'Data was processed in-browser and is not permanently stored by this page.']
+  ], [24, 90]);
+  addSheet(wb, 'Inputs', [['Input', 'Value']].concat(model.drivers.map(function (driver) {
+    return [driver, valueForDriver(driver)];
+  })), [32, 16]);
+  addSheet(wb, 'Results', [['Metric', 'Value', 'Display', 'Note']].concat(result.metrics.map(function (metric) {
+    return [metric.name, metric.value, formatInteractiveValue(metric), metric.note];
+  })), [30, 16, 22, 60]);
+  addSheet(wb, 'Interpretation', [['Interpretation']].concat(result.notes.map(function (note) { return [note]; })), [110]);
+  addSheet(wb, 'Formula Logic', [['Formula']].concat(model.formulas.map(function (formula) { return [formula]; })), [110]);
+  XLSX.writeFile(wb, model.id + '-interactive-results.xlsx');
+}
+
+function drawChart(model) {
+  var canvas = document.getElementById('trendChart');
+  var ctx = canvas.getContext('2d');
+  var width = canvas.width;
+  var height = canvas.height;
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = '#F6F7F4';
+  ctx.fillRect(0, 0, width, height);
+  var series = [
+    { label: 'Revenue', values: model.rows.revenue, color: '#14B8A6' },
+    { label: 'EBITDA', values: model.rows.ebitda, color: '#F5B942' },
+    { label: 'Cash', values: model.rows.endingCash, color: '#C4663F' },
+    { label: 'FCF', values: model.rows.freeCashFlow, color: '#5BA7D1' }
+  ];
+  var all = series.reduce(function (values, item) { return values.concat(item.values); }, []);
+  var min = Math.min(0, Math.min.apply(null, all));
+  var max = Math.max.apply(null, all);
+  var pad = 46;
+  var plotW = width - pad * 2;
+  var plotH = height - pad * 2;
+  ctx.strokeStyle = '#DDE5DC';
+  ctx.lineWidth = 1;
+  for (var grid = 0; grid <= 4; grid += 1) {
+    var y = pad + plotH * grid / 4;
+    ctx.beginPath();
+    ctx.moveTo(pad, y);
+    ctx.lineTo(width - pad, y);
+    ctx.stroke();
+  }
+  series.forEach(function (item) {
+    ctx.strokeStyle = item.color;
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    item.values.forEach(function (value, index) {
+      var x = pad + (plotW * index / Math.max(1, item.values.length - 1));
+      var y = pad + plotH - ((value - min) / Math.max(1, max - min) * plotH);
+      if (index === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  });
+  ctx.font = '700 15px Inter, sans-serif';
+  series.forEach(function (item, index) {
+    ctx.fillStyle = item.color;
+    ctx.fillRect(pad + index * 118, 18, 16, 16);
+    ctx.fillStyle = '#17201D';
+    ctx.fillText(item.label, pad + 24 + index * 118, 31);
+  });
+  document.getElementById('chartScenario').textContent = currentScenario.charAt(0).toUpperCase() + currentScenario.slice(1) + ' scenario';
+}
+
+function getChecks(model) {
+  var endingCash = model.rows.endingCash[model.rows.endingCash.length - 1];
+  var minCash = Math.min.apply(null, model.rows.endingCash);
+  var revenue = sum(model.rows.revenue);
+  var ebitda = sum(model.rows.ebitda);
+  var grossMargin = revenue ? sum(model.rows.grossProfit) / revenue * 100 : 0;
+  var departmentShare = sum(departments.map(function (dept) { return dept.revenueShare; }));
+  var material = varianceItems.filter(function (item) { return varianceResult(item).material; }).length;
+  return [
+    { name: 'Ending cash positive', status: endingCash >= 0, detail: 'Ending cash is ' + formatMoney(endingCash) },
+    { name: 'Minimum cash positive', status: minCash >= 0, detail: 'Lowest monthly cash is ' + formatMoney(minCash) },
+    { name: 'EBITDA positive', status: ebitda >= 0, detail: 'Forecast EBITDA is ' + formatMoney(ebitda) },
+    { name: 'Gross margin sensible', status: grossMargin >= 20 && grossMargin <= 85, detail: 'Gross margin is ' + formatPercent(grossMargin) },
+    { name: 'Department revenue allocation', status: Math.abs(departmentShare - 100) <= 2, detail: 'Department shares total ' + formatPercent(departmentShare) },
+    { name: 'Material variances reviewed', status: material <= Math.max(3, varianceItems.length / 2), detail: material + ' material variance lines at current threshold' }
+  ];
+}
+
+function renderChecks(model) {
+  var checks = getChecks(model);
+  document.getElementById('checkList').innerHTML = checks.map(function (check) {
+    return '<article class="rounded-lg border border-line bg-paper p-4">' +
+      '<div class="flex items-start justify-between gap-3"><p class="font-black">' + check.name + '</p><span class="rounded-lg px-2 py-1 text-xs font-black ' + (check.status ? 'bg-teal/10 text-teal' : 'bg-clay/10 text-clay') + '">' + (check.status ? 'Pass' : 'Review') + '</span></div>' +
+      '<p class="mt-2 text-sm text-gray-600">' + check.detail + '</p>' +
+      '</article>';
+  }).join('');
+}
+
+function boardSummaryData(model) {
+  var summary = scenarioSummary(currentScenario);
+  var topVariances = varianceItems.slice().sort(function (a, b) {
+    return Math.abs(varianceResult(b).percent) - Math.abs(varianceResult(a).percent);
+  }).slice(0, 4);
+  var checks = getChecks(model);
+  return {
+    summary: summary,
+    topVariances: topVariances,
+    checks: checks,
+    narrative: [
+      'Current ' + currentScenario + ' case revenue is ' + formatMoney(summary.revenue) + ' with EBITDA of ' + formatMoney(summary.ebitda) + ' and an EBITDA margin of ' + formatPercent(summary.margin) + '.',
+      'Free cash flow is ' + formatMoney(summary.fcf) + ', leaving ending cash at ' + formatMoney(summary.endingCash) + '.',
+      topVariances.length ? commentaryFor(topVariances[0]) : 'No variance lines are available for review.'
+    ]
+  };
+}
+
+function renderBoardSummary(model) {
+  var data = boardSummaryData(model);
+  document.getElementById('boardSummary').innerHTML =
+    '<div class="grid gap-3 sm:grid-cols-2">' +
+    '<article class="rounded-lg bg-paper p-4"><p class="text-xs font-black uppercase tracking-[0.14em] text-teal">Revenue</p><p class="mt-2 text-3xl font-black">' + formatMoney(data.summary.revenue) + '</p></article>' +
+    '<article class="rounded-lg bg-paper p-4"><p class="text-xs font-black uppercase tracking-[0.14em] text-teal">Ending cash</p><p class="mt-2 text-3xl font-black">' + formatMoney(data.summary.endingCash) + '</p></article>' +
+    '</div>' +
+    '<div class="rounded-lg border border-line bg-paper p-4"><p class="font-black">Executive narrative</p><ul class="mt-3 space-y-2 text-sm leading-6 text-gray-700">' + data.narrative.map(function (line) { return '<li>' + escapeHtml(line) + '</li>'; }).join('') + '</ul></div>' +
+    '<div class="rounded-lg border border-line bg-paper p-4"><p class="font-black">Top variance commentary</p><div class="mt-3 grid gap-3">' + data.topVariances.map(function (item) { return '<p class="text-sm leading-6 text-gray-700">' + escapeHtml(commentaryFor(item)) + '</p>'; }).join('') + '</div></div>';
+}
+
+var renderTimer = null;
+function scheduleCalculatedRender() {
+  clearTimeout(renderTimer);
+  renderTimer = setTimeout(renderCalculated, 80);
+}
+
+function renderCalculated() {
+  var model = calculateModel(currentScenario);
+  renderMetrics(model);
+  renderModelTable(model);
+  renderVarianceRows();
+  renderDepartments();
+  renderCashBridge(model);
+  renderScenarioComparison();
+  drawChart(model);
+  renderBoardSummary(model);
+  renderChecks(model);
+  document.querySelectorAll('.scenario-tab').forEach(function (button) {
+    var active = button.dataset.scenario === currentScenario;
+    button.className = active ? 'scenario-tab rounded-lg bg-pine px-4 py-2 text-sm font-black text-white' : 'scenario-tab rounded-lg border border-line bg-white px-4 py-2 text-sm font-black text-ink';
+  });
+  saveSessionState();
+}
+
+function renderAll() {
+  renderAssumptions();
+  renderWorkingCapitalInputs();
+  renderScenarioInputs();
+  renderCalculated();
+}
+
+function saveSessionState() {
+  var payload = {
+    companyName: document.getElementById('companyName').value,
+    currency: document.getElementById('currency').value,
+    startMonth: document.getElementById('startMonth').value,
+    periodCount: document.getElementById('periodCount').value,
+    currentScenario: currentScenario,
+    assumptions: assumptions,
+    workingCapital: workingCapital,
+    scenarioLevers: scenarioLevers,
+    varianceItems: varianceItems,
+    departments: departments,
+    threshold: document.getElementById('threshold').value
+  };
+  sessionStorage.setItem(storageKey, JSON.stringify(payload));
+}
+
+function loadSessionState() {
+  try {
+    var raw = sessionStorage.getItem(storageKey);
+    if (!raw) return;
+    var payload = JSON.parse(raw);
+    assumptions = payload.assumptions || assumptions;
+    workingCapital = Object.assign({}, workingCapital, payload.workingCapital || {});
+    scenarioLevers = Object.assign({}, scenarioLevers, payload.scenarioLevers || {});
+    Object.keys(scenarioLevers).forEach(function (name) {
+      scenarioLevers[name] = Object.assign({ revenue: 0, margin: 0, opex: 0, workingCapital: 0 }, scenarioLevers[name] || {});
+    });
+    varianceItems = (payload.varianceItems || varianceItems).map(function (item) {
+      return Object.assign({ department: 'Unassigned', type: 'bad', budget: 0, actual: 0, forecast: 0 }, item);
+    });
+    departments = payload.departments || departments;
+    currentScenario = payload.currentScenario || currentScenario;
+    ['companyName', 'currency', 'startMonth', 'periodCount', 'threshold'].forEach(function (id) {
+      if (payload[id] !== undefined && document.getElementById(id)) document.getElementById(id).value = payload[id];
+    });
+  } catch (error) {}
+}
+
+function normaliseHeader(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+}
+
+function parseCsv(text) {
+  var rows = [];
+  var row = [];
+  var cell = '';
+  var quoted = false;
+  for (var i = 0; i < text.length; i += 1) {
+    var char = text[i];
+    var next = text[i + 1];
+    if (char === '"' && quoted && next === '"') {
+      cell += '"';
+      i += 1;
+    } else if (char === '"') {
+      quoted = !quoted;
+    } else if (char === ',' && !quoted) {
+      row.push(cell);
+      cell = '';
+    } else if ((char === '\n' || char === '\r') && !quoted) {
+      if (char === '\r' && next === '\n') i += 1;
+      row.push(cell);
+      if (row.some(function (value) { return String(value).trim() !== ''; })) rows.push(row);
+      row = [];
+      cell = '';
+    } else {
+      cell += char;
+    }
+  }
+  row.push(cell);
+  if (row.some(function (value) { return String(value).trim() !== ''; })) rows.push(row);
+  return rows;
+}
+
+function rowsToObjects(rows) {
+  if (!rows.length) return [];
+  var headers = rows[0].map(normaliseHeader);
+  return rows.slice(1).map(function (row) {
+    var object = {};
+    headers.forEach(function (header, index) { object[header] = row[index]; });
+    return object;
+  });
+}
+
+function getField(object, names) {
+  for (var i = 0; i < names.length; i += 1) {
+    var key = normaliseHeader(names[i]);
+    if (object[key] !== undefined && object[key] !== '') return object[key];
+  }
+  return '';
+}
+
+function applyImportedObjects(objects, target) {
+  var skipped = 0;
+  if (target === 'departments') {
+    departments = objects.map(function (object) {
+      return {
+        name: getField(object, ['department', 'name', 'cost centre', 'cost center']) || 'Department',
+        revenueShare: parseNumber(getField(object, ['revenue share', 'revenue %', 'revenue percent'])),
+        payroll: parseNumber(getField(object, ['payroll', 'salary', 'staff cost'])),
+        marketing: parseNumber(getField(object, ['marketing'])),
+        software: parseNumber(getField(object, ['software', 'systems'])),
+        other: parseNumber(getField(object, ['other', 'other costs', 'opex']))
+      };
+    }).filter(function (dept) { return dept.name; });
+  } else {
+    var mapped = [];
+    objects.forEach(function (object) {
+      var name = getField(object, ['line item', 'line', 'account', 'name']);
+      if (!name) {
+        skipped += 1;
+        return;
+      }
+      mapped.push({
+        name: name,
+        department: getField(object, ['department', 'owner', 'cost centre', 'cost center']) || 'Unassigned',
+        type: String(getField(object, ['type', 'direction']) || 'bad').toLowerCase().indexOf('good') !== -1 ? 'good' : 'bad',
+        budget: parseNumber(getField(object, ['budget', 'plan'])),
+        actual: parseNumber(getField(object, ['actual', 'actuals'])),
+        forecast: parseNumber(getField(object, ['forecast', 'latest estimate', 'le']))
+      });
+    });
+    if (mapped.length) varianceItems = mapped;
+  }
+  importLog.unshift({ time: new Date().toLocaleTimeString('en-GB'), count: objects.length - skipped, skipped: skipped, target: target });
+  renderImportPreview(objects, target, skipped);
+  renderAll();
+}
+
+function clearImportedData() {
+  varianceItems = [];
+  departments = [];
+  importLog = [];
+  document.getElementById('pasteData').value = '';
+  document.getElementById('importFile').value = '';
+  document.getElementById('importCount').textContent = 'No import yet';
+  document.getElementById('importPreview').textContent = 'Imported variance and department data has been cleared for this session.';
+  renderAll();
+}
+
+function renderImportPreview(objects, target, skipped) {
+  var preview = objects.slice(0, 8);
+  document.getElementById('importCount').textContent = (objects.length - skipped) + ' imported';
+  document.getElementById('importPreview').innerHTML =
+    '<p class="font-black text-ink">Imported into ' + (target === 'departments' ? 'Department plan' : 'Variance actuals') + '.</p>' +
+    '<p class="mt-1 text-gray-600">' + skipped + ' row(s) skipped. Showing first ' + preview.length + ' mapped row(s).</p>' +
+    '<pre class="mt-4 max-h-56 overflow-auto rounded-lg bg-white p-3 text-xs text-gray-700">' + escapeHtml(JSON.stringify(preview, null, 2)) + '</pre>';
+}
+
+function handlePasteImport() {
+  var text = document.getElementById('pasteData').value;
+  if (!text.trim()) {
+    document.getElementById('importPreview').textContent = 'Paste spreadsheet rows before applying.';
+    return;
+  }
+  applyImportedObjects(rowsToObjects(parseCsv(text)), document.getElementById('importTarget').value);
+}
+
+function handleFileImport(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  var target = document.getElementById('importTarget').value;
+  var reader = new FileReader();
+  reader.onload = function (loadEvent) {
+    if (/\.xlsx?$/.test(file.name.toLowerCase())) {
+      if (!window.XLSX) {
+        document.getElementById('importPreview').textContent = 'Excel import needs the SheetJS library. Try CSV if the library is not available.';
+        return;
+      }
+      var workbook = XLSX.read(loadEvent.target.result, { type: 'array' });
+      var sheet = workbook.Sheets[workbook.SheetNames[0]];
+      var rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+      applyImportedObjects(rowsToObjects(rows), target);
+    } else {
+      applyImportedObjects(rowsToObjects(parseCsv(loadEvent.target.result)), target);
+    }
+  };
+  if (/\.xlsx?$/.test(file.name.toLowerCase())) reader.readAsArrayBuffer(file); else reader.readAsText(file);
+}
+
+function excelCol(index) {
+  var name = '';
+  var n = index;
+  while (n > 0) {
+    var mod = (n - 1) % 26;
+    name = String.fromCharCode(65 + mod) + name;
+    n = Math.floor((n - mod) / 26);
+  }
+  return name;
+}
+
+function addSheet(wb, name, rows, widths) {
+  var ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = (widths || []).map(function (wch) { return { wch: wch }; });
+  XLSX.utils.book_append_sheet(wb, ws, name);
+  return ws;
+}
+
+function addWorkbookGuideSheets(wb, model, formulaMode) {
+  var summary = scenarioSummary(currentScenario);
+  addSheet(wb, 'Read Me', [
+    ['Finance Modeler by Zequence Digital'],
+    ['Company', document.getElementById('companyName').value || 'Not specified'],
+    ['Generated', new Date().toLocaleString('en-GB')],
+    ['Workbook mode', formulaMode ? 'Formula workbook' : 'Values only'],
+    [],
+    ['How to use this workbook'],
+    ['1', 'Update assumptions and imported actuals in the input tabs.'],
+    ['2', 'Review forecast, variance, working capital, scenarios, and checks.'],
+    ['3', 'Use the board summary as the management reporting starting point.'],
+    ['4', 'For a tailored pack, request a custom finance model from Zequence Digital.']
+  ], [18, 90]);
+  addSheet(wb, 'Dashboard', [
+    ['Metric', 'Value', 'Commentary'],
+    ['Active scenario', currentScenario, 'Selected in the browser model'],
+    ['Forecast revenue', summary.revenue, 'Total across selected forecast horizon'],
+    ['EBITDA', summary.ebitda, 'Total EBITDA across selected forecast horizon'],
+    ['EBITDA margin', summary.margin / 100, 'EBITDA divided by revenue'],
+    ['Free cash flow', summary.fcf, 'Cash generated after capex, working capital, tax, debt and dividends'],
+    ['Ending cash', summary.endingCash, summary.endingCash >= 0 ? 'Positive ending cash' : 'Funding gap to review']
+  ], [26, 18, 70]);
+  addSheet(wb, 'Version Log', [
+    ['Version', 'Date', 'Owner', 'Notes'],
+    ['1.0', new Date().toLocaleDateString('en-GB'), 'Zequence Digital', 'Generated from Finance Modeler browser tool']
+  ], [14, 16, 24, 80]);
+}
+
+function formulaCell(formula, value) {
+  return { f: formula, v: value, t: 'n' };
+}
+
+function formulaForModel(key, col, prevCol, excelRow, index) {
+  var formulas = {
+    revenue: index === 0 ? 'Inputs!$B$8*(1+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,2,FALSE)/100)' : prevCol + excelRow + '*(1+Inputs!$B$10/100)',
+    cogs: col + '2*(1-(Inputs!$B$11+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,3,FALSE))/100)',
+    grossProfit: col + '2-' + col + '3',
+    payroll: 'Inputs!$B$12*(1+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,4,FALSE)/100)',
+    marketing: 'Inputs!$B$13*(1+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,4,FALSE)/100)*(1+' + index + '*1%)',
+    software: 'Inputs!$B$14*(1+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,4,FALSE)/100)',
+    rent: 'Inputs!$B$15*(1+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,4,FALSE)/100)',
+    otherOpex: 'Inputs!$B$16*(1+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,4,FALSE)/100)',
+    ebitda: col + '4-SUM(' + col + '5:' + col + '9)',
+    tax: 'MAX(0,' + col + '10)*Inputs!$B$18/100',
+    netIncome: col + '10-' + col + '11',
+    capex: 'Inputs!$B$17',
+    deltaNwc: index === 0 ? '((' + col + '2*WorkingCapital!$B$2/30)+(' + col + '3*WorkingCapital!$B$4/30)-(' + col + '3*WorkingCapital!$B$3/30))*(1+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,5,FALSE)/100)' : '(((' + col + '2*WorkingCapital!$B$2/30)+(' + col + '3*WorkingCapital!$B$4/30)-(' + col + '3*WorkingCapital!$B$3/30))-((' + prevCol + '2*WorkingCapital!$B$2/30)+(' + prevCol + '3*WorkingCapital!$B$4/30)-(' + prevCol + '3*WorkingCapital!$B$3/30)))*(1+VLOOKUP(Inputs!$B$5,Scenarios!$A$2:$E$4,5,FALSE)/100)',
+    vatCash: 'MAX(0,' + col + '2-' + col + '3)*WorkingCapital!$B$5/100',
+    debtRepayment: 'WorkingCapital!$B$6',
+    dividends: 'WorkingCapital!$B$7',
+    freeCashFlow: col + '12-' + col + '13-' + col + '14-' + col + '15-' + col + '16-' + col + '17',
+    endingCash: index === 0 ? 'Inputs!$B$19+' + col + '18' : prevCol + excelRow + '+' + col + '18'
+  };
+  return formulas[key] || '';
+}
+
+function buildWorkbook() {
+  if (!window.XLSX) {
+    document.getElementById('exportStatus').textContent = 'Excel library did not load. Check the network connection and try again.';
+    return;
+  }
+  var formulaMode = document.getElementById('exportMode').value === 'formulas';
+  var model = calculateModel(currentScenario);
+  var wb = XLSX.utils.book_new();
+  wb.Props = {
+    Title: 'Finance Modeler Export',
+    Subject: 'Finance modelling and variance analysis',
+    Author: 'Zequence Digital UK Limited',
+    CreatedDate: new Date()
+  };
+  addWorkbookGuideSheets(wb, model, formulaMode);
+  var inputRows = [
+    ['Company', document.getElementById('companyName').value],
+    ['Currency', document.getElementById('currency').value],
+    ['Start month', document.getElementById('startMonth').value],
+    ['Periods', Number(document.getElementById('periodCount').value)],
+    ['Active scenario', currentScenario],
+    [],
+    ['Assumption', 'Value']
+  ];
+  assumptionLabels.forEach(function (item) { inputRows.push([item[1], assumptions[item[0]]]); });
+  addSheet(wb, 'Inputs', inputRows, [28, 16]);
+  addSheet(wb, 'WorkingCapital', [
+    ['Driver', 'Value'],
+    ['Debtor days', workingCapital.arDays],
+    ['Creditor days', workingCapital.apDays],
+    ['Inventory days', workingCapital.inventoryDays],
+    ['VAT / sales tax rate', workingCapital.vatRate],
+    ['Debt repayment', workingCapital.debtRepayment],
+    ['Dividends', workingCapital.dividends]
+  ], [28, 16]);
+  var scenarioRows = [['Scenario', 'Revenue sensitivity', 'Margin points', 'Opex sensitivity', 'Working capital sensitivity']];
+  Object.keys(scenarioLevers).forEach(function (key) {
+    scenarioRows.push([key, scenarioLevers[key].revenue, scenarioLevers[key].margin, scenarioLevers[key].opex, scenarioLevers[key].workingCapital]);
+  });
+  addSheet(wb, 'Scenarios', scenarioRows, [18, 20, 16, 18, 24]);
+  var modelSheetRows = [['Line'].concat(model.periods)];
+  modelRows.forEach(function (row, rowIndex) {
+    var key = row[0];
+    var excelRow = rowIndex + 2;
+    var data = [row[1]];
+    model.periods.forEach(function (_, index) {
+      var col = excelCol(index + 2);
+      var prevCol = excelCol(index + 1);
+      var value = model.rows[key][index];
+      var formula = formulaForModel(key, col, prevCol, excelRow, index);
+      data.push(formulaMode && formula ? formulaCell(formula, value) : value);
+    });
+    modelSheetRows.push(data);
+  });
+  addSheet(wb, 'Forecast Model', modelSheetRows, [28].concat(model.periods.map(function () { return 14; })));
+  var varianceRows = [['Line item', 'Department', 'Budget', 'Actual', 'Forecast', 'Variance', 'Variance %', 'Status', 'Commentary']];
+  varianceItems.forEach(function (item, index) {
+    var result = varianceResult(item);
+    var excelRow = index + 2;
+    varianceRows.push([
+      item.name,
+      item.department,
+      item.budget,
+      item.actual,
+      item.forecast,
+      formulaMode ? formulaCell('D' + excelRow + '-C' + excelRow, result.variance) : result.variance,
+      formulaMode ? formulaCell('IFERROR(F' + excelRow + '/ABS(C' + excelRow + '),0)', result.percent / 100) : result.percent / 100,
+      result.status,
+      commentaryFor(item)
+    ]);
+  });
+  addSheet(wb, 'Variance Analysis', varianceRows, [28, 18, 14, 14, 14, 14, 14, 18, 60]);
+  addSheet(wb, 'Departments', [['Department', 'Revenue %', 'Payroll', 'Marketing', 'Software', 'Other']].concat(departments.map(function (dept) {
+    return [dept.name, dept.revenueShare, dept.payroll, dept.marketing, dept.software, dept.other];
+  })), [22, 12, 14, 14, 14, 14]);
+  var comparisonRows = [['Metric', 'Base', 'Upside', 'Downside']];
+  [['Revenue', 'revenue'], ['EBITDA', 'ebitda'], ['EBITDA margin', 'margin'], ['Free cash flow', 'fcf'], ['Ending cash', 'endingCash']].forEach(function (row) {
+    var values = ['base', 'upside', 'downside'].map(function (name) { return scenarioSummary(name)[row[1]]; });
+    comparisonRows.push([row[0]].concat(values));
+  });
+  addSheet(wb, 'Scenario Comparison', comparisonRows, [22, 16, 16, 16]);
+  var board = boardSummaryData(model);
+  addSheet(wb, 'Board Summary', [['Executive narrative'], [board.narrative[0]], [board.narrative[1]], [board.narrative[2]], [], ['Top variance commentary']].concat(board.topVariances.map(function (item) {
+    return [commentaryFor(item)];
+  })), [100]);
+  addSheet(wb, 'Checks', [['Check', 'Result', 'Detail']].concat(getChecks(model).map(function (check) {
+    return [check.name, check.status ? 'Pass' : 'Review', check.detail];
+  })).concat([['Formula mode', formulaMode ? 'Enabled' : 'Values only', 'Selected before export']]), [32, 14, 42]);
+  var fileName = (document.getElementById('companyName').value || 'finance-model').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase() + '-finance-model.xlsx';
+  XLSX.writeFile(wb, fileName);
+  document.getElementById('exportStatus').textContent = 'Workbook downloaded: ' + fileName;
+}
+
+function buildBoardPackHtml() {
+  var model = calculateModel(currentScenario);
+  var board = boardSummaryData(model);
+  var checks = getChecks(model);
+  return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>' + escapeHtml(document.getElementById('companyName').value) + ' Board Pack</title><style>body{font-family:Arial,sans-serif;margin:40px;color:#17201d}h1,h2{color:#10231e}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card{border:1px solid #dde5dc;border-radius:8px;padding:16px;margin:12px 0}.pass{color:#0f766e}.review{color:#b45309}table{border-collapse:collapse;width:100%;margin-top:12px}th,td{border:1px solid #dde5dc;padding:8px;text-align:left}th{background:#f6f7f4}</style></head><body>' +
+    '<h1>' + escapeHtml(document.getElementById('companyName').value) + ' Board Pack</h1>' +
+    '<p>Scenario: <strong>' + currentScenario + '</strong> | Generated: ' + new Date().toLocaleString('en-GB') + '</p>' +
+    '<div class="grid"><div class="card"><h2>Revenue</h2><p>' + formatMoney(board.summary.revenue) + '</p></div><div class="card"><h2>Ending cash</h2><p>' + formatMoney(board.summary.endingCash) + '</p></div></div>' +
+    '<h2>Executive Narrative</h2><ul>' + board.narrative.map(function (line) { return '<li>' + escapeHtml(line) + '</li>'; }).join('') + '</ul>' +
+    '<h2>Top Variances</h2><table><thead><tr><th>Line</th><th>Owner</th><th>Status</th><th>Commentary</th></tr></thead><tbody>' + board.topVariances.map(function (item) { return '<tr><td>' + escapeHtml(item.name) + '</td><td>' + escapeHtml(item.department) + '</td><td>' + varianceResult(item).status + '</td><td>' + escapeHtml(commentaryFor(item)) + '</td></tr>'; }).join('') + '</tbody></table>' +
+    '<h2>Checks</h2><table><thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead><tbody>' + checks.map(function (check) { return '<tr><td>' + escapeHtml(check.name) + '</td><td class="' + (check.status ? 'pass' : 'review') + '">' + (check.status ? 'Pass' : 'Review') + '</td><td>' + escapeHtml(check.detail) + '</td></tr>'; }).join('') + '</tbody></table>' +
+    '</body></html>';
+}
+
+function downloadBoardPack() {
+  var html = buildBoardPackHtml();
+  var blob = new Blob([html], { type: 'text/html' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = (document.getElementById('companyName').value || 'finance-model').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase() + '-board-pack.html';
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function downloadTemplate() {
+  var target = document.getElementById('importTarget').value;
+  var csv = target === 'departments'
+    ? 'Department,Revenue %,Payroll,Marketing,Software,Other\nSales,52,18000,6500,1200,2200\nOperations,30,22000,1500,2400,4800\nAdmin,18,12000,800,2600,4500\n'
+    : 'Line item,Budget,Actual,Forecast,Department,Type\nRevenue,185000,192500,205000,Sales,good\nCost of sales,71000,74800,77900,Operations,bad\nPayroll,52000,54800,54000,Admin,bad\n';
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = target === 'departments' ? 'finance-modeler-department-template.csv' : 'finance-modeler-variance-template.csv';
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function downloadInputChecklist() {
+  var csv = 'Section,Field,Required,Description\n' +
+    'Model assumptions,Starting revenue,Yes,Opening monthly revenue for the forecast\n' +
+    'Model assumptions,Monthly revenue growth,Yes,Expected month-on-month growth percentage\n' +
+    'Model assumptions,Gross margin,Yes,Revenue less cost of sales as a percentage\n' +
+    'Model assumptions,Payroll,Yes,Monthly staff cost\n' +
+    'Model assumptions,Marketing,Yes,Monthly marketing spend\n' +
+    'Model assumptions,Software,Yes,Monthly software and systems cost\n' +
+    'Model assumptions,Rent and facilities,Yes,Monthly facilities cost\n' +
+    'Model assumptions,Other operating costs,Yes,Other monthly opex\n' +
+    'Model assumptions,Capital expenditure,Yes,Monthly capex\n' +
+    'Model assumptions,Tax rate,Yes,Tax rate percentage\n' +
+    'Model assumptions,Opening cash,Yes,Cash balance at start of model\n' +
+    'Working capital,Debtor days,Yes,Average collection days from customers\n' +
+    'Working capital,Creditor days,Yes,Average payment days to suppliers\n' +
+    'Working capital,Inventory days,Optional,Stock holding days where relevant\n' +
+    'Working capital,VAT / sales tax rate,Optional,Tax rate used for cash timing\n' +
+    'Variance import,Line item,Yes,P&L or balance sheet line name\n' +
+    'Variance import,Budget,Yes,Approved plan amount\n' +
+    'Variance import,Actual,Yes,Actual amount for the period\n' +
+    'Variance import,Forecast,Yes,Latest forecast amount\n' +
+    'Variance import,Department,Optional,Owner or cost centre\n' +
+    'Variance import,Type,Optional,Use good for revenue/income and bad for costs\n';
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'finance-modeler-input-checklist.csv';
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function loadSampleData() {
+  sessionStorage.removeItem(storageKey);
+  assumptions = { startingRevenue: 180000, unitPrice: 120, monthlyGrowth: 4, grossMargin: 62, payroll: 52000, marketing: 14000, software: 6200, rent: 9000, otherOpex: 11500, capex: 8000, taxRate: 19, openingCash: 240000 };
+  workingCapital = { arDays: 42, apDays: 30, inventoryDays: 18, vatRate: 20, debtRepayment: 6000, dividends: 0 };
+  scenarioLevers = { base: { revenue: 0, margin: 0, opex: 0, workingCapital: 0 }, upside: { revenue: 12, margin: 3, opex: -4, workingCapital: -6 }, downside: { revenue: -15, margin: -4, opex: 8, workingCapital: 10 } };
+  departments = demoDepartments();
+  varianceItems = demoVarianceItems();
+  interactiveModelInputs = {};
+  ensureInteractiveInputs(getActiveInteractiveModel());
+  importLog = [];
+  currentScenario = 'base';
+  document.getElementById('companyName').value = 'Finance Manager Co';
+  document.getElementById('currency').value = 'GBP';
+  document.getElementById('startMonth').value = '2026-01';
+  document.getElementById('periodCount').value = '12';
+  document.getElementById('threshold').value = '8';
+  document.getElementById('pasteData').value = '';
+  document.getElementById('importFile').value = '';
+  document.getElementById('interactiveModelPaste').value = '';
+  document.getElementById('interactiveModelFile').value = '';
+  document.getElementById('importCount').textContent = 'No import yet';
+  document.getElementById('importPreview').textContent = 'Demo data has been loaded for this session only.';
+  renderInteractiveModel();
+  renderAll();
+}
+
+function clearAllData() {
+  sessionStorage.removeItem(storageKey);
+  assumptions = { startingRevenue: 0, unitPrice: 0, monthlyGrowth: 0, grossMargin: 0, payroll: 0, marketing: 0, software: 0, rent: 0, otherOpex: 0, capex: 0, taxRate: 0, openingCash: 0 };
+  workingCapital = { arDays: 0, apDays: 0, inventoryDays: 0, vatRate: 0, debtRepayment: 0, dividends: 0 };
+  scenarioLevers = { base: { revenue: 0, margin: 0, opex: 0, workingCapital: 0 }, upside: { revenue: 0, margin: 0, opex: 0, workingCapital: 0 }, downside: { revenue: 0, margin: 0, opex: 0, workingCapital: 0 } };
+  departments = [];
+  varianceItems = [];
+  zeroInteractiveInputs(getActiveInteractiveModel());
+  importLog = [];
+  currentScenario = 'base';
+  document.getElementById('companyName').value = '';
+  document.getElementById('currency').value = 'GBP';
+  document.getElementById('startMonth').value = '2026-01';
+  document.getElementById('periodCount').value = '12';
+  document.getElementById('threshold').value = '8';
+  document.getElementById('pasteData').value = '';
+  document.getElementById('importFile').value = '';
+  document.getElementById('interactiveModelPaste').value = '';
+  document.getElementById('interactiveModelFile').value = '';
+  document.getElementById('importCount').textContent = 'No import yet';
+  document.getElementById('importPreview').textContent = 'All demo, imported, and session data has been cleared. Import your own data or load the demo to start again.';
+  renderInteractiveModel();
+  renderAll();
+  sessionStorage.removeItem(storageKey);
+}
+
+document.getElementById('mobile-menu-toggle').addEventListener('click', function () {
+  var menu = document.getElementById('mobile-menu');
+  menu.hidden = !menu.hidden;
+  this.setAttribute('aria-expanded', String(!menu.hidden));
+});
+document.querySelectorAll('#mobile-menu a').forEach(function (link) {
+  link.addEventListener('click', function () { document.getElementById('mobile-menu').hidden = true; });
+});
+['companyName', 'currency', 'startMonth', 'periodCount'].forEach(function (id) {
+  document.getElementById(id).addEventListener('change', renderAll);
+});
+document.querySelectorAll('.scenario-tab').forEach(function (button) {
+  button.addEventListener('click', function () {
+    currentScenario = button.dataset.scenario;
+    renderAll();
+  });
+});
+document.getElementById('threshold').addEventListener('input', renderCalculated);
+document.getElementById('downloadWorkbook').addEventListener('click', buildWorkbook);
+document.getElementById('exportTop').addEventListener('click', buildWorkbook);
+document.getElementById('downloadBoardPack').addEventListener('click', downloadBoardPack);
+document.getElementById('printBoardPack').addEventListener('click', function () { window.print(); });
+document.getElementById('loadDemo').addEventListener('click', loadSampleData);
+document.getElementById('loadDemoTop').addEventListener('click', loadSampleData);
+document.getElementById('clearAll').addEventListener('click', clearAllData);
+document.getElementById('clearAllTop').addEventListener('click', clearAllData);
+document.getElementById('addDepartment').addEventListener('click', function () {
+  departments.push({ name: 'New Department', revenueShare: 0, payroll: 0, marketing: 0, software: 0, other: 0 });
+  renderCalculated();
+});
+document.getElementById('applyPaste').addEventListener('click', handlePasteImport);
+document.getElementById('importFile').addEventListener('change', handleFileImport);
+document.getElementById('downloadTemplate').addEventListener('click', downloadTemplate);
+document.getElementById('downloadChecklist').addEventListener('click', downloadInputChecklist);
+document.getElementById('clearImport').addEventListener('click', clearImportedData);
+document.getElementById('modelIndustryFilter').addEventListener('change', renderModelLibrary);
+document.getElementById('modelSearch').addEventListener('input', renderModelLibrary);
+document.getElementById('downloadAllModelTemplates').addEventListener('click', downloadAllModelTemplates);
+document.getElementById('downloadModelCatalogue').addEventListener('click', downloadModelCatalogue);
+document.getElementById('downloadClientDataPack').addEventListener('click', downloadClientDataPack);
+document.getElementById('downloadAuditChecklist').addEventListener('click', downloadAuditChecklist);
+document.querySelectorAll('[data-pack-request]').forEach(function (button) {
+  button.addEventListener('click', function () { requestPack(button.dataset.packRequest); });
+});
+document.getElementById('downloadInteractiveTemplate').addEventListener('click', downloadInteractiveInputTemplate);
+document.getElementById('downloadInteractiveResult').addEventListener('click', downloadInteractiveResultWorkbook);
+document.getElementById('applyInteractivePaste').addEventListener('click', handleInteractivePaste);
+document.getElementById('interactiveModelFile').addEventListener('change', handleInteractiveFile);
+document.getElementById('clearInteractiveModel').addEventListener('click', function () {
+  interactiveModelInputs = {};
+  document.getElementById('interactiveModelPaste').value = '';
+  document.getElementById('interactiveModelFile').value = '';
+  renderInteractiveModel();
+});
+renderModelLibraryFilters();
+renderModelLibrary();
+renderInteractiveModel();
+loadSessionState();
+renderAll();
+</script>
+</body>
+</html>
