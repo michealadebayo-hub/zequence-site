@@ -23,13 +23,12 @@
 <meta name="twitter:title" content="Zequence Digital UK Limited | AI-Powered Operational Software">
 <meta name="twitter:description" content="AI products and operational software for workflows, bookings, payments, customer flows, and business productivity.">
 <meta name="twitter:image" content="https://zequencedigital.co.uk/social-preview.svg">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DZF2RX40V1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DZF2RX40V1');
 </script>
+<!-- Google Analytics loads only after cookie consent -->
+<script src="assets/js/consent.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
@@ -239,7 +238,7 @@ body {
         </p>
       </div>
 
-      <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <article class="group rounded-2xl border border-line bg-white p-6 shadow-panel transition hover:-translate-y-1">
           <div class="flex items-center justify-between">
             <span class="rounded-full bg-volt/20 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-night">Live</span>
@@ -274,10 +273,20 @@ body {
           </div>
         </article>
 
-        <article class="group rounded-2xl border border-line bg-night p-6 text-white shadow-glow transition hover:-translate-y-1">
+        <article class="group rounded-2xl border border-line bg-white p-6 shadow-panel transition hover:-translate-y-1">
+          <div class="flex items-center justify-between">
+            <span class="rounded-full bg-teal/15 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-night">Care</span>
+            <span class="grid h-11 w-11 place-items-center rounded-2xl bg-night font-display font-bold text-white">04</span>
+          </div>
+          <h3 class="mt-8 font-display text-3xl font-bold text-night">CareInbox</h3>
+          <p class="mt-4 leading-7 text-gray-600">One inbox for home care agencies: email, WhatsApp Business and Messenger together, with AI that sorts, summarises and drafts replies for your team to review.</p>
+          <a href="careinbox.html" class="mt-7 inline-flex rounded-full bg-night px-5 py-3 text-sm font-bold text-white transition group-hover:bg-cobalt">View CareInbox</a>
+        </article>
+
+        <article class="group rounded-2xl md:col-span-2 border border-line bg-night p-6 text-white shadow-glow transition hover:-translate-y-1">
           <div class="flex items-center justify-between">
             <span class="rounded-full bg-white/12 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-white/72">Service</span>
-            <span class="grid h-11 w-11 place-items-center rounded-2xl bg-volt font-display font-bold text-night">04</span>
+            <span class="grid h-11 w-11 place-items-center rounded-2xl bg-volt font-display font-bold text-night">05</span>
           </div>
           <h3 class="mt-8 font-display text-3xl font-bold">AI Product Studio</h3>
           <p class="mt-4 leading-7 text-white/68">Product planning, interface design, automation strategy, AI assistant flows, analytics setup, and practical launch improvements.</p>
@@ -686,12 +695,15 @@ document.querySelectorAll('#mobile-menu a').forEach(function (link) {
       <a href="finance-checkout.html?pack=industry" class="transition hover:text-night">Finance Packs</a>
       <a href="closepilot.html" class="transition hover:text-night">ClosePilot</a>
       <a href="honorhub.html" class="transition hover:text-night">HonorHub</a>
+      <a href="careinbox.html" class="transition hover:text-night">CareInbox</a>
       <a href="#coming-soon" class="transition hover:text-night">Coming Soon</a>
       <a href="#contact" class="transition hover:text-night">Contact</a>
       <a href="finance-terms.html" class="transition hover:text-night">Finance Terms</a>
       <a href="privacy.html" class="transition hover:text-night">Privacy</a>
+      <a href="#" data-cookie-settings class="transition hover:text-night">Cookie settings</a>
     </div>
   </div>
+  <p class="mx-auto mt-6 max-w-7xl border-t border-line pt-5 text-xs leading-6 text-gray-500">Zequence Digital UK Ltd is registered in England and Wales, company number 16384575. Registered office: 41 Chapel Place, Seaton Burn, Newcastle upon Tyne, NE13 6EX, United Kingdom. ICO registration ZC096524.</p>
 </footer>
 </body>
 </html>

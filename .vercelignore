@@ -1,0 +1,8 @@
+# Keep non-site files off the public website
+*.md
+node_modules
+package.json
+package-lock.json
+tailwind.config.js
+assets/css/tailwind.css
+.codex
